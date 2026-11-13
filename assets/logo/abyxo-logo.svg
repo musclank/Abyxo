@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+<title id="title">ABYXO logo</title><desc id="desc">ABYXO wordmark with a crowned abyss-blue octopus and the tagline Small Creature. Deep Chaos.</desc>
+<defs><linearGradient id="cyan" x1="0" x2="1"><stop stop-color="#16D9F5"/><stop offset="1" stop-color="#A6F7FF"/></linearGradient><linearGradient id="gold" x1="0" x2="1"><stop stop-color="#F8D66D"/><stop offset="1" stop-color="#C58A22"/></linearGradient></defs>
+<rect width="1200" height="420" rx="34" fill="#071426"/>
+<g transform="translate(72 60)">
+<path d="M105 185 C40 190 38 280 8 286 C-15 290 -8 255 18 236 C-6 208 13 180 44 188 C20 150 52 126 78 150 C74 102 116 98 132 139 C158 105 198 128 181 165 C221 147 244 180 210 205 C244 224 222 263 188 248 C172 291 139 290 131 251 C112 291 75 277 83 242 C49 258 30 229 58 207Z" fill="#123E68" stroke="#16D9F5" stroke-width="5"/>
+<ellipse cx="103" cy="190" rx="10" ry="14" fill="#16D9F5"/><ellipse cx="145" cy="190" rx="10" ry="14" fill="#16D9F5"/><circle cx="106" cy="186" r="3" fill="#fff"/><circle cx="148" cy="186" r="3" fill="#fff"/>
+<path d="M113 216 Q126 230 140 214" fill="none" stroke="#A6F7FF" stroke-width="5" stroke-linecap="round"/>
+<path d="M91 128 L80 75 L113 96 L137 58 L153 99 L183 77 L171 132Z" fill="url(#gold)" stroke="#F8D66D" stroke-width="4"/><circle cx="113" cy="107" r="5" fill="#fff2b2"/><circle cx="153" cy="108" r="5" fill="#fff2b2"/>
+</g>
+<text x="350" y="228" font-family="Arial,Helvetica,sans-serif" font-size="142" font-weight="900" letter-spacing="8" fill="url(#cyan)">ABYXO</text>
+<text x="360" y="292" font-family="Arial,Helvetica,sans-serif" font-size="31" font-weight="700" letter-spacing="5" fill="#F4F7FC">SMALL CREATURE. DEEP CHAOS.</text>
+<text x="362" y="342" font-family="Arial,Helvetica,sans-serif" font-size="18" letter-spacing="7" fill="#8B5CF6">BASE CHAIN • ABYXONAUTS</text>
+</svg>
