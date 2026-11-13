@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 150" role="img" aria-labelledby="title desc">
+<title id="title">ABYXO official logo</title>
+<desc id="desc">The crowned ABYXO octopus mascot beside the ABYXO wordmark and Small Creature. Deep Chaos. tagline.</desc>
+<defs>
+  <linearGradient id="word" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4f7fc"/><stop offset=".58" stop-color="#a6f7ff"/><stop offset="1" stop-color="#16d9f5"/></linearGradient>
+  <filter id="softGlow" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<image href="./mascot.svg" x="0" y="0" width="145" height="145"/>
+<text x="158" y="91" fill="url(#word)" stroke="#16d9f5" stroke-opacity=".18" stroke-width="1" font-family="Arial, Helvetica, sans-serif" font-size="82" font-weight="900" letter-spacing="3" filter="url(#softGlow)">ABYXO</text>
+<path d="M164 108 H540" stroke="#16d9f5" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+<text x="164" y="132" fill="#a6f7ff" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" letter-spacing="3">SMALL CREATURE. DEEP CHAOS.</text>
+</svg>
