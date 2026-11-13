@@ -24,6 +24,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Copy shared brand assets into website
+        run: |
+          mkdir -p ./website/assets/logo ./website/assets/mascot
+          cp ./assets/logo/abyxo-logo.svg ./website/assets/logo/abyxo-logo.svg
+          cp ./assets/mascot/abyxo-mascot.svg ./website/assets/mascot/abyxo-mascot.svg
+
       - name: Prepare website artifact
         uses: actions/upload-pages-artifact@v3
         with:
