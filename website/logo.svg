@@ -6,7 +6,7 @@
   <filter id="softGlow" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
 </defs>
 <svg x="0" y="0" width="145" height="145" viewBox="0 0 480 480">
-<title id="title">ABYXO crowned octopus</title><desc id="desc">A cute mischievous dark blue octopus with cyan glowing eyes and a golden crown.</desc>
+<title id="mascot-title">ABYXO crowned octopus</title><desc id="mascot-desc">A cute mischievous dark blue octopus with cyan glowing eyes and a golden crown.</desc>
 <defs>
  <radialGradient id="body" cx="35%" cy="25%" r="80%"><stop stop-color="#1764a5"/><stop offset=".55" stop-color="#0b3767"/><stop offset="1" stop-color="#071426"/></radialGradient>
  <linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff0a0"/><stop offset=".45" stop-color="#f8c84e"/><stop offset="1" stop-color="#b87519"/></linearGradient>
