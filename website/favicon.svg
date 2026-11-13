@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<rect width="64" height="64" rx="15" fill="#071426"/>
+<circle cx="32" cy="32" r="28" fill="#0b2744" stroke="#16d9f5" stroke-width="1.5"/>
+<image href="./mascot.svg" x="2" y="2" width="60" height="60"/>
+</svg>
