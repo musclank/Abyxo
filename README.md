@@ -20,9 +20,21 @@ abyxo/
 └── website/      # Website source and content
 ```
 
+## Project documentation
+
+- [Brand guide](docs/BRAND_GUIDE.md)
+- [Tokenomics draft](docs/TOKENOMICS.md)
+- [Roadmap draft](docs/ROADMAP.md)
+- [Disclaimer](DISCLAIMER.md)
+- [Security policy](SECURITY.md)
+- [Contribution guidelines](CONTRIBUTING.md)
+- [Community principles](community/README.md)
+
 ## Important
 
 All tokenomics, contract, and launch details are drafts until explicitly finalized. Never commit private keys, seed phrases, API tokens, or other secrets. Smart contracts must be independently reviewed and audited before any production deployment.
+
+Read the [ABYXO Disclaimer](DISCLAIMER.md) before relying on project information or interacting with any asset claiming to be ABYXO.
 
 ## Community
 
