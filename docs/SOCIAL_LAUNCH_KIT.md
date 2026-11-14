@@ -20,7 +20,7 @@ Community-led meme coin concept. DYOR.
 https://musclank.github.io/Abyxo/
 
 **Suggested avatar and banner**  
-Use the official files in the [ABYXO Promo Pack](https://musclank.github.io/Abyxo/promo.html).
+Use the official ABYXO mascot artwork from `website/mascot.svg` and the social banner from `assets/branding/abyxo-social-banner.svg`.
 
 ## Suggested pinned introduction
 
@@ -55,7 +55,7 @@ Use the official files in the [ABYXO Promo Pack](https://musclank.github.io/Abyx
 ## Publishing checklist
 
 - [ ] Create the social account and secure it with strong authentication.
-- [ ] Upload the official avatar and banner from the promo pack.
+- [ ] Upload the official mascot artwork as the avatar and `assets/branding/abyxo-social-banner.svg` as the banner.
 - [ ] Add the official website URL to the profile.
 - [ ] Publish and pin the introduction post.
 - [ ] Publish the account link on the official ABYXO website only after verifying ownership.
