@@ -812,3 +812,49 @@ body.game-is-fullscreen{overflow:hidden}
 .abyxo-music-toggle:focus-visible,.abyxo-music-volume:focus-visible{outline:2px solid #a6f7ff;outline-offset:4px}
 @media(max-width:600px){.abyxo-music-control{right:12px;bottom:60px;padding:8px 10px;gap:7px}.abyxo-music-toggle{font-size:8px}.abyxo-music-volume{width:48px}}
 @media(prefers-reduced-motion:reduce){.abyxo-music-control{scroll-behavior:auto}}
+
+
+/* MOBILE WIDTH SAFEGUARD — prevent accidental horizontal page overflow */
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:clip;
+}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,canvas,iframe{max-width:100%}
+main,header,footer,section,article,aside,nav,
+.section-wrap,.site-header,.lore-section,.lore-hero{
+  min-width:0;
+  max-width:100%;
+}
+@media(max-width:760px){
+  .site-header{
+    width:calc(100% - 30px);
+    max-width:560px;
+    margin-inline:auto;
+  }
+  .site-header .nav{
+    left:0;
+    right:0;
+    width:100%;
+    max-width:100%;
+    min-width:0;
+  }
+  .site-header .nav a{max-width:100%;min-width:0}
+  .section-wrap{width:calc(100% - 30px);max-width:560px}
+  .hero,.hero-copy,.hero-art,.two-col>*,
+  .details-heading>* ,.community-panel>*,
+  .leaderboard-layout>* ,.minigame-heading>*{
+    min-width:0;
+    max-width:100%;
+  }
+  .ticker-strip{max-width:100%;min-width:0}
+  .abyxo-music-control{
+    right:max(10px,env(safe-area-inset-right));
+    max-width:calc(100vw - 20px);
+  }
+  .site-sound-toggle{
+    right:max(10px,env(safe-area-inset-right));
+    max-width:calc(100vw - 20px);
+  }
+}
