@@ -41,6 +41,10 @@
     .terminal-chip{border:1px solid #16d9f544;background:#0c2038;color:#a6f7ff;padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer}
     .terminal-chip:hover,.terminal-chip:focus-visible{border-color:#16d9f5;background:#10304a;outline:none}
     .terminal-hint{margin:16px 0 0;color:#718ba5;font:10px/1.8 "DM Mono",monospace}
+    .terminal-theme-options{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+    .terminal-theme-option{border:1px solid #16d9f566;background:#0c2038;color:#a6f7ff;padding:8px 12px;font:10px "DM Mono",monospace;cursor:pointer}
+    .terminal-theme-option:hover,.terminal-theme-option:focus-visible{border-color:#16d9f5;background:#103b52;outline:2px solid #16d9f544}
+    @media(max-width:760px){.terminal-theme-option{min-height:38px;padding-inline:14px}}
     .terminal-back{display:inline-flex;margin-top:28px;color:#a6f7ff;font:10px "DM Mono",monospace;letter-spacing:.1em}
     .terminal-back:hover{color:white}
     @media(max-width:760px){.terminal-page{padding:48px 0 70px}.terminal-screen{height:52vh;min-height:280px;padding:17px 14px;font-size:12px}.terminal-prompt{padding:0 14px 17px;font-size:12px}.terminal-top{padding-inline:12px;font-size:9px}.terminal-status{gap:8px}.terminal-actions{gap:7px}.terminal-chip{padding:9px 10px}}
@@ -143,6 +147,41 @@
       }
       function pick(items) {
         return items[Math.floor(Math.random() * items.length)];
+      }
+      function applyTheme(theme) {
+        if (theme === "reset" || theme === "dark") {
+          localStorage.setItem("abyxo-theme", "dark");
+          document.documentElement.removeAttribute("data-theme");
+          line("DEFAULT ABYXO DARK THEME RESTORED. THIS SETTING IS SAVED.", "success");
+          return;
+        }
+        if (theme === "light" || theme === "ocean") {
+          localStorage.setItem("abyxo-theme", theme);
+          document.documentElement.setAttribute("data-theme", theme);
+          line("THEME UPDATED: " + theme.toUpperCase() + ". IT WILL FOLLOW YOU ACROSS THE WEBSITE.", "success");
+          return;
+        }
+        line("UNKNOWN THEME. CHOOSE DARK, LIGHT, OCEAN, OR RESET.", "error");
+      }
+      function showThemeOptions() {
+        line("CHOOSE A THEME — TAP AN OPTION:", "system");
+        const options = document.createElement("div");
+        options.className = "terminal-theme-options";
+        [
+          { label: "DARK · DEFAULT", value: "dark" },
+          { label: "LIGHT", value: "light" },
+          { label: "OCEAN", value: "ocean" },
+          { label: "RESET", value: "reset" }
+        ].forEach((item) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "terminal-theme-option";
+          button.textContent = item.label;
+          button.addEventListener("click", () => applyTheme(item.value));
+          options.appendChild(button);
+        });
+        output.appendChild(options);
+        output.scrollTop = output.scrollHeight;
       }
       function run(raw) {
         const parts = raw.trim().toLowerCase().split(/\\s+/);
@@ -251,22 +290,11 @@
             else line("No commands recorded yet.", "system");
             break;
           case "theme": {
-            const themes = ["dark", "light", "ocean"];
             if (!argument) {
               line("CURRENT THEME: " + (localStorage.getItem("abyxo-theme") || "dark").toUpperCase(), "success");
-              line("USAGE: theme dark | theme light | theme ocean | theme reset", "system");
-              break;
-            }
-            if (argument === "reset" || argument === "dark") {
-              localStorage.setItem("abyxo-theme", "dark");
-              document.documentElement.removeAttribute("data-theme");
-              line("DEFAULT ABYXO DARK THEME RESTORED. THIS SETTING IS SAVED.", "success");
-            } else if (themes.includes(argument)) {
-              localStorage.setItem("abyxo-theme", argument);
-              document.documentElement.setAttribute("data-theme", argument);
-              line("THEME UPDATED: " + argument.toUpperCase() + ". IT WILL FOLLOW YOU ACROSS THE WEBSITE.", "success");
+              showThemeOptions();
             } else {
-              line("UNKNOWN THEME. USE: dark, light, ocean, OR reset.", "error");
+              applyTheme(argument);
             }
             break;
           }
