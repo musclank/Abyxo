@@ -610,6 +610,9 @@ if (personalityArt) {
 
   function defeatBoss() {
     burst(boss.x, boss.y, "#a6f7ff", 60);
+    // Restore the player's full health after every boss battle.
+    health = 5;
+    updateHealth();
     boss = null;
     if (shootButton) shootButton.hidden = true;
     bossShots = [];
