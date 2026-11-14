@@ -23,3 +23,8 @@ References to Base, wallets, exchanges, explorers, or other third-party services
 ## Changes
 
 Project information may change. Always verify important details from current, independently accessible sources before taking action.
+
+
+## Website legal pages
+
+The website also publishes a [Disclaimer](website/disclaimer.html), [Privacy Notice](website/privacy.html), [Terms of Use](website/terms.html), and [Risk Disclosure](website/risk-disclosure.html). These are preliminary notices and should be reviewed and completed by the responsible project operator with qualified legal counsel before a public commercial launch.
