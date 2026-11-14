@@ -29,7 +29,12 @@
   }
   function numeric(value) {
     if (typeof value === "number") return value;
-    if (typeof value === "string") return Number(value.replace(/[$,%\s,]/g, ""));
+    if (typeof value === "string") {
+      const clean = value.trim().replace(/[$,%\\s,]/g, "").toUpperCase();
+      const match = clean.match(/^(-?\\d+(?:\\.\\d+)?)([KMB])?$/);
+      if (!match) return Number(clean);
+      return Number(match[1]) * ({K:1e3,M:1e6,B:1e9}[match[2]] || 1);
+    }
     if (value && typeof value === "object") return numeric(value.usd ?? value.value ?? value.amount);
     return NaN;
   }
@@ -72,8 +77,9 @@
     return token.address ? "https://www.clanker.world/clanker/"+encodeURIComponent(token.address) : "https://www.clanker.world/clankers";
   }
   function tokenVisual(token) {
-    if (token.image) return '<img src="'+String(token.image).replace(/"/g,"%22")+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'clanker-token-fallback\',textContent:'+JSON.stringify((token.symbol || token.name || "?").slice(0,2).toUpperCase())+'}))">';
-    return '<span class="clanker-token-fallback">'+escapeHtml((token.symbol || token.name || "?").slice(0,2).toUpperCase())+'</span>';
+    const initials = escapeHtml((token.symbol || token.name || "?").slice(0,2).toUpperCase());
+    if (token.image) return '<img src="'+escapeHtml(token.image)+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="clanker-token-fallback" hidden>'+initials+'</span>';
+    return '<span class="clanker-token-fallback">'+initials+'</span>';
   }
   function escapeHtml(value) {
     return String(value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
