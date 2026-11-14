@@ -21,7 +21,9 @@ abyxo/
 ```
 
 ## Project documentation
-\n- [Media kit](docs/MEDIA_KIT.md)\n
+
+- [Promotional asset pack](https://musclank.github.io/Abyxo/promo.html)
+- [Media kit](docs/MEDIA_KIT.md)
 - [Brand guide](docs/BRAND_GUIDE.md)
 - [Tokenomics draft](docs/TOKENOMICS.md)
 - [Roadmap draft](docs/ROADMAP.md)
