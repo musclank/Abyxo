@@ -283,21 +283,30 @@ if (personalityArt) {
   function spawnDrop() {
     const mineChance = Math.min(.42, .28 + (level - 1) * .0014);
     const roll = Math.random();
-    const type = roll < mineChance ? "mine" : roll < mineChance + .08 ? "bomb" : "coin";
+    const biomeIndex = Math.floor((level - 1) / 10) % 10;
+    const specialChance = level > 10 ? .13 : 0;
+    const type = roll < specialChance ? "special"
+      : roll < specialChance + mineChance ? "mine"
+      : roll < specialChance + mineChance + .08 ? "bomb" : "coin";
+    const specialNames = ["jellyfish", "thorn-coral", "lava-rock", "ice-shard", "ghost-orb", "crystal-spike", "storm-orb", "void-eye", "ancient-relic"];
+    const specialKind = specialNames[(biomeIndex - 1 + specialNames.length) % specialNames.length];
     const coinRoll = Math.random();
     const coinTier = coinRoll < .5
       ? { radius: 10, points: 1 }
       : coinRoll < .82
         ? { radius: 15, points: 2 }
         : { radius: 21, points: 3 };
-    const radius = type === "mine" ? 17 : type === "bomb" ? 19 : coinTier.radius;
+    const radius = type === "mine" ? 17 : type === "bomb" ? 19 : type === "special" ? 20 : coinTier.radius;
     drops.push({
       x: 28 + Math.random() * (W - 56),
+      baseX: 28 + Math.random() * (W - 56),
       y: -28,
       radius,
       points: type === "coin" ? coinTier.points : 0,
-      speed: ((type === "bomb" ? 185 : type === "mine" ? 165 : 125) + Math.min(125, (level - 1) * 1.25) + Math.random() * 85 + (30 - timeLeft) * 1.5),
+      speed: ((type === "bomb" ? 185 : type === "mine" ? 165 : type === "special" ? 150 : 125) + Math.min(125, (level - 1) * 1.25) + Math.random() * 85 + (30 - timeLeft) * 1.5),
       type,
+      specialKind: type === "special" ? specialKind : null,
+      drift: Math.random() * Math.PI * 2,
       spin: Math.random() * Math.PI * 2
     });
   }
@@ -429,6 +438,34 @@ if (personalityArt) {
       ctx.strokeStyle = "rgba(232,211,255,.8)"; ctx.lineWidth = 1.5; ctx.stroke();
       ctx.fillStyle = "#25134b"; ctx.beginPath(); ctx.arc(0, 0, r * .48, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = "#fff"; ctx.font = "bold 14px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("×", 0, 0);
+    } else if (drop.type === "special") {
+      const r = drop.radius;
+      const kind = drop.specialKind;
+      const palette = {
+        jellyfish: ["#7dffe5", "#1c9fba"], "thorn-coral": ["#ff9bb5", "#b52e68"],
+        "lava-rock": ["#ffb05c", "#c73525"], "ice-shard": ["#e4fbff", "#55bde8"],
+        "ghost-orb": ["#d9e5ff", "#7484c9"], "crystal-spike": ["#e0b7ff", "#8c50d8"],
+        "storm-orb": ["#fff36a", "#4778ef"], "void-eye": ["#ff83e6", "#5d2b9c"],
+        "ancient-relic": ["#f7d98b", "#8b693d"]
+      };
+      const colors = palette[kind] || palette["ancient-relic"];
+      ctx.shadowColor = colors[0]; ctx.shadowBlur = 22;
+      if (kind === "jellyfish") {
+        ctx.fillStyle = colors[0]; ctx.beginPath(); ctx.arc(0, -3, r, Math.PI, 0); ctx.quadraticCurveTo(r * .8, r, r * .55, r * .5); ctx.quadraticCurveTo(0, r * 1.2, -r * .55, r * .5); ctx.quadraticCurveTo(-r * .8, r, -r, -3); ctx.fill();
+        ctx.strokeStyle = colors[0]; ctx.lineWidth = 3;
+        for (let t = -1; t <= 1; t++) { ctx.beginPath(); ctx.moveTo(t * 10, r * .55); ctx.quadraticCurveTo(t * 16, r + 12, t * 8 + Math.sin(elapsed * 5 + t) * 5, r + 20); ctx.stroke(); }
+      } else if (kind === "thorn-coral" || kind === "crystal-spike" || kind === "ice-shard") {
+        ctx.fillStyle = colors[0]; ctx.beginPath();
+        ctx.moveTo(0, -r * 1.4); ctx.lineTo(r * .45, -r * .2); ctx.lineTo(r * 1.1, r * .65); ctx.lineTo(0, r * .35); ctx.lineTo(-r * 1.1, r * .65); ctx.lineTo(-r * .45, -r * .2); ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = colors[1]; ctx.lineWidth = 3; ctx.stroke();
+      } else {
+        const orb = ctx.createRadialGradient(-r * .3, -r * .4, 1, 0, 0, r * 1.4);
+        orb.addColorStop(0, colors[0]); orb.addColorStop(1, colors[1]);
+        ctx.fillStyle = orb; ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "rgba(5,12,28,.75)"; ctx.beginPath(); ctx.ellipse(0, 0, r * .48, r * .3, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(0, 0, 4, 0, Math.PI * 2); ctx.fill();
+        if (kind === "lava-rock") { ctx.strokeStyle = "#ffdf85"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(-r * .5, -r * .3); ctx.lineTo(0, r * .2); ctx.lineTo(r * .4, -r * .5); ctx.stroke(); }
+      }
     } else {
       const r = drop.radius;
       ctx.shadowColor = "#ff4b55"; ctx.shadowBlur = 24;
@@ -770,6 +807,11 @@ if (personalityArt) {
       const drop = drops[i];
       drop.y += drop.speed * dt;
       drop.spin += dt * (drop.type === "coin" ? 1.6 : -1.8);
+      if (drop.type === "special") {
+        drop.drift += dt * 2.2;
+        const sway = drop.specialKind === "jellyfish" || drop.specialKind === "ghost-orb" || drop.specialKind === "storm-orb" ? 42 : 16;
+        drop.x = Math.max(24, Math.min(W - 24, drop.baseX + Math.sin(drop.drift) * sway));
+      }
       const dx = drop.x - player.x, dy = drop.y - player.y;
       // Match the visible 86×86 mascot sprite instead of using an undersized circle.
       const hitX = Math.abs(dx) < drop.radius + 40;
@@ -781,7 +823,7 @@ if (personalityArt) {
           burst(drop.x, drop.y, "#ffd95f", 10 + drop.points * 4);
           playSound("coin");
         } else {
-          const penalty = drop.type === "bomb" ? 5 : 2;
+          const penalty = drop.type === "bomb" ? 5 : drop.type === "special" ? 3 : 2;
           score = Math.max(0, score - penalty);
           scoreLabel.textContent = String(score);
           player.hit = .7;
