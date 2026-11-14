@@ -68,6 +68,48 @@
     else if (target.matches(".nav-cta, .button, .explore-bubble")) ping("bubble");
     else ping("click");
   });
+
+  // Optional site-wide background music. The MP3 is uploaded separately to /audio/.
+  const music = new Audio("./audio/deep-ocean.mp3");
+  music.loop = true;
+  music.preload = "none";
+  music.volume = 0.28;
+  const musicControl = document.createElement("div");
+  musicControl.className = "abyxo-music-control";
+  musicControl.innerHTML = '<button type="button" class="abyxo-music-toggle" aria-pressed="false"><span aria-hidden="true">▶</span><span class="abyxo-music-label">PLAY OCEAN MUSIC</span></button><label class="abyxo-volume-label" for="abyxo-music-volume">VOL</label><input id="abyxo-music-volume" class="abyxo-music-volume" type="range" min="0" max="100" value="28" aria-label="Background music volume">';
+  document.body.appendChild(musicControl);
+  const musicButton = musicControl.querySelector(".abyxo-music-toggle");
+  const musicLabel = musicControl.querySelector(".abyxo-music-label");
+  const musicIcon = musicButton.querySelector("span");
+  const volumeControl = musicControl.querySelector(".abyxo-music-volume");
+  musicButton.addEventListener("click", async () => {
+    if (music.paused) {
+      try {
+        await music.play();
+        musicButton.setAttribute("aria-pressed", "true");
+        musicIcon.textContent = "Ⅱ";
+        musicLabel.textContent = "OCEAN MUSIC ON";
+      } catch (_) {
+        musicLabel.textContent = "MP3 NOT UPLOADED";
+        musicButton.setAttribute("aria-label", "Upload audio/deep-ocean.mp3 to enable music");
+      }
+    } else {
+      music.pause();
+      musicButton.setAttribute("aria-pressed", "false");
+      musicIcon.textContent = "▶";
+      musicLabel.textContent = "PLAY OCEAN MUSIC";
+    }
+  });
+  volumeControl.addEventListener("input", () => { music.volume = Number(volumeControl.value) / 100; });
+  music.addEventListener("ended", () => {
+    musicButton.setAttribute("aria-pressed", "false");
+    musicIcon.textContent = "▶";
+    musicLabel.textContent = "PLAY OCEAN MUSIC";
+  });
+  music.addEventListener("error", () => {
+    if (music.paused) musicLabel.textContent = "MP3 NOT UPLOADED";
+  });
+
   document.addEventListener("pointerover", (event) => {
     if (!enabled || event.pointerType === "touch") return;
     const target = event.target.closest(".nav a, .nav-cta, .explore-bubble");
