@@ -184,20 +184,22 @@ if (personalityArt) {
 
   function spawnDrop() {
     const mineChance = Math.min(.42, .28 + (level - 1) * .0014);
-    const mine = Math.random() < mineChance;
+    const roll = Math.random();
+    const type = roll < mineChance ? "mine" : roll < mineChance + .08 ? "bomb" : "coin";
     const coinRoll = Math.random();
     const coinTier = coinRoll < .5
       ? { radius: 10, points: 1 }
       : coinRoll < .82
         ? { radius: 15, points: 2 }
         : { radius: 21, points: 3 };
+    const radius = type === "mine" ? 17 : type === "bomb" ? 19 : coinTier.radius;
     drops.push({
       x: 28 + Math.random() * (W - 56),
       y: -28,
-      radius: mine ? 17 : coinTier.radius,
-      points: mine ? 0 : coinTier.points,
-      speed: (mine ? 165 : 125) + Math.min(125, (level - 1) * 1.25) + Math.random() * 85 + (30 - timeLeft) * 1.5,
-      type: mine ? "mine" : "coin",
+      radius,
+      points: type === "coin" ? coinTier.points : 0,
+      speed: ((type === "bomb" ? 185 : type === "mine" ? 165 : 125) + Math.min(125, (level - 1) * 1.25) + Math.random() * 85 + (30 - timeLeft) * 1.5),
+      type,
       spin: Math.random() * Math.PI * 2
     });
   }
@@ -258,7 +260,7 @@ if (personalityArt) {
       ctx.fillStyle = "#8d5b0c"; ctx.font = "bold 16px Georgia"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
       ctx.fillText("A", 0, 1);
       ctx.fillStyle = "rgba(255,255,255,.65)"; ctx.beginPath(); ctx.ellipse(-r * .35, -r * .48, 3, 5, -.5, 0, Math.PI * 2); ctx.fill();
-    } else {
+    } else if (drop.type === "mine") {
       const r = drop.radius;
       ctx.shadowColor = "#a879ff"; ctx.shadowBlur = 20;
       const mine = ctx.createRadialGradient(-r * .35, -r * .4, 1, 0, 0, r * 1.4);
@@ -273,6 +275,21 @@ if (personalityArt) {
       ctx.strokeStyle = "rgba(232,211,255,.8)"; ctx.lineWidth = 1.5; ctx.stroke();
       ctx.fillStyle = "#25134b"; ctx.beginPath(); ctx.arc(0, 0, r * .48, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = "#fff"; ctx.font = "bold 14px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("×", 0, 0);
+    } else {
+      const r = drop.radius;
+      ctx.shadowColor = "#ff4b55"; ctx.shadowBlur = 24;
+      const bomb = ctx.createRadialGradient(-r * .35, -r * .4, 1, 0, 0, r * 1.35);
+      bomb.addColorStop(0, "#ffb0a8"); bomb.addColorStop(.28, "#f04444"); bomb.addColorStop(1, "#681321");
+      ctx.fillStyle = bomb; ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = "#ffb5a8"; ctx.lineWidth = 2; ctx.stroke();
+      ctx.fillStyle = "#351018"; ctx.fillRect(-r * .28, -r * .92, r * .56, r * .28);
+      ctx.strokeStyle = "#ffd36b"; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(0, -r * .92); ctx.quadraticCurveTo(r * .5, -r * 1.35, r * .85, -r * 1.05); ctx.stroke();
+      ctx.fillStyle = "#fff0a6"; ctx.shadowColor = "#ffb52e"; ctx.shadowBlur = 12;
+      ctx.beginPath(); ctx.arc(r * .87, -r * 1.04, 3, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "#fff"; ctx.font = "bold 13px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("−5", 0, 1);
     }
     ctx.restore();
   }
@@ -363,10 +380,11 @@ if (personalityArt) {
           scoreLabel.textContent = String(score);
           burst(drop.x, drop.y, "#ffd95f", 10 + drop.points * 4);
         } else {
-          score = Math.max(0, score - 2);
+          const penalty = drop.type === "bomb" ? 5 : 2;
+          score = Math.max(0, score - penalty);
           scoreLabel.textContent = String(score);
-          player.hit = .55;
-          burst(drop.x, drop.y, "#b58aff", 18);
+          player.hit = .7;
+          burst(drop.x, drop.y, drop.type === "bomb" ? "#ff525c" : "#b58aff", drop.type === "bomb" ? 26 : 18);
         }
         drops.splice(i, 1);
       } else if (drop.y > H + 30) {
