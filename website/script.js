@@ -185,10 +185,17 @@ if (personalityArt) {
   function spawnDrop() {
     const mineChance = Math.min(.42, .28 + (level - 1) * .0014);
     const mine = Math.random() < mineChance;
+    const coinRoll = Math.random();
+    const coinTier = coinRoll < .5
+      ? { radius: 10, points: 1 }
+      : coinRoll < .82
+        ? { radius: 15, points: 2 }
+        : { radius: 21, points: 3 };
     drops.push({
       x: 28 + Math.random() * (W - 56),
       y: -28,
-      radius: mine ? 17 : 14,
+      radius: mine ? 17 : coinTier.radius,
+      points: mine ? 0 : coinTier.points,
       speed: (mine ? 165 : 125) + Math.min(125, (level - 1) * 1.25) + Math.random() * 85 + (30 - timeLeft) * 1.5,
       type: mine ? "mine" : "coin",
       spin: Math.random() * Math.PI * 2
@@ -352,9 +359,9 @@ if (personalityArt) {
       const dx = drop.x - player.x, dy = drop.y - player.y;
       if (Math.hypot(dx, dy) < drop.radius + 25) {
         if (drop.type === "coin") {
-          score += 1;
+          score += drop.points;
           scoreLabel.textContent = String(score);
-          burst(drop.x, drop.y, "#ffd95f", 15);
+          burst(drop.x, drop.y, "#ffd95f", 10 + drop.points * 4);
         } else {
           score = Math.max(0, score - 2);
           scoreLabel.textContent = String(score);
