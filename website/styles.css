@@ -992,3 +992,8 @@ html {
 .game-shoot:focus-visible{outline:2px solid #a6f7ff;outline-offset:3px}
 .game-shoot[hidden]{display:none}
 @media(max-width:520px){.game-controls{flex-wrap:wrap}.game-shoot{min-height:40px;padding-inline:16px}}
+
+
+/* Automatic Tentacle weapon status */
+.game-weapon-status{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 13px;border:1px solid #16d9f588;border-radius:999px;background:linear-gradient(135deg,#0c789544,#16d9f51c);color:#a6f7ff;font:700 9px "DM Mono",monospace;letter-spacing:.08em;box-shadow:0 0 16px #16d9f522}
+@media(max-width:520px){.game-weapon-status{min-height:36px;padding-inline:10px;font-size:8px}}
