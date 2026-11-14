@@ -515,7 +515,7 @@ if (personalityArt) {
   }
 
   function saveCheckpoint() {
-    const checkpoint = { level, score, health, best, savedAt: Date.now() };
+    const checkpoint = { level: level + 1, score, health, best, savedAt: Date.now() };
     try {
       localStorage.setItem(checkpointKey, JSON.stringify(checkpoint));
       savedCheckpoint = checkpoint;
@@ -562,7 +562,6 @@ if (personalityArt) {
       finishGame();
       return;
     }
-    level += 1;
     showBossCheckpoint();
   }
 
