@@ -265,6 +265,7 @@ if (personalityArt) {
     score = 0;
     level = 1;
     boss = null;
+    if (shootButton) shootButton.hidden = true;
     bossShots = [];
     tentacleShots = [];
     shootClock = 0;
@@ -468,6 +469,7 @@ if (personalityArt) {
 
   function startBossFight() {
     boss = { x: W / 2, y: 105, hp: 50, direction: 1, fireClock: 0 };
+    if (shootButton) shootButton.hidden = false;
     bossShots = [];
     tentacleShots = [];
     bossClock = 0;
@@ -491,6 +493,7 @@ if (personalityArt) {
   function defeatBoss() {
     burst(boss.x, boss.y, "#a6f7ff", 60);
     boss = null;
+    if (shootButton) shootButton.hidden = true;
     bossShots = [];
     tentacleShots = [];
     playSound("win");
