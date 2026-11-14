@@ -150,7 +150,10 @@ if (personalityArt) {
 
   function resizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 3);
-    const scale = dpr;
+    const rect = stage.getBoundingClientRect();
+    // Match the backing bitmap to device DPI and the larger fullscreen display.
+    const displayScale = Math.max(1, rect.width / W, rect.height / H);
+    const scale = dpr * displayScale;
     const pixelWidth = Math.round(W * scale);
     const pixelHeight = Math.round(H * scale);
     if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
