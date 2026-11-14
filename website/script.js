@@ -302,19 +302,68 @@ if (personalityArt) {
     });
   }
 
+  const oceanBiomes = [
+    { name: "SUNLIT REEF", top: "#104365", mid: "#082943", deep: "#020d1b", glow: "rgba(116,235,255,.10)", grid: "rgba(91,210,239,.055)", bubble: "rgba(166,247,255,.25)", accent: "#1c7891" },
+    { name: "BIOLUMINESCENT FOREST", top: "#123b50", mid: "#092b3b", deep: "#03121f", glow: "rgba(70,255,206,.13)", grid: "rgba(70,255,206,.07)", bubble: "rgba(115,255,220,.32)", accent: "#26c99b" },
+    { name: "ANCIENT RUINS", top: "#3c3854", mid: "#202b43", deep: "#090f20", glow: "rgba(193,166,255,.12)", grid: "rgba(178,157,225,.07)", bubble: "rgba(208,194,255,.3)", accent: "#8b78bd" },
+    { name: "CORAL KINGDOM", top: "#633d58", mid: "#34263f", deep: "#100f22", glow: "rgba(255,143,166,.13)", grid: "rgba(255,143,166,.06)", bubble: "rgba(255,185,190,.3)", accent: "#e77d9b" },
+    { name: "VOLCANIC TRENCH", top: "#542b35", mid: "#2b1c2b", deep: "#100b18", glow: "rgba(255,111,65,.15)", grid: "rgba(255,126,82,.07)", bubble: "rgba(255,174,112,.3)", accent: "#e66c45" },
+    { name: "FROZEN ABYSS", top: "#47718a", mid: "#1d405d", deep: "#07182b", glow: "rgba(181,239,255,.17)", grid: "rgba(168,229,255,.08)", bubble: "rgba(220,250,255,.42)", accent: "#8edcf5" },
+    { name: "GHOST SHIP GRAVEYARD", top: "#35445a", mid: "#182b42", deep: "#070f1e", glow: "rgba(174,196,220,.12)", grid: "rgba(160,190,220,.07)", bubble: "rgba(195,218,239,.27)", accent: "#91a9c2" },
+    { name: "CRYSTAL CAVERNS", top: "#3d3470", mid: "#20224c", deep: "#090d25", glow: "rgba(166,139,255,.16)", grid: "rgba(166,139,255,.08)", bubble: "rgba(205,187,255,.35)", accent: "#a58bff" },
+    { name: "ABYSSAL STORM", top: "#183d58", mid: "#10243d", deep: "#050b1a", glow: "rgba(74,164,255,.15)", grid: "rgba(83,157,255,.08)", bubble: "rgba(130,193,255,.32)", accent: "#4c9cf2" },
+    { name: "THE VOID", top: "#241d43", mid: "#11152d", deep: "#030611", glow: "rgba(156,111,255,.14)", grid: "rgba(137,111,255,.08)", bubble: "rgba(190,164,255,.3)", accent: "#9b78ff" }
+  ];
+
   function drawBackground() {
+    const biome = oceanBiomes[Math.floor((level - 1) / 10) % oceanBiomes.length];
     const gradient = ctx.createLinearGradient(0, 0, 0, H);
-    gradient.addColorStop(0, "#104365");
-    gradient.addColorStop(.48, "#082943");
-    gradient.addColorStop(1, "#020d1b");
+    gradient.addColorStop(0, biome.top);
+    gradient.addColorStop(.48, biome.mid);
+    gradient.addColorStop(1, biome.deep);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, W, H);
 
-    // Soft underwater light shafts.
+    // Biome-specific distant silhouettes make each post-boss zone feel new.
+    ctx.save();
+    ctx.globalAlpha = .2;
+    ctx.fillStyle = biome.accent;
+    const biomeIndex = Math.floor((level - 1) / 10) % oceanBiomes.length;
+    if (biomeIndex === 0 || biomeIndex === 3) {
+      for (let i = 0; i < 13; i++) {
+        const x = i * 62 - 10, h = 28 + (i * 37 % 65);
+        ctx.beginPath(); ctx.moveTo(x, H); ctx.quadraticCurveTo(x - 15, H - h * .6, x + 5, H - h); ctx.quadraticCurveTo(x + 23, H - h * .6, x + 18, H); ctx.fill();
+      }
+    } else if (biomeIndex === 2 || biomeIndex === 6) {
+      for (let i = 0; i < 7; i++) {
+        const x = 35 + i * 108;
+        ctx.fillRect(x, H - 100 - (i % 3) * 24, 18, 100 + (i % 3) * 24);
+        ctx.fillRect(x - 9, H - 104 - (i % 3) * 24, 36, 9);
+      }
+    } else if (biomeIndex === 4) {
+      for (let i = 0; i < 8; i++) {
+        const x = 35 + i * 95;
+        ctx.beginPath(); ctx.ellipse(x, H - 10, 20 + (i % 3) * 8, 9, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillRect(x - 3, H - 42 - (i % 3) * 8, 6, 32);
+      }
+    } else if (biomeIndex === 5 || biomeIndex === 7 || biomeIndex === 9) {
+      for (let i = 0; i < 9; i++) {
+        const x = 25 + i * 84, h = 48 + (i * 29 % 90);
+        ctx.beginPath(); ctx.moveTo(x, H); ctx.lineTo(x + 13, H - h); ctx.lineTo(x + 28, H); ctx.closePath(); ctx.fill();
+      }
+    } else {
+      for (let i = 0; i < 10; i++) {
+        const x = 20 + i * 78, y = 65 + (i * 53 % 190);
+        ctx.beginPath(); ctx.arc(x, y, 18 + (i % 3) * 9, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    ctx.restore();
+
+    // Soft light shafts inherit the current zone's color.
     for (let i = 0; i < 5; i++) {
       const x = 55 + i * 155 + Math.sin(elapsed * .22 + i) * 24;
       const beam = ctx.createLinearGradient(x, 0, x + 75, H);
-      beam.addColorStop(0, "rgba(116,235,255,.10)");
+      beam.addColorStop(0, biome.glow);
       beam.addColorStop(1, "rgba(22,217,245,0)");
       ctx.fillStyle = beam;
       ctx.beginPath(); ctx.moveTo(x - 18, 0); ctx.lineTo(x + 18, 0);
@@ -322,7 +371,7 @@ if (personalityArt) {
     }
 
     // Fine depth grid and drifting bubbles.
-    ctx.strokeStyle = "rgba(91,210,239,.055)";
+    ctx.strokeStyle = biome.grid;
     ctx.lineWidth = 1;
     for (let x = 0; x <= W; x += 60) {
       ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
@@ -332,13 +381,20 @@ if (personalityArt) {
       const y = (i * 83 + 17 - elapsed * (9 + i % 7)) % (H + 24);
       const radius = 1 + (i % 4) * .7;
       ctx.beginPath(); ctx.arc(x, y < 0 ? y + H + 24 : y, radius, 0, Math.PI * 2);
-      ctx.fillStyle = i % 4 === 0 ? "rgba(22,217,245,.48)" : "rgba(166,247,255,.2)";
+      ctx.fillStyle = i % 4 === 0 ? biome.glow : biome.bubble;
       ctx.fill();
     }
     const vignette = ctx.createRadialGradient(W / 2, H / 2, 90, W / 2, H / 2, 490);
     vignette.addColorStop(0, "rgba(0,0,0,0)");
     vignette.addColorStop(1, "rgba(0,5,15,.42)");
     ctx.fillStyle = vignette; ctx.fillRect(0, 0, W, H);
+
+    ctx.save();
+    ctx.fillStyle = biome.glow;
+    ctx.font = "bold 10px 'DM Mono', monospace";
+    ctx.textAlign = "left";
+    ctx.fillText("ZONE // " + biome.name, 18, H - 17);
+    ctx.restore();
   }
 
   function drawDrop(drop) {
