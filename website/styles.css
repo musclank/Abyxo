@@ -571,3 +571,58 @@ body{
  .transmission-foot{flex-direction:column;gap:7px;font-size:8px}
 }
 @media(prefers-reduced-motion:reduce){.console-mascot{animation:none}.signal-button{transition:none}}
+
+
+/* Homepage additions — moods, sealed vault, and hidden easter egg */
+.personality-section{padding-top:86px;padding-bottom:42px}
+.personality-heading{display:grid;grid-template-columns:1fr .8fr;gap:42px;align-items:end;margin:20px 0 34px}
+.personality-heading h2{margin:0;font-size:clamp(38px,5vw,60px)}
+.personality-heading>p{margin:0 0 5px;color:#aebfd0;font-size:14px;line-height:1.8;max-width:48ch}
+.personality-panel{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,5vw,64px);align-items:center;padding:30px clamp(22px,5vw,58px);border:1px solid rgba(166,247,255,.17);border-radius:22px;background:radial-gradient(circle at 20% 50%,rgba(22,217,245,.1),transparent 38%),linear-gradient(130deg,#0d2945,#08182c);overflow:hidden}
+.personality-art{position:relative;min-height:270px;display:grid;place-items:center;isolation:isolate}
+.personality-art img{position:relative;z-index:1;width:min(78%,250px);filter:drop-shadow(0 14px 28px #16d9f544);transition:filter .3s,transform .3s}
+.personality-orbit{position:absolute;width:250px;height:250px;border:1px solid #16d9f52b;border-radius:50%;box-shadow:0 0 0 18px #16d9f508,0 0 0 38px #8b5cf608}
+.mood-stamp{position:absolute;z-index:2;bottom:4px;padding:7px 11px;border:1px solid #16d9f544;border-radius:99px;background:#071426d9;color:#a6f7ff;font:9px "DM Mono",monospace;letter-spacing:.12em}
+.personality-art[data-mood="sleepy"] img{filter:grayscale(.2) brightness(.8) drop-shadow(0 0 22px #8b5cf677);transform:rotate(-7deg) scale(.94)}
+.personality-art[data-mood="legendary"] img{filter:drop-shadow(0 0 28px #f8c84eaa) saturate(1.25);transform:scale(1.08)}
+.personality-art[data-mood="chaos"] img{filter:hue-rotate(35deg) saturate(1.55) drop-shadow(0 0 26px #8b5cf6aa);transform:rotate(5deg) scale(1.04)}
+.personality-controls{min-width:0}
+.mood-options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0 24px}
+.mood-option{display:grid;justify-items:center;gap:7px;padding:12px 5px;border:1px solid #ffffff20;border-radius:12px;background:#071a2d;color:#aebfd0;cursor:pointer;font:10px "DM Mono",monospace;transition:.2s}
+.mood-option span{font-size:22px}.mood-option b{font-weight:500}
+.mood-option:hover,.mood-option.active{border-color:#16d9f5a8;background:#10314c;color:#a6f7ff;transform:translateY(-2px)}
+.personality-controls h3{margin:0 0 8px;font-size:clamp(19px,2.4vw,25px)}
+.personality-controls>p:not(.console-label){margin:0;color:#9cb1c7;font-size:14px;line-height:1.7}
+.mood-footnote{display:block;margin-top:22px;color:#718ba5;font:8px "DM Mono",monospace;letter-spacing:.1em}
+.treasure-section{padding-top:36px;padding-bottom:42px}
+.treasure-card{position:relative;display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:center;padding:38px clamp(24px,5vw,60px);border:1px solid #f8c84e38;border-radius:22px;background:radial-gradient(circle at 20% 50%,#f8c84e16,transparent 36%),linear-gradient(120deg,#192b3b,#0a1d32);overflow:hidden}
+.treasure-art{position:relative;min-height:210px;display:grid;place-items:center}
+.treasure-glow{position:absolute;width:180px;height:180px;border-radius:50%;background:#f8c84e18;filter:blur(22px)}
+.treasure-chest{position:relative;font-size:104px;filter:drop-shadow(0 12px 25px #f8c84e44);transform:rotate(-7deg)}
+.treasure-coin{position:absolute;color:#f8c84e;font-size:26px;text-shadow:0 0 18px #f8c84e}
+.coin-one{top:25px;right:24%}.coin-two{bottom:34px;left:20%}
+.treasure-copy h2{font-size:clamp(38px,4.8vw,56px);margin:18px 0}
+.treasure-copy>p{max-width:55ch;color:#aebfd0;font-size:14px;line-height:1.8}
+.vault-status{display:flex;align-items:center;gap:13px;margin-top:22px;padding:13px 15px;border:1px solid #f8c84e30;border-radius:12px;background:#07142677;width:fit-content}
+.vault-lock{font-size:22px}.vault-status b,.vault-status small{display:block}.vault-status b{font:10px "DM Mono",monospace;letter-spacing:.12em;color:#f8c84e}.vault-status small{margin-top:4px;color:#8fa5ba;font-size:11px}
+.vault-ribbon{position:absolute;right:-42px;top:24px;transform:rotate(35deg);padding:7px 48px;background:#f8c84e;color:#071426;font:8px "DM Mono",monospace;letter-spacing:.12em}
+.secret-section{padding-top:24px;padding-bottom:70px}
+.secret-panel{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center;padding:34px clamp(22px,5vw,54px);border:1px dashed #8b5cf666;border-radius:20px;background:radial-gradient(circle at 90% 20%,#8b5cf618,transparent 35%),#0a1b30}
+.secret-panel h2{font-size:clamp(38px,4.5vw,54px);margin:16px 0}
+.secret-panel>div:first-child>p{max-width:48ch;color:#aebfd0;font-size:14px;line-height:1.8}
+.secret-button{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;padding:17px 18px;border:1px solid #8b5cf688;border-radius:12px;background:#171e3b;color:#e5dcff;font:10px "DM Mono",monospace;letter-spacing:.08em;cursor:pointer;transition:.2s}
+.secret-button:hover{background:#22244d;border-color:#b49aff;transform:translateY(-2px)}
+.secret-button>span{font-size:20px;color:#b49aff}
+.secret-button b{color:#a6f7ff;font-weight:500}
+.secret-reveal{margin:14px 0 0;padding:15px;border-left:3px solid #f8c84e;border-radius:0 10px 10px 0;background:#f8c84e12;color:#f8e6a6;font-size:13px;line-height:1.7}
+.mood-option:focus-visible,.secret-button:focus-visible{outline:2px solid #a6f7ff;outline-offset:4px}
+@media(max-width:760px){
+ .personality-section{padding-top:65px}.personality-heading{grid-template-columns:1fr;gap:16px;margin-bottom:24px}
+ .personality-heading h2{font-size:43px}.personality-panel{grid-template-columns:1fr;gap:16px;padding:22px 18px}
+ .personality-art{min-height:230px}.personality-art img{width:205px}.personality-orbit{width:210px;height:210px}
+ .mood-options{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.mood-option{font-size:9px;padding:10px 2px}
+ .treasure-card{grid-template-columns:1fr;gap:0;padding:25px 22px 30px}.treasure-art{min-height:155px}.treasure-chest{font-size:82px}
+ .treasure-copy h2{font-size:43px}.vault-ribbon{top:12px;right:-52px;font-size:7px}
+ .secret-panel{grid-template-columns:1fr;gap:18px;padding:26px 20px}.secret-panel h2{font-size:43px}
+}
+@media(prefers-reduced-motion:reduce){.personality-art img,.mood-option,.secret-button{transition:none}}
