@@ -118,6 +118,7 @@
         "  status      Check terminal connection status",
         "  whoami      Identify your abyssal access level",
         "  history     Show commands used this session",
+        "  theme       Change the whole website theme (dark/light/ocean/reset)",
         "  clear       Clear the terminal screen"
       ];
       const usedCommands = [];
@@ -144,7 +145,9 @@
         return items[Math.floor(Math.random() * items.length)];
       }
       function run(raw) {
-        const command = raw.trim().toLowerCase();
+        const parts = raw.trim().toLowerCase().split(/\\s+/);
+        const command = parts[0];
+        const argument = parts[1] || "";
         if (!command) return;
         line("abyxo@trench:~$ " + raw, "command");
         if (command !== "clear" && command !== "history") usedCommands.push(command);
@@ -247,6 +250,26 @@
             if (usedCommands.length) usedCommands.forEach((item, index) => line(String(index + 1).padStart(2, "0") + "  " + item, "system"));
             else line("No commands recorded yet.", "system");
             break;
+          case "theme": {
+            const themes = ["dark", "light", "ocean"];
+            if (!argument) {
+              line("CURRENT THEME: " + (localStorage.getItem("abyxo-theme") || "dark").toUpperCase(), "success");
+              line("USAGE: theme dark | theme light | theme ocean | theme reset", "system");
+              break;
+            }
+            if (argument === "reset" || argument === "dark") {
+              localStorage.setItem("abyxo-theme", "dark");
+              document.documentElement.removeAttribute("data-theme");
+              line("DEFAULT ABYXO DARK THEME RESTORED. THIS SETTING IS SAVED.", "success");
+            } else if (themes.includes(argument)) {
+              localStorage.setItem("abyxo-theme", argument);
+              document.documentElement.setAttribute("data-theme", argument);
+              line("THEME UPDATED: " + argument.toUpperCase() + ". IT WILL FOLLOW YOU ACROSS THE WEBSITE.", "success");
+            } else {
+              line("UNKNOWN THEME. USE: dark, light, ocean, OR reset.", "error");
+            }
+            break;
+          }
           case "clear":
             output.replaceChildren();
             break;
