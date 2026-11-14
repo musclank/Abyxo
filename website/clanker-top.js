@@ -42,20 +42,53 @@
     if (value && typeof value === "object") return numeric(value.usd ?? value.value ?? value.amount);
     return NaN;
   }
+  function nestedObjects(root, maxDepth = 5) {
+    const found = [];
+    const queue = [{ value: root, depth: 0 }];
+    const seen = new Set();
+    while (queue.length) {
+      const { value, depth } = queue.shift();
+      if (!value || typeof value !== "object" || seen.has(value) || depth > maxDepth) continue;
+      seen.add(value);
+      if (!Array.isArray(value)) found.push(value);
+      if (depth < maxDepth) {
+        for (const child of Object.values(value)) {
+          if (child && typeof child === "object") queue.push({ value: child, depth: depth + 1 });
+        }
+      }
+    }
+    return found;
+  }
+  function deepPick(objects, keys) {
+    for (const obj of objects) {
+      const value = pick(obj, keys);
+      if (value !== undefined) return value;
+    }
+    return undefined;
+  }
   function tokenObject(item) {
-    const token = item.token && typeof item.token === "object" ? item.token : item;
-    const market = item.market && typeof item.market === "object" ? item.market : {};
+    const objects = nestedObjects(item);
+    const token = objects.find(obj =>
+      pick(obj, aliases.name) !== undefined ||
+      pick(obj, aliases.symbol) !== undefined ||
+      pick(obj, aliases.address) !== undefined
+    ) || item;
+    const market = objects.find(obj =>
+      pick(obj, aliases.volume24h) !== undefined ||
+      pick(obj, aliases.marketCap) !== undefined ||
+      pick(obj, aliases.liquidity) !== undefined
+    ) || {};
     return {
       raw: item,
-      name: pick(token, aliases.name) || pick(item, aliases.name) || "Unknown token",
-      symbol: pick(token, aliases.symbol) || pick(item, aliases.symbol) || "—",
-      address: pick(token, aliases.address) || pick(item, aliases.address) || "",
-      image: pick(token, aliases.image) || pick(item, aliases.image) || "",
-      chain: pick(token, aliases.chain) || pick(item, aliases.chain) || "",
-      volume24h: numeric(pick(market, aliases.volume24h) ?? pick(token, aliases.volume24h) ?? pick(item, aliases.volume24h)),
-      marketCap: numeric(pick(market, aliases.marketCap) ?? pick(token, aliases.marketCap) ?? pick(item, aliases.marketCap)),
-      liquidity: numeric(pick(market, aliases.liquidity) ?? pick(token, aliases.liquidity) ?? pick(item, aliases.liquidity)),
-      change24h: numeric(pick(market, aliases.change24h) ?? pick(token, aliases.change24h) ?? pick(item, aliases.change24h))
+      name: deepPick([token, ...objects], aliases.name) || "Unknown token",
+      symbol: deepPick([token, ...objects], aliases.symbol) || "—",
+      address: deepPick([token, ...objects], aliases.address) || "",
+      image: deepPick([token, ...objects], aliases.image) || "",
+      chain: deepPick([token, ...objects], aliases.chain) || "",
+      volume24h: numeric(deepPick([market, ...objects], aliases.volume24h)),
+      marketCap: numeric(deepPick([market, ...objects], aliases.marketCap)),
+      liquidity: numeric(deepPick([market, ...objects], aliases.liquidity)),
+      change24h: numeric(deepPick([market, ...objects], aliases.change24h))
     };
   }
   function extractList(payload) {
