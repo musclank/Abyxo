@@ -137,6 +137,37 @@
       </div>
     </section>
 
+
+    <section class="global-leaderboard section-wrap" id="global-leaderboard" aria-labelledby="leaderboard-title">
+      <div class="leaderboard-heading">
+        <div><div class="section-kicker">ABYXO ARCADE // WORLDWIDE</div><h2 id="leaderboard-title">GLOBAL<br><span>LEADERBOARD.</span></h2></div>
+        <p>Sign in, dive into the abyss, and put your best treasure run on the world map.</p>
+      </div>
+      <div class="leaderboard-layout">
+        <div class="leaderboard-account">
+          <div class="leaderboard-card-kicker">ABYXONAUT IDENTITY</div>
+          <div id="leaderboard-session" class="leaderboard-session" aria-live="polite">Connect to join the global ranking.</div>
+          <form id="leaderboard-auth-form" class="leaderboard-auth-form">
+            <label id="leaderboard-username-wrap">USERNAME<input id="leaderboard-username" type="text" minlength="3" maxlength="18" autocomplete="username" placeholder="DeepDiver" pattern="[A-Za-z0-9_]+" /></label>
+            <label>EMAIL<input id="leaderboard-email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
+            <label>PASSWORD<input id="leaderboard-password" type="password" minlength="8" autocomplete="current-password" required placeholder="At least 8 characters" /></label>
+            <button class="leaderboard-submit" id="leaderboard-submit" type="submit">CREATE ACCOUNT ↗</button>
+          </form>
+          <div class="leaderboard-auth-actions">
+            <button type="button" id="leaderboard-mode" class="leaderboard-text-button">Already registered? Sign in</button>
+            <button type="button" id="leaderboard-signout" class="leaderboard-text-button" hidden>Sign out</button>
+          </div>
+          <p id="leaderboard-auth-status" class="leaderboard-status" role="status">Create an account or sign in to submit scores.</p>
+          <div id="leaderboard-player-best" class="leaderboard-player-best" hidden></div>
+        </div>
+        <div class="leaderboard-rankings">
+          <div class="leaderboard-table-head"><span>GLOBAL TOP 100</span><button id="leaderboard-refresh" type="button" aria-label="Refresh leaderboard">↻ REFRESH</button></div>
+          <ol id="leaderboard-list" class="leaderboard-list"><li class="leaderboard-empty">Loading the abyss rankings…</li></ol>
+          <p class="leaderboard-footnote">Only signed-in players can submit a run. Your email is never shown publicly.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="home-explore section-wrap"><div class="section-kicker">EXPLORE THE ABYSS</div><h2>ONE CREATURE.<br><span>MANY DEPTHS.</span></h2><div class="explore-grid"><a class="explore-bubble explore-bubble--lore" href="./lore.html"><img class="explore-mascot explore-mascot--lore" src="./mascot-lore.svg" alt="" aria-hidden="true"><span>The lore</span><b>↗</b></a><a class="explore-bubble explore-bubble--signal" href="./signal.html"><img class="explore-mascot explore-mascot--signal" src="./mascot-signal.svg" alt="" aria-hidden="true"><span>The signal</span><b>↗</b></a><a class="explore-bubble explore-bubble--tokenomics" href="./tokenomics.html"><img class="explore-mascot explore-mascot--tokenomics" src="./mascot-tokenomics.svg" alt="" aria-hidden="true"><span>Tokenomics</span><b>↗</b></a><a class="explore-bubble explore-bubble--roadmap" href="./roadmap.html"><img class="explore-mascot explore-mascot--roadmap" src="./mascot-roadmap.svg" alt="" aria-hidden="true"><span>Roadmap</span><b>↗</b></a><a class="explore-bubble explore-bubble--community" href="./community.html"><img class="explore-mascot explore-mascot--community" src="./mascot-community.svg" alt="" aria-hidden="true"><span>Community</span><b>↗</b></a></div></section>
   </main>
   <footer class="site-footer section-wrap">
@@ -144,6 +175,9 @@
     <p>SMALL CREATURE. DEEP CHAOS.</p>
     <span class="footer-note">An independent meme coin concept. DYOR. Nothing here is financial advice.</span>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
   <script src="./script.js"></script>
+  <script src="./leaderboard.js"></script>
 </body>
 </html>
