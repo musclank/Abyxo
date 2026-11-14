@@ -140,6 +140,82 @@ if (personalityArt) {
       syncFullscreenState();
     }
   });
+
+  // Lightweight arcade sound effects generated with Web Audio (no external audio files).
+  const soundButton = document.querySelector("#game-sound");
+  let soundEnabled = true;
+  let audioContext = null;
+  try { soundEnabled = localStorage.getItem("abyxoArcadeSound") !== "off"; } catch (_) {}
+  function syncSoundButton() {
+    if (!soundButton) return;
+    soundButton.textContent = soundEnabled ? "♫ SOUND ON" : "♫ SOUND OFF";
+    soundButton.setAttribute("aria-pressed", String(soundEnabled));
+    soundButton.setAttribute("aria-label", soundEnabled ? "Turn game sound off" : "Turn game sound on");
+  }
+  function unlockAudio() {
+    if (!soundEnabled) return false;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return false;
+    try {
+      if (!audioContext) audioContext = new AudioContextClass();
+      if (audioContext.state === "suspended") audioContext.resume();
+      return true;
+    } catch (_) { return false; }
+  }
+  function tone(frequency, duration, wave = "sine", volume = .12, endFrequency = frequency, delay = 0) {
+    if (!soundEnabled || !unlockAudio()) return;
+    const now = audioContext.currentTime + delay;
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    oscillator.type = wave;
+    oscillator.frequency.setValueAtTime(frequency, now);
+    oscillator.frequency.exponentialRampToValueAtTime(Math.max(35, endFrequency), now + duration);
+    gain.gain.setValueAtTime(.0001, now);
+    gain.gain.exponentialRampToValueAtTime(volume, now + .012);
+    gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start(now);
+    oscillator.stop(now + duration + .02);
+  }
+  function playSound(kind) {
+    if (!soundEnabled) return;
+    if (kind === "coin") {
+      tone(880, .11, "sine", .10, 1320);
+      tone(1320, .13, "sine", .07, 1760, .07);
+    } else if (kind === "mine") {
+      tone(240, .22, "triangle", .13, 90);
+      tone(115, .18, "sawtooth", .035, 65, .035);
+    } else if (kind === "bomb") {
+      tone(105, .42, "sawtooth", .17, 38);
+      tone(68, .32, "triangle", .10, 42, .04);
+    } else if (kind === "level") {
+      tone(523, .15, "triangle", .10, 659);
+      tone(659, .16, "triangle", .10, 784, .12);
+      tone(784, .24, "triangle", .10, 1047, .24);
+    } else if (kind === "start") {
+      tone(330, .12, "sine", .08, 494);
+      tone(494, .18, "sine", .08, 659, .10);
+    } else if (kind === "over") {
+      tone(440, .22, "triangle", .11, 330);
+      tone(330, .28, "triangle", .10, 165, .20);
+    } else if (kind === "win") {
+      tone(523, .16, "triangle", .11, 659);
+      tone(659, .16, "triangle", .11, 784, .13);
+      tone(784, .16, "triangle", .11, 1047, .26);
+      tone(1047, .3, "sine", .09, 1318, .39);
+    }
+  }
+  if (soundButton) {
+    syncSoundButton();
+    soundButton.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      try { localStorage.setItem("abyxoArcadeSound", soundEnabled ? "on" : "off"); } catch (_) {}
+      syncSoundButton();
+      if (soundEnabled) { unlockAudio(); playSound("coin"); }
+    });
+  }
+
   const W = 720, H = 420;
   const keys = { left: false, right: false };
   let player, drops, particles, score, level, health, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0, levelClock = 0;
@@ -366,6 +442,7 @@ if (personalityArt) {
       bestLabel.textContent = String(best);
       try { localStorage.setItem("abyxoArcadeBest", String(best)); } catch (_) {}
     }
+    playSound("over");
     overlayTitle.textContent = "DIVE OVER!";
     overlayCopy.textContent = "All 5 hearts are gone. You reached level " + level + " and collected " + score + " points. Take a breath and dive again!";
     startButton.innerHTML = "TRY AGAIN <span>↻</span>";
@@ -383,6 +460,7 @@ if (personalityArt) {
       bestLabel.textContent = String(best);
       try { localStorage.setItem("abyxoArcadeBest", String(best)); } catch (_) {}
     }
+    playSound("win");
     overlayTitle.textContent = "100 LEVELS CLEARED!";
     overlayCopy.textContent = "You conquered all 100 dives and collected " + score + " coins. " + (score >= 100 ? "Legendary Abyxonaut!" : "The abyss will remember this run.");
     startButton.innerHTML = "PLAY AGAIN <span>↻</span>";
@@ -417,6 +495,7 @@ if (personalityArt) {
           score += drop.points;
           scoreLabel.textContent = String(score);
           burst(drop.x, drop.y, "#ffd95f", 10 + drop.points * 4);
+          playSound("coin");
         } else {
           const penalty = drop.type === "bomb" ? 5 : 2;
           score = Math.max(0, score - penalty);
@@ -425,6 +504,7 @@ if (personalityArt) {
           health = Math.max(0, health - 1);
           updateHealth();
           burst(drop.x, drop.y, drop.type === "bomb" ? "#ff525c" : "#b58aff", drop.type === "bomb" ? 26 : 18);
+          playSound(drop.type === "bomb" ? "bomb" : "mine");
           if (health <= 0) {
             drops.splice(i, 1);
             gameOver();
@@ -441,6 +521,7 @@ if (personalityArt) {
         finishGame();
       } else {
         level += 1;
+        playSound("level");
         levelClock = 0;
         timeLeft = 30;
         spawnClock = 0;
@@ -462,6 +543,8 @@ if (personalityArt) {
   }
 
   function startGame() {
+    unlockAudio();
+    playSound("start");
     cancelAnimationFrame(animationId);
     resetGame();
     running = true;
