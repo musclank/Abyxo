@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="Enter the ABYXO Deep Terminal. Decode signals and uncover classified archives from the abyss.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://musclank.github.io/Abyxo/terminal.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ABYXO">
+  <meta property="og:title" content="Deep Terminal — ABYXO">
+  <meta property="og:description" content="A classified terminal from the deepest part of the ABYXO abyss.">
+  <meta property="og:url" content="https://musclank.github.io/Abyxo/terminal.html">
+  <title>Deep Terminal — ABYXO</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .terminal-page{padding:62px 0 90px;min-height:72vh}
+    .terminal-heading{margin-bottom:28px}
+    .terminal-heading h1{font-size:clamp(42px,7vw,76px);margin:20px 0 14px}
+    .terminal-heading p{max-width:650px;color:#aebfd0;line-height:1.8}
+    .terminal-frame{position:relative;max-width:900px;margin:0 auto;border:1px solid #16d9f55c;background:#030b14;box-shadow:0 0 50px #16d9f510, inset 0 0 35px #16d9f508;overflow:hidden}
+    .terminal-frame:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,#8ffaff06 4px);z-index:2}
+    .terminal-top{min-height:48px;padding:0 17px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0c2038;border-bottom:1px solid #16d9f533;font:10px "DM Mono",monospace;letter-spacing:.1em;color:#9bb8ca}
+    .terminal-top strong{color:#9fffff;font-weight:500}
+    .terminal-lights{display:flex;gap:6px}.terminal-lights i{width:7px;height:7px;border-radius:50%;background:#16d9f5;box-shadow:0 0 9px #16d9f5}.terminal-lights i:nth-child(2){background:#8b5cf6;box-shadow:0 0 9px #8b5cf6}.terminal-lights i:nth-child(3){background:#f8c84e;box-shadow:0 0 9px #f8c84e}
+    .terminal-status{display:flex;gap:16px;align-items:center}
+    .terminal-screen{height:min(54vh,480px);min-height:300px;overflow-y:auto;padding:22px 22px 16px;font:13px/1.8 "DM Mono",monospace;color:#a6f7ff;scrollbar-color:#17627b #071426;scrollbar-width:thin}
+    .terminal-line{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 5px}
+    .terminal-line.system{color:#8aa9bf}.terminal-line.success{color:#8dffbd}.terminal-line.warning{color:#f8c84e}.terminal-line.error{color:#ff8c9c}.terminal-line.command{color:#f4f7fc}
+    .terminal-prompt{display:flex;align-items:center;gap:9px;padding:0 22px 20px;font:13px "DM Mono",monospace}
+    .terminal-prompt label{color:#16d9f5;white-space:nowrap}
+    .terminal-prompt input{width:100%;min-width:0;background:transparent;border:0;border-bottom:1px solid #16d9f54a;border-radius:0;padding:10px 2px;color:#f4f7fc;font:inherit;outline:none}
+    .terminal-prompt input:focus{border-color:#16d9f5;box-shadow:0 1px #16d9f5}
+    .terminal-prompt input::placeholder{color:#54718a}
+    .terminal-actions{max-width:900px;margin:14px auto 0;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+    .terminal-chip{border:1px solid #16d9f544;background:#0c2038;color:#a6f7ff;padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer}
+    .terminal-chip:hover,.terminal-chip:focus-visible{border-color:#16d9f5;background:#10304a;outline:none}
+    .terminal-hint{margin:16px 0 0;color:#718ba5;font:10px/1.8 "DM Mono",monospace}
+    .terminal-back{display:inline-flex;margin-top:28px;color:#a6f7ff;font:10px "DM Mono",monospace;letter-spacing:.1em}
+    .terminal-back:hover{color:white}
+    @media(max-width:760px){.terminal-page{padding:48px 0 70px}.terminal-screen{height:52vh;min-height:280px;padding:17px 14px;font-size:12px}.terminal-prompt{padding:0 14px 17px;font-size:12px}.terminal-top{padding-inline:12px;font-size:9px}.terminal-status{gap:8px}.terminal-actions{gap:7px}.terminal-chip{padding:9px 10px}}
+    @media(prefers-reduced-motion:reduce){.terminal-frame:before{display:none}}
+  </style>
+</head>
+<body>
+  <div class="ocean-glow glow-one"></div><div class="ocean-glow glow-two"></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="ABYXO home"><img src="./logo.svg" alt="ABYXO — Small Creature. Deep Chaos."></a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="./" class="nav-item nav-item--home" data-nav="home"><span class="nav-bubble nav-bubble--home"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Home</span></a>
+      <a href="./lore.html" class="nav-item nav-item--lore" data-nav="lore"><span class="nav-bubble nav-bubble--lore"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">The lore</span></a>
+      <a href="./signal.html" class="nav-item nav-item--signal" data-nav="signal"><span class="nav-bubble nav-bubble--signal"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">The signal</span></a>
+      <a href="./tokenomics.html" class="nav-item nav-item--tokenomics" data-nav="tokenomics"><span class="nav-bubble nav-bubble--tokenomics"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Tokenomics</span></a>
+      <a href="./roadmap.html" class="nav-item nav-item--roadmap" data-nav="roadmap"><span class="nav-bubble nav-bubble--roadmap"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Roadmap</span></a>
+      <a href="./community.html" class="nav-item nav-item--community" data-nav="community"><span class="nav-bubble nav-bubble--community"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Community</span></a>
+      <a href="./clanker-top.html" class="nav-item nav-item--signal"><span class="nav-bubble nav-bubble--signal"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Top Clankers</span></a>
+      <a class="nav-cta" href="./community.html"><span>Enter the abyss</span><b>↗</b></a>
+    </nav>
+  </header>
+  <main class="terminal-page section-wrap">
+    <div class="terminal-heading">
+      <div class="section-kicker"><span class="pulse-dot"></span> CLASSIFIED ACCESS / CHANNEL 008-A</div>
+      <h1>ABYXO <span>DEEP TERMINAL</span></h1>
+      <p>A forgotten console is still transmitting from the trench. Type a command, follow the signal, and see what the creature left behind.</p>
+    </div>
+    <section class="terminal-frame" aria-label="Interactive ABYXO terminal">
+      <div class="terminal-top"><span><strong>ABYXO://DEEP-NET</strong> &nbsp; ROOT ACCESS</span><span class="terminal-status"><span>LINK: STABLE</span><span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span></span></div>
+      <div class="terminal-screen" id="terminal-output" role="log" aria-live="polite" aria-relevant="additions"></div>
+      <form class="terminal-prompt" id="terminal-form" autocomplete="off">
+        <label for="terminal-input">abyxo@trench:~$</label>
+        <input id="terminal-input" name="command" type="text" placeholder="type help and press Enter" spellcheck="false" autocapitalize="off" aria-label="Enter a terminal command">
+      </form>
+    </section>
+    <div class="terminal-actions" aria-label="Suggested terminal commands">
+      <button class="terminal-chip" type="button" data-command="help">HELP</button>
+      <button class="terminal-chip" type="button" data-command="scan">SCAN</button>
+      <button class="terminal-chip" type="button" data-command="decrypt">DECRYPT</button>
+      <button class="terminal-chip" type="button" data-command="lore">LORE</button>
+      <button class="terminal-chip" type="button" data-command="clear">CLEAR</button>
+    </div>
+    <p class="terminal-hint">TIP: COMMANDS ARE SIMULATED FOR THE ABYXO EXPERIENCE. THIS TERMINAL DOES NOT ACCESS YOUR DEVICE OR ANY EXTERNAL SYSTEM.</p>
+    <a class="terminal-back" href="./lore.html">← RETURN TO THE LORE ARCHIVE</a>
+  </main>
+  <footer class="site-footer section-wrap">
+    <a class="brand" href="./"><img src="./logo.svg" alt="ABYXO — Small Creature. Deep Chaos."></a>
+    <p>SMALL CREATURE. DEEP CHAOS.</p>
+    <span class="footer-note">An independent meme coin concept. DYOR. Nothing here is financial advice.</span>
+    <nav class="legal-links" aria-label="Legal information"><a href="./disclaimer.html">Disclaimer</a><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./risk-disclosure.html">Risk disclosure</a></nav>
+  </footer>
+  <script>
+    (() => {
+      const output = document.getElementById("terminal-output");
+      const form = document.getElementById("terminal-form");
+      const input = document.getElementById("terminal-input");
+      if (!output || !form || !input) return;
+      const secret = [
+        "ARCHIVE 008-A // CREATURE'S PRIVATE NOTE",
+        "If you can read this, you found the signal.",
+        "The crown was never the treasure. The friends we made in the abyss were.",
+        "Keep one eye on the surface. Keep seven on the memes.",
+        "— ABYXO"
+      ];
+      const help = [
+        "AVAILABLE COMMANDS",
+        "  help       Show this command list",
+        "  scan       Scan the fictional abyssal network",
+        "  decrypt    Reveal the sealed ABYXO archive",
+        "  lore       Display the creature's origin signal",
+        "  status     Check terminal connection status",
+        "  whoami     Identify your abyssal access level",
+        "  clear      Clear the terminal screen"
+      ];
+      function line(text, type = "") {
+        const node = document.createElement("p");
+        node.className = "terminal-line" + (type ? " " + type : "");
+        node.textContent = text;
+        output.appendChild(node);
+        output.scrollTop = output.scrollHeight;
+      }
+      function run(raw) {
+        const command = raw.trim().toLowerCase();
+        if (!command) return;
+        line("abyxo@trench:~$ " + raw, "command");
+        switch (command) {
+          case "help": help.forEach((item) => line(item, "system")); break;
+          case "scan":
+            line("PINGING THE ABYSSAL GRID...", "system");
+            line("[OK] SURFACE RELAY ............ ONLINE", "success");
+            line("[OK] BUBBLE DISTRICT .......... DETECTED", "success");
+            line("[WARN] FORGOTTEN TRENCH ....... SIGNAL UNSTABLE", "warning");
+            line("[FOUND] CROWN ZONE ........... ENTITY 008", "success");
+            break;
+          case "decrypt":
+            line("DECRYPTION KEY ACCEPTED // ARCHIVE 008-A OPEN", "success");
+            secret.forEach((item) => line(item, "success"));
+            break;
+          case "lore":
+            line("ORIGIN TRACE: A tiny crowned octopus emerged from the digital deep.", "system");
+            line("DESTINATION: BASE ECOSYSTEM.", "system");
+            line("MISSION: TURN THE QUIETEST CORNER OF THE ABYSS INTO THE LOUDEST PLACE ON THE TIMELINE.", "success");
+            line("FULL RECORD: ./lore.html", "system");
+            break;
+          case "status":
+            line("CONNECTION: STABLE", "success");
+            line("ENTITY 008: UNCONTAINED", "warning");
+            line("ENCRYPTION: LOCAL SIMULATION", "system");
+            break;
+          case "whoami":
+            line("IDENTITY: ABYXONAUT", "success");
+            line("ACCESS: CURIOUS VISITOR // CLEARANCE 008", "system");
+            break;
+          case "clear": output.replaceChildren(); break;
+          default: line("UNKNOWN COMMAND: " + raw + " — TYPE 'help' TO SEE AVAILABLE COMMANDS.", "error");
+        }
+      }
+      ["BOOTING ABYXO DEEP TERMINAL...", "ESTABLISHING SECURE TRENCH LINK...", "SIGNAL FOUND // ENTITY 008 RESPONDING.", "ACCESS GRANTED, ABYXONAUT.", "Type 'help' to see available commands."].forEach((item, index) => line(item, index === 3 ? "success" : "system"));
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const value = input.value;
+        input.value = "";
+        run(value);
+      });
+      document.querySelectorAll("[data-command]").forEach((button) => button.addEventListener("click", () => {
+        const command = button.dataset.command;
+        run(command);
+        input.focus();
+      }));
+      input.focus({ preventScroll: true });
+    })();
+  </script>
+  <script src="./script.js"></script>
+  <script src="./site-sound.js"></script>
+</body>
+</html>
