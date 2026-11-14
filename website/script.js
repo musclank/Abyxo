@@ -97,8 +97,6 @@ if (personalityArt) {
   const scoreLabel = document.querySelector("#game-score");
   const timeLabel = document.querySelector("#game-time");
   const bestLabel = document.querySelector("#game-best");
-  const leftButton = document.querySelector("#game-left");
-  const rightButton = document.querySelector("#game-right");
   const fullscreenButton = document.querySelector("#game-fullscreen");
   const gameShell = document.querySelector(".minigame-shell");
   function syncFullscreenState() {
@@ -383,31 +381,33 @@ if (personalityArt) {
     animationId = requestAnimationFrame(frame);
   }
 
-  function bindHold(button, direction) {
-    button.addEventListener("pointerdown", (event) => {
-      event.preventDefault();
-      keys[direction] = true;
-      button.classList.add("is-pressed");
-      if (button.setPointerCapture) button.setPointerCapture(event.pointerId);
-    });
-    const release = () => { keys[direction] = false; button.classList.remove("is-pressed"); };
-    button.addEventListener("pointerup", release);
-    button.addEventListener("pointercancel", release);
-    button.addEventListener("lostpointercapture", release);
-    button.addEventListener("contextmenu", (event) => event.preventDefault());
+  let dragPointerId = null;
+  function movePlayerToPointer(event) {
+    const rect = stage.getBoundingClientRect();
+    if (!rect.width) return;
+    const localX = (event.clientX - rect.left) / rect.width * W;
+    player.x = Math.max(player.width / 2, Math.min(W - player.width / 2, localX));
   }
-
-  bindHold(leftButton, "left");
-  bindHold(rightButton, "right");
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") { keys.left = true; event.preventDefault(); }
-    if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") { keys.right = true; event.preventDefault(); }
+  stage.addEventListener("pointerdown", (event) => {
+    if (!running || (event.pointerType === "mouse" && event.button !== 0)) return;
+    event.preventDefault();
+    dragPointerId = event.pointerId;
+    movePlayerToPointer(event);
+    if (stage.setPointerCapture) stage.setPointerCapture(event.pointerId);
   });
-  window.addEventListener("keyup", (event) => {
-    if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") keys.left = false;
-    if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") keys.right = false;
+  stage.addEventListener("pointermove", (event) => {
+    if (event.pointerId !== dragPointerId || !running) return;
+    event.preventDefault();
+    movePlayerToPointer(event);
   });
-  window.addEventListener("blur", () => { keys.left = keys.right = false; });
+  const endDrag = (event) => {
+    if (event.pointerId === dragPointerId) dragPointerId = null;
+  };
+  stage.addEventListener("pointerup", endDrag);
+  stage.addEventListener("pointercancel", endDrag);
+  stage.addEventListener("lostpointercapture", endDrag);
+  stage.addEventListener("contextmenu", (event) => event.preventDefault());
+  window.addEventListener("blur", () => { dragPointerId = null; });
   startButton.addEventListener("click", startGame);
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
