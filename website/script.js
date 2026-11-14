@@ -687,10 +687,10 @@ if (personalityArt) {
       }
     }
     if (levelClock >= 30) {
-      if (level >= 100) {
-        finishGame();
-      } else if (level % 10 === 0) {
+      if (level % 10 === 0) {
         startBossFight();
+      } else if (level >= 100) {
+        finishGame();
       } else {
         level += 1;
         playSound("level");
