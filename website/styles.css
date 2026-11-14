@@ -784,3 +784,6 @@ body.game-is-fullscreen{overflow:hidden}
 @media(max-width:760px){.leaderboard-heading{display:block}.leaderboard-heading>p{margin-top:18px}.leaderboard-layout{grid-template-columns:1fr}.leaderboard-list li{grid-template-columns:34px minmax(0,1fr) auto}}
 
 .leaderboard-auth-form[hidden],.leaderboard-player-best[hidden],.leaderboard-text-button[hidden]{display:none!important}
+
+/* ABYXO legal page and footer navigation */
+.legal-links{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;font:10px "DM Mono",monospace;letter-spacing:.04em}.legal-links a{color:#8fa8c0;text-decoration:underline;text-decoration-color:#16d9f555;text-underline-offset:4px}.legal-links a:hover{color:var(--cyan)}.legal-section{max-width:900px;padding-top:20px;padding-bottom:100px;color:#b6c8da;font-size:14px;line-height:1.85}.legal-section h2{font-size:clamp(20px,3vw,28px);letter-spacing:-.035em;line-height:1.2;margin:38px 0 12px;color:var(--white)}.legal-section p{margin:0 0 16px}.legal-section ul{padding-left:22px;margin:0 0 20px}.legal-section li{padding:3px 0}.legal-updated{font:10px "DM Mono",monospace;letter-spacing:.1em;color:var(--cyan);margin-bottom:28px!important}.legal-note{margin-top:40px!important;padding:18px 20px;border:1px solid #16d9f544;background:#0c2038;color:#9eb4ca;font-size:12px}
