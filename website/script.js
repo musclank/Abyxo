@@ -94,6 +94,7 @@ if (personalityArt) {
   const overlay = document.querySelector("#game-overlay");
   const overlayTitle = document.querySelector("#game-overlay-title");
   const overlayCopy = document.querySelector("#game-overlay-copy");
+  const levelLabel = document.querySelector("#game-level");
   const scoreLabel = document.querySelector("#game-score");
   const timeLabel = document.querySelector("#game-time");
   const bestLabel = document.querySelector("#game-best");
@@ -140,7 +141,7 @@ if (personalityArt) {
   });
   const W = 720, H = 420;
   const keys = { left: false, right: false };
-  let player, drops, particles, score, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0;
+  let player, drops, particles, score, level, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0;
   let canvasScale = 1;
   let best = 0;
   try { best = Number(localStorage.getItem("abyxoArcadeBest") || 0) || 0; } catch (_) {}
@@ -171,7 +172,9 @@ if (personalityArt) {
     particles = [];
     elapsed = 0;
     score = 0;
+    level = 1;
     timeLeft = 30;
+    levelLabel.textContent = "1/100";
     spawnClock = 0;
     lastFrame = 0;
     scoreLabel.textContent = "0";
@@ -179,12 +182,13 @@ if (personalityArt) {
   }
 
   function spawnDrop() {
-    const mine = Math.random() < .28;
+    const mineChance = Math.min(.42, .28 + (level - 1) * .0014);
+    const mine = Math.random() < mineChance;
     drops.push({
       x: 28 + Math.random() * (W - 56),
       y: -28,
       radius: mine ? 17 : 14,
-      speed: (mine ? 165 : 125) + Math.random() * 85 + (30 - timeLeft) * 2,
+      speed: (mine ? 165 : 125) + Math.min(125, (level - 1) * 1.25) + Math.random() * 85 + (30 - timeLeft) * 1.5,
       type: mine ? "mine" : "coin",
       spin: Math.random() * Math.PI * 2
     });
@@ -319,8 +323,8 @@ if (personalityArt) {
       bestLabel.textContent = String(best);
       try { localStorage.setItem("abyxoArcadeBest", String(best)); } catch (_) {}
     }
-    overlayTitle.textContent = "DIVE COMPLETE!";
-    overlayCopy.textContent = "You collected " + score + " coins. " + (score >= 15 ? "The abyss is impressed, Abyxonaut!" : "Ready for another treasure run?");
+    overlayTitle.textContent = "100 LEVELS CLEARED!";
+    overlayCopy.textContent = "You conquered all 100 dives and collected " + score + " coins. " + (score >= 100 ? "Legendary Abyxonaut!" : "The abyss will remember this run.");
     startButton.innerHTML = "PLAY AGAIN <span>↻</span>";
     overlay.hidden = false;
     drawScene();
@@ -336,7 +340,7 @@ if (personalityArt) {
     player.hit = Math.max(0, player.hit - dt);
 
     spawnClock += dt;
-    const spawnEvery = Math.max(.38, .78 - (30 - timeLeft) * .009);
+    const spawnEvery = Math.max(.22, .78 - (level - 1) * .0052 - (30 - timeLeft) * .004);
     while (spawnClock >= spawnEvery) { spawnClock -= spawnEvery; spawnDrop(); }
 
     for (let i = drops.length - 1; i >= 0; i--) {
@@ -360,7 +364,19 @@ if (personalityArt) {
         drops.splice(i, 1);
       }
     }
-    if (timeLeft <= 0) finishGame();
+    if (timeLeft <= 0) {
+      if (level >= 100) {
+        finishGame();
+      } else {
+        level += 1;
+        timeLeft = 30;
+        spawnClock = 0;
+        drops.length = 0;
+        particles.length = 0;
+        levelLabel.textContent = level + "/100";
+        timeLabel.textContent = "30";
+      }
+    }
   }
 
   function frame(timestamp) {
