@@ -613,6 +613,7 @@ if (personalityArt) {
       if (keys.right) player.x += player.speed * dt;
       player.x = Math.max(34, Math.min(W - 34, player.x));
       player.hit = Math.max(0, player.hit - dt);
+      if (shootClock <= 0) shootTentacle();
       for (let i = tentacleShots.length - 1; i >= 0; i--) {
         const shot = tentacleShots[i];
         shot.y -= shot.speed * dt;
@@ -752,7 +753,6 @@ if (personalityArt) {
   stage.addEventListener("contextmenu", (event) => event.preventDefault());
   window.addEventListener("blur", () => { dragPointerId = null; });
   startButton.addEventListener("click", startGame);
-  if (shootButton) shootButton.addEventListener("click", shootTentacle);
   window.addEventListener("keydown", (event) => {
     if ((event.code === "Space" || event.code === "ArrowUp") && running && boss) {
       event.preventDefault();
