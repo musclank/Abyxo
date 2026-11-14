@@ -9,6 +9,31 @@
   } catch (_) {}
 })();
 
+// Smooth same-site page transitions (external links and in-page anchors stay untouched).
+(() => {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const overlay = document.createElement("div");
+  overlay.className = "page-transition-overlay is-visible";
+  overlay.setAttribute("aria-hidden", "true");
+  document.body.appendChild(overlay);
+  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.remove("is-visible")));
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link || event.defaultPrevented || event.button !== 0 ||
+        event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+        link.target && link.target !== "_self" || link.hasAttribute("download")) return;
+    let destination;
+    try { destination = new URL(link.href, window.location.href); } catch (_) { return; }
+    if (destination.origin !== window.location.origin ||
+        destination.pathname === window.location.pathname && destination.search === window.location.search ||
+        destination.protocol !== "http:" && destination.protocol !== "https:") return;
+    event.preventDefault();
+    overlay.classList.add("is-visible");
+    window.setTimeout(() => { window.location.href = destination.href; }, 220);
+  });
+})();
+
 const toggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".nav");
 
