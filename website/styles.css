@@ -159,12 +159,6 @@ h1,h2{ text-wrap:balance }
 }
 
 
-/* Promo pack link in the site footer */
-.footer-promo{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font:11px "DM Mono",monospace;letter-spacing:.08em;text-decoration:none;text-transform:uppercase;border-bottom:1px solid #16d9f54d;padding:8px 0;transition:color .2s,border-color .2s}
-.footer-promo span{font-size:15px}
-.footer-promo:hover{color:var(--white);border-color:var(--cyan)}
-.footer-promo:focus-visible{outline:2px solid var(--cyan);outline-offset:5px}
-
 
 /* Bubble navigation — floating glass droplets */
 .site-header{z-index:20}
