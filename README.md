@@ -28,7 +28,7 @@ abyxo/
 - [Brand guide](docs/BRAND_GUIDE.md)
 - [Tokenomics draft](docs/TOKENOMICS.md)
 - [Roadmap draft](docs/ROADMAP.md)
-- [Disclaimer](DISCLAIMER.md)
+- [Disclaimer](DISCLAIMER.md)\n- [Website disclaimer](website/disclaimer.html)\n- [Privacy notice](website/privacy.html)\n- [Terms of use](website/terms.html)\n- [Risk disclosure](website/risk-disclosure.html)
 - [Security policy](SECURITY.md)
 - [Contribution guidelines](CONTRIBUTING.md)
 - [Community principles](community/README.md)
