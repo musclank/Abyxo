@@ -313,8 +313,7 @@ if (personalityArt) {
     running = false;
     cancelAnimationFrame(animationId);
     keys.left = keys.right = false;
-    leftButton.classList.remove("is-pressed");
-    rightButton.classList.remove("is-pressed");
+    dragPointerId = null;
     if (score > best) {
       best = score;
       bestLabel.textContent = String(best);
