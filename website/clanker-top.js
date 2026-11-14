@@ -1,5 +1,9 @@
 (() => {
-  const API = "https://www.clanker.world/api/tokens/trending";
+  const config = window.ABYXO_SUPABASE_CONFIG;
+  const supabaseReady = !!(window.supabase && config?.url && config?.anonKey);
+  const supabaseClient = supabaseReady
+    ? window.supabase.createClient(config.url, config.anonKey)
+    : null;
   const rows = document.querySelector("#clanker-rows");
   const mobile = document.querySelector("#clanker-mobile-list");
   const status = document.querySelector("#clanker-status");
@@ -115,9 +119,12 @@
     status.textContent = "FETCHING LIVE DATA";
     dot.className = "";
     try {
-      const response = await fetch(API,{headers:{Accept:"application/json"},cache:"no-store"});
-      if (!response.ok) throw new Error("Clanker API returned HTTP "+response.status);
-      const payload = await response.json();
+      if (!supabaseClient) throw new Error("Supabase client/config is unavailable.");
+      const { data: payload, error } = await supabaseClient.functions.invoke("clanker-trending", {
+        method: "GET"
+      });
+      if (error) throw new Error(error.message || "Supabase proxy request failed.");
+      if (payload?.error) throw new Error(payload.error);
       const list = extractList(payload);
       if (!list.length) throw new Error("The Clanker API returned an empty or unexpected response.");
       tokens = list.map(tokenObject);
