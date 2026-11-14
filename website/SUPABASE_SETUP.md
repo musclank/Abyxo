@@ -16,7 +16,7 @@ This creates player profiles, the public read-only top-100 leaderboard, and a re
 3. Keep email confirmation enabled for production. Players will need to confirm their email before signing in if confirmation is required.
 
 ## 3. Connect the website
-1. In **Project Settings → API** (or **Connect**), copy the Project URL and the publishable/anon public key.
+1. Open the project's **Connect** dialog to copy the Project URL and publishable key, or go to **Settings → API Keys** to view/manage the keys.
 2. Open `website/supabase-config.js`.
 3. Paste the values into `url` and `anonKey`.
 4. Commit the file to the `main` branch.
