@@ -73,7 +73,7 @@
     }
     const raw = String(value).trim();
     if (!raw) return "";
-    if (raw.startsWith("ipfs://")) return "https://ipfs.io/ipfs/" + raw.slice(7).replace(/^ipfs\\//, "");
+    if (raw.startsWith("ipfs://")) return "https://ipfs.io/ipfs/" + raw.slice(7).replace(/^ipfs\//, "");
     if (raw.startsWith("ipfs/")) return "https://ipfs.io/" + raw;
     if (raw.startsWith("//")) return "https:" + raw;
     return raw;
