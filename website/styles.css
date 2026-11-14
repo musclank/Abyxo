@@ -656,7 +656,7 @@ body{
 .game-topbar{display:flex;justify-content:space-between;gap:12px;padding:2px 2px 14px;border-bottom:1px solid #a6f7ff20;color:#89a9c2;font:9px "DM Mono",monospace;letter-spacing:.12em}
 .game-topbar>span:first-child{display:flex;align-items:center;gap:8px}
 .game-live-dot{width:7px;height:7px;border-radius:50%;background:#16d9f5;box-shadow:0 0 12px #16d9f5}
-.game-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;padding:14px 0}
+.game-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;padding:14px 0}
 .game-stats>div{display:flex;align-items:center;justify-content:center;gap:9px;padding:8px;border:1px solid #a6f7ff16;border-radius:9px;background:#06182a80}
 .game-stats small{color:#7896b0;font:8px "DM Mono",monospace;letter-spacing:.12em}
 .game-stats b{color:#f4f7fc;font:600 19px "Space Grotesk",sans-serif;font-variant-numeric:tabular-nums}
@@ -753,3 +753,6 @@ body.game-is-fullscreen{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .game-overlay-icon{filter:none}
 }
+
+/* Five-heart survival HUD */
+.game-stats>.game-health-stat b{color:#ff6474;font-size:clamp(12px,2vw,18px);letter-spacing:.04em;white-space:nowrap;text-shadow:0 0 10px #ff526044}
