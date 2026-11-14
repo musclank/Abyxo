@@ -93,6 +93,47 @@ if (personalityArt) {
   const bestLabel = document.querySelector("#game-best");
   const leftButton = document.querySelector("#game-left");
   const rightButton = document.querySelector("#game-right");
+  const fullscreenButton = document.querySelector("#game-fullscreen");
+  const gameShell = document.querySelector(".minigame-shell");
+  function syncFullscreenState() {
+    const active = document.fullscreenElement === gameShell || gameShell.classList.contains("game-fullscreen-fallback");
+    fullscreenButton.setAttribute("aria-pressed", String(active));
+    fullscreenButton.innerHTML = active ? '⛶ <span>EXIT FULLSCREEN</span>' : '⛶ <span>FULLSCREEN</span>';
+    fullscreenButton.setAttribute("aria-label", active ? "Exit minigame fullscreen" : "Open minigame fullscreen");
+    document.body.classList.toggle("game-is-fullscreen", active);
+  }
+  async function toggleFullscreen() {
+    const active = document.fullscreenElement === gameShell || gameShell.classList.contains("game-fullscreen-fallback");
+    if (active) {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        try { await document.exitFullscreen(); } catch (_) {}
+      }
+      gameShell.classList.remove("game-fullscreen-fallback");
+      syncFullscreenState();
+      return;
+    }
+    if (gameShell.requestFullscreen) {
+      try {
+        await gameShell.requestFullscreen();
+        return;
+      } catch (_) {
+        // Use the fixed-position fallback when fullscreen is blocked by the browser.
+      }
+    }
+    gameShell.classList.add("game-fullscreen-fallback");
+    syncFullscreenState();
+  }
+  fullscreenButton.addEventListener("click", toggleFullscreen);
+  document.addEventListener("fullscreenchange", () => {
+    if (document.fullscreenElement !== gameShell) gameShell.classList.remove("game-fullscreen-fallback");
+    syncFullscreenState();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && gameShell.classList.contains("game-fullscreen-fallback")) {
+      gameShell.classList.remove("game-fullscreen-fallback");
+      syncFullscreenState();
+    }
+  });
   const W = 720, H = 420;
   const keys = { left: false, right: false };
   let player, drops, score, timeLeft, running, lastFrame, spawnClock, animationId;
