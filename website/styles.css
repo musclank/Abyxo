@@ -984,3 +984,11 @@ html {
 :root[data-theme="ocean"] .nav .nav-cta{background:#42f5d7;color:#031c2b}
 :root[data-theme="ocean"] .terminal-frame{border-color:#42f5d7;background:#02131f}
 :root[data-theme="ocean"] .terminal-chip{border-color:#42f5d766;background:#073449;color:#a4fff0}
+
+
+/* ABYXO Arcade — Tentacle boss weapon control */
+.game-shoot{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 13px;border:1px solid #16d9f5aa;border-radius:999px;background:linear-gradient(135deg,#0c7895,#16d9f5);color:#041323;font:700 9px "DM Mono",monospace;letter-spacing:.08em;cursor:pointer;box-shadow:0 0 18px #16d9f533;touch-action:manipulation}
+.game-shoot:hover{background:#a6f7ff}
+.game-shoot:focus-visible{outline:2px solid #a6f7ff;outline-offset:3px}
+.game-shoot[hidden]{display:none}
+@media(max-width:520px){.game-controls{flex-wrap:wrap}.game-shoot{min-height:40px;padding-inline:16px}}
