@@ -82,7 +82,7 @@
       <button class="terminal-chip" type="button" data-command="scan">SCAN</button>
       <button class="terminal-chip" type="button" data-command="decrypt">DECRYPT</button>
       <button class="terminal-chip" type="button" data-command="lore">LORE</button>
-      <button class="terminal-chip" type="button" data-command="clear">CLEAR</button>
+      <button class="terminal-chip" type="button" data-command="map">MAP</button>\n      <button class="terminal-chip" type="button" data-command="threats">THREATS</button>\n      <button class="terminal-chip" type="button" data-command="fortune">FORTUNE</button>\n      <button class="terminal-chip" type="button" data-command="clear">CLEAR</button>
     </div>
     <p class="terminal-hint">TIP: COMMANDS ARE SIMULATED FOR THE ABYXO EXPERIENCE. THIS TERMINAL DOES NOT ACCESS YOUR DEVICE OR ANY EXTERNAL SYSTEM.</p>
     <a class="terminal-back" href="./lore.html">← RETURN TO THE LORE ARCHIVE</a>
@@ -108,13 +108,37 @@
       ];
       const help = [
         "AVAILABLE COMMANDS",
-        "  help       Show this command list",
-        "  scan       Scan the fictional abyssal network",
-        "  decrypt    Reveal the sealed ABYXO archive",
-        "  lore       Display the creature's origin signal",
-        "  status     Check terminal connection status",
-        "  whoami     Identify your abyssal access level",
-        "  clear      Clear the terminal screen"
+        "  help        Show all commands",
+        "  scan        Scan the fictional abyssal network",
+        "  decrypt     Reveal the sealed ABYXO archive",
+        "  lore        Display the creature's origin signal",
+        "  map         Explore the abyss map",
+        "  treasures   List legendary relics",
+        "  threats     Identify creatures in the trench",
+        "  diary       Read ABYXO's private field notes",
+        "  mascot      Inspect Entity 008",
+        "  base        Check the Base Chain destination",
+        "  community   Find the Abyxonaut signal",
+        "  signal      Receive a random abyss transmission",
+        "  inventory   Check your explorer inventory",
+        "  fortune     Get a questionable prediction",
+        "  status      Check terminal connection status",
+        "  whoami      Identify your abyssal access level",
+        "  history     Show commands used this session",
+        "  clear       Clear the terminal screen"
+      ];
+      const usedCommands = [];
+      const transmissions = [
+        "A bubble just delivered a very important meme. It was classified as extremely silly.",
+        "The crown is glowing. Either destiny is calling or someone found the snack stash.",
+        "Eight arms detected. Productivity estimate: suspiciously high.",
+        "A new Abyxonaut has entered the trench. The FUD Crab has been notified. It is not happy."
+      ];
+      const fortunes = [
+        "A shiny relic awaits you. It may be a coin. It may be a spoon.",
+        "The next signal you follow will lead to something unexpected. Probably bubbles.",
+        "Your timeline is about to get deeper. Stay hydrated, Abyxonaut.",
+        "The crown sees potential in you. The crown sees potential in everyone."
       ];
       function line(text, type = "") {
         const node = document.createElement("p");
@@ -123,18 +147,25 @@
         output.appendChild(node);
         output.scrollTop = output.scrollHeight;
       }
+      function pick(items) {
+        return items[Math.floor(Math.random() * items.length)];
+      }
       function run(raw) {
         const command = raw.trim().toLowerCase();
         if (!command) return;
         line("abyxo@trench:~$ " + raw, "command");
+        if (command !== "clear" && command !== "history") usedCommands.push(command);
         switch (command) {
-          case "help": help.forEach((item) => line(item, "system")); break;
+          case "help":
+            help.forEach((item) => line(item, "system"));
+            break;
           case "scan":
             line("PINGING THE ABYSSAL GRID...", "system");
             line("[OK] SURFACE RELAY ............ ONLINE", "success");
             line("[OK] BUBBLE DISTRICT .......... DETECTED", "success");
             line("[WARN] FORGOTTEN TRENCH ....... SIGNAL UNSTABLE", "warning");
             line("[FOUND] CROWN ZONE ........... ENTITY 008", "success");
+            line("[INFO] UNKNOWN SHADOW ......... KEEP YOUR EYES OPEN", "warning");
             break;
           case "decrypt":
             line("DECRYPTION KEY ACCEPTED // ARCHIVE 008-A OPEN", "success");
@@ -146,17 +177,95 @@
             line("MISSION: TURN THE QUIETEST CORNER OF THE ABYSS INTO THE LOUDEST PLACE ON THE TIMELINE.", "success");
             line("FULL RECORD: ./lore.html", "system");
             break;
+          case "map":
+            line("ABYSS NAVIGATION // FOUR KNOWN ZONES", "system");
+            line("01  THE SURFACE       — WHERE THE MEMES BEGIN", "success");
+            line("02  BUBBLE DISTRICT   — RUMOURS & REACTIONS", "success");
+            line("03  FORGOTTEN TRENCH  — LOST INTERNET LORE", "warning");
+            line("04  THE CROWN ZONE    — ABYXO TERRITORY", "success");
+            break;
+          case "treasures":
+            line("RELIC REGISTER // HANDLE WITH CURIOSITY", "system");
+            line("🪙 THE FIRST COIN — whereabouts unknown", "success");
+            line("📡 THE DEEP SIGNAL — source untraceable", "success");
+            line("📜 THE EIGHT RULES — paper reportedly eaten by ABYXO", "warning");
+            break;
+          case "threats":
+            line("TRENCH THREAT DATABASE", "system");
+            line("SCROLL SHARK — feeds on attention and unfinished punchlines", "warning");
+            line("GHOST JELLY — drifts through abandoned chats", "warning");
+            line("FUD CRAB — snaps at every new idea", "warning");
+            line("RECOMMENDATION: STAY CURIOUS. DO NOT FEED THE CRAB.", "success");
+            break;
+          case "diary":
+            line("PRIVATE FIELD NOTES // ENTITY 008", "system");
+            line("001 / THE AWAKENING — Found a crown. It fits. This feels important.", "success");
+            line("002 / FIRST CONTACT — Humans argue about pictures of animals. Fascinating.", "success");
+            line("003 / NEW TERRITORY — Base looks interesting. Eight arms are better than two.", "success");
+            line("004 / CURRENT STATUS — The Abyxonauts are gathering.", "success");
+            break;
+          case "mascot":
+            line("ENTITY 008 // ABYXO", "success");
+            line("SPECIES: ABYSSAL INTERNET OCTOPUS", "system");
+            line("FEATURES: DARK-BLUE BODY / GLOWING CYAN EYES / PERMANENT GOLD CROWN", "system");
+            line("TEMPERAMENT: MISCHIEVOUS / DRAMATIC / SURPRISINGLY CHARMING", "system");
+            line("CONTAINMENT STATUS: NOT A CHANCE.", "warning");
+            break;
+          case "base":
+            line("DESTINATION NETWORK: BASE", "success");
+            line("STATUS: ABYXO'S DIGITAL HOME", "system");
+            line("MISSION: BUILD, EXPLORE, AND MAKE SOME MEME-POWERED NOISE.", "system");
+            line("REMINDER: ALWAYS VERIFY CONTRACT DETAILS THROUGH OFFICIAL PROJECT CHANNELS.", "warning");
+            break;
+          case "community":
+            line("COMMUNITY CHANNEL: ABYXONAUTS", "success");
+            line("SIGNAL: FRIENDS OF THE DEEP", "system");
+            line("MISSION: KEEP THE ABYSS LOUD, WELCOMING, AND FUN.", "system");
+            line("Find the community through the official Community page.", "system");
+            break;
+          case "signal":
+            line("INCOMING TRANSMISSION...", "system");
+            line(pick(transmissions), "success");
+            break;
+          case "inventory":
+            line("EXPLORER INVENTORY // CLEARANCE 008", "system");
+            line("[1] One questionable map", "success");
+            line("[2] Three air bubbles", "success");
+            line("[3] A suspiciously shiny pebble", "success");
+            line("[4] Zero snacks (the FUD Crab was here)", "warning");
+            break;
+          case "fortune":
+            line("CONSULTING THE ANCIENT BUBBLES...", "system");
+            line(pick(fortunes), "success");
+            break;
           case "status":
             line("CONNECTION: STABLE", "success");
             line("ENTITY 008: UNCONTAINED", "warning");
             line("ENCRYPTION: LOCAL SIMULATION", "system");
+            line("EXTERNAL SYSTEM ACCESS: NONE", "system");
             break;
           case "whoami":
             line("IDENTITY: ABYXONAUT", "success");
             line("ACCESS: CURIOUS VISITOR // CLEARANCE 008", "system");
+            line("WELCOME TO THE DEEP.", "success");
             break;
-          case "clear": output.replaceChildren(); break;
-          default: line("UNKNOWN COMMAND: " + raw + " — TYPE 'help' TO SEE AVAILABLE COMMANDS.", "error");
+          case "history":
+            line("SESSION COMMAND HISTORY", "system");
+            if (usedCommands.length) usedCommands.forEach((item, index) => line(String(index + 1).padStart(2, "0") + "  " + item, "system"));
+            else line("No commands recorded yet.", "system");
+            break;
+          case "clear":
+            output.replaceChildren();
+            break;
+          case "sudo":
+            line("NICE TRY, ABYXONAUT. THE CROWN HAS ROOT ACCESS.", "warning");
+            break;
+          case "hello":
+          case "hi":
+            line("GREETINGS FROM THE TRENCH. ABYXO WAVES ALL EIGHT ARMS.", "success");
+            break;
+          default:
+            line("UNKNOWN COMMAND: " + raw + " — TYPE 'help' TO SEE AVAILABLE COMMANDS.", "error");
         }
       }
       ["BOOTING ABYXO DEEP TERMINAL...", "ESTABLISHING SECURE TRENCH LINK...", "SIGNAL FOUND // ENTITY 008 RESPONDING.", "ACCESS GRANTED, ABYXONAUT.", "Type 'help' to see available commands."].forEach((item, index) => line(item, index === 3 ? "success" : "system"));
