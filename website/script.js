@@ -141,7 +141,7 @@ if (personalityArt) {
   });
   const W = 720, H = 420;
   const keys = { left: false, right: false };
-  let player, drops, particles, score, level, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0;
+  let player, drops, particles, score, level, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0, levelClock = 0;
   let canvasScale = 1;
   let best = 0;
   try { best = Number(localStorage.getItem("abyxoArcadeBest") || 0) || 0; } catch (_) {}
@@ -171,6 +171,7 @@ if (personalityArt) {
     drops = [];
     particles = [];
     elapsed = 0;
+    levelClock = 0;
     score = 0;
     level = 1;
     timeLeft = 30;
@@ -332,7 +333,8 @@ if (personalityArt) {
 
   function update(dt) {
     elapsed += dt;
-    timeLeft = Math.max(0, timeLeft - dt);
+    levelClock += dt;
+    timeLeft = Math.max(0, 30 - levelClock);
     timeLabel.textContent = String(Math.ceil(timeLeft));
     if (keys.left) player.x -= player.speed * dt;
     if (keys.right) player.x += player.speed * dt;
@@ -364,11 +366,12 @@ if (personalityArt) {
         drops.splice(i, 1);
       }
     }
-    if (timeLeft <= 0) {
+    if (levelClock >= 30) {
       if (level >= 100) {
         finishGame();
       } else {
         level += 1;
+        levelClock = 0;
         timeLeft = 30;
         spawnClock = 0;
         drops.length = 0;
