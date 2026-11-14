@@ -782,3 +782,5 @@ body.game-is-fullscreen{overflow:hidden}
 .leaderboard-empty{display:block!important;padding:24px 4px!important;color:#819caf!important;line-height:1.6}
 .leaderboard-footnote{margin:14px 0 0}
 @media(max-width:760px){.leaderboard-heading{display:block}.leaderboard-heading>p{margin-top:18px}.leaderboard-layout{grid-template-columns:1fr}.leaderboard-list li{grid-template-columns:34px minmax(0,1fr) auto}}
+
+.leaderboard-auth-form[hidden],.leaderboard-player-best[hidden],.leaderboard-text-button[hidden]{display:none!important}
