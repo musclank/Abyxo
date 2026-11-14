@@ -347,8 +347,17 @@ if (personalityArt) {
     healthLabel.setAttribute("aria-label", health + " of 5 lives remaining");
   }
 
+  function publishArcadeScore(completed) {
+    if (window.ABYXOLeaderboard && typeof window.ABYXOLeaderboard.submitScore === "function") {
+      window.ABYXOLeaderboard.submitScore(score, level, completed).catch((error) => {
+        console.warn("ABYXO leaderboard submission failed:", error);
+      });
+    }
+  }
+
   function gameOver() {
     running = false;
+    publishArcadeScore(false);
     cancelAnimationFrame(animationId);
     keys.left = keys.right = false;
     dragPointerId = null;
@@ -365,6 +374,7 @@ if (personalityArt) {
 
   function finishGame() {
     running = false;
+    publishArcadeScore(true);
     cancelAnimationFrame(animationId);
     keys.left = keys.right = false;
     dragPointerId = null;
