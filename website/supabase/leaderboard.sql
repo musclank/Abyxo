@@ -104,13 +104,13 @@ begin
 
   insert into public.score_submissions(user_id) values (player_id);
 
-  insert into public.leaderboard(user_id, best_score, best_level, completed_runs, updated_at)
+  insert into public.leaderboard as current_leaderboard(user_id, best_score, best_level, completed_runs, updated_at)
   values (player_id, p_score, p_level, case when p_completed then 1 else 0 end, now())
   on conflict (user_id) do update set
-    best_level = case when excluded.best_score > public.leaderboard.best_score then excluded.best_level else public.leaderboard.best_level end,
-    best_score = greatest(public.leaderboard.best_score, excluded.best_score),
-    completed_runs = public.leaderboard.completed_runs + excluded.completed_runs,
-    updated_at = case when excluded.best_score >= public.leaderboard.best_score then now() else public.leaderboard.updated_at end
+    best_level = case when excluded.best_score > current_leaderboard.best_score then excluded.best_level else public.leaderboard.best_level end,
+    best_score = greatest(current_leaderboard.best_score, excluded.best_score),
+    completed_runs = current_leaderboard.completed_runs + excluded.completed_runs,
+    updated_at = case when excluded.best_score >= current_leaderboard.best_score then now() else public.leaderboard.updated_at end
   returning * into result_row;
 
   return result_row;
