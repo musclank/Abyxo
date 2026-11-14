@@ -792,3 +792,12 @@ body.game-is-fullscreen{overflow:hidden}
 .game-sound{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #16d9f555;border-radius:999px;background:#16d9f510;color:#a6f7ff;font:8px "DM Mono",monospace;letter-spacing:.1em;cursor:pointer;transition:background .2s,border-color .2s}.game-sound:hover{background:#16d9f526;border-color:#16d9f5}.game-sound[aria-pressed="false"]{border-color:#ffffff30;color:#819caf;background:#ffffff08}.game-sound:focus-visible{outline:2px solid #a6f7ff;outline-offset:3px}
 @media(max-width:760px){.game-sound{padding:7px 8px;font-size:7px}}
 @media(prefers-reduced-motion:reduce){.game-sound{transition:none}}
+
+/* Site-wide ABYXO sound control */
+.site-sound-toggle{position:fixed;right:18px;bottom:18px;z-index:1000;display:inline-flex;align-items:center;gap:8px;padding:10px 13px;border:1px solid #16d9f566;border-radius:999px;background:rgba(3,18,34,.92);color:#a6f7ff;box-shadow:0 8px 28px #0007,0 0 18px #16d9f51a;backdrop-filter:blur(12px);font:9px "DM Mono",monospace;letter-spacing:.1em;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.site-sound-toggle:hover{background:rgba(9,43,66,.96);border-color:#16d9f5;transform:translateY(-2px)}
+.site-sound-toggle[aria-pressed="false"]{color:#91a6b8;border-color:#ffffff30;background:rgba(8,18,30,.9)}
+.site-sound-toggle:focus-visible{outline:2px solid #a6f7ff;outline-offset:3px}
+.site-sound-toggle>span:first-child{font-size:14px}
+@media(max-width:600px){.site-sound-toggle{right:12px;bottom:12px;padding:9px 11px;font-size:8px}}
+@media(prefers-reduced-motion:reduce){.site-sound-toggle{transition:none}}
