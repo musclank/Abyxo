@@ -626,3 +626,22 @@ body{
  .secret-panel{grid-template-columns:1fr;gap:18px;padding:26px 20px}.secret-panel h2{font-size:43px}
 }
 @media(prefers-reduced-motion:reduce){.personality-art img,.mood-option,.secret-button{transition:none}}
+
+
+/* Homepage hero — dimensional ABYXO coin */
+.hero-art .hero-coin{
+  width:min(88%,460px);
+  filter:drop-shadow(0 28px 42px #0009) drop-shadow(0 0 34px #16d9f544);
+  transform-style:preserve-3d;
+  animation:coin-hover 6s ease-in-out infinite;
+}
+@keyframes coin-hover{
+  0%,100%{transform:translateY(0) rotate(-4deg) rotateY(-7deg)}
+  50%{transform:translateY(-14px) rotate(3deg) rotateY(7deg)}
+}
+@media(max-width:760px){
+  .hero-art .hero-coin{width:min(80%,350px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-art .hero-coin{animation:none}
+}
