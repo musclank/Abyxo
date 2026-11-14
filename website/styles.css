@@ -997,3 +997,22 @@ html {
 /* Automatic Tentacle weapon status */
 .game-weapon-status{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 13px;border:1px solid #16d9f588;border-radius:999px;background:linear-gradient(135deg,#0c789544,#16d9f51c);color:#a6f7ff;font:700 9px "DM Mono",monospace;letter-spacing:.08em;box-shadow:0 0 16px #16d9f522}
 @media(max-width:520px){.game-weapon-status{min-height:36px;padding-inline:10px;font-size:8px}}
+
+
+/* ABYXO Arcade — boss checkpoint actions */
+.game-continue-unsaved{
+  margin:10px auto 0;
+  display:block;
+  min-height:36px;
+  padding:0 16px;
+  border:1px solid rgba(166,247,255,.35);
+  border-radius:999px;
+  background:rgba(7,20,38,.72);
+  color:#a6f7ff;
+  font:700 9px "DM Mono",monospace;
+  letter-spacing:.08em;
+  cursor:pointer;
+}
+.game-continue-unsaved:hover{background:rgba(22,217,245,.14);border-color:#16d9f5}
+.game-continue-unsaved:focus-visible{outline:2px solid #a6f7ff;outline-offset:3px}
+.game-continue-unsaved[hidden]{display:none!important}
