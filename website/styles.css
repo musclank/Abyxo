@@ -1016,3 +1016,14 @@ html {
 .game-continue-unsaved:hover{background:rgba(22,217,245,.14);border-color:#16d9f5}
 .game-continue-unsaved:focus-visible{outline:2px solid #a6f7ff;outline-offset:3px}
 .game-continue-unsaved[hidden]{display:none!important}
+
+
+/* ABYXO — cinematic transitions between internal pages */
+.page-transition-overlay{
+  position:fixed;inset:0;z-index:999999;pointer-events:none;
+  background:#071426;opacity:0;transition:opacity .22s ease;
+}
+.page-transition-overlay.is-visible{opacity:1}
+@media(prefers-reduced-motion:reduce){
+  .page-transition-overlay{display:none!important;transition:none!important}
+}
