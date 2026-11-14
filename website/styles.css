@@ -882,3 +882,47 @@ html {
     right: max(10px, env(safe-area-inset-right));
   }
 }
+
+
+/* AUDIO CONTROLS — integrated into the main navigation */
+.nav-audio-controls{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:0 0 auto;
+}
+.nav-audio-controls .site-sound-toggle,
+.nav-audio-controls .abyxo-music-control{
+  position:static;
+  inset:auto;
+  z-index:auto;
+  margin:0;
+  box-shadow:none;
+  backdrop-filter:none;
+}
+.nav-audio-controls .site-sound-toggle{
+  padding:9px 11px;
+  font-size:8px;
+  white-space:nowrap;
+}
+.nav-audio-controls .abyxo-music-control{
+  padding:8px 10px;
+  gap:7px;
+  background:#071426;
+}
+.nav-audio-controls .abyxo-music-toggle{font-size:8px}
+.nav-audio-controls .abyxo-music-volume{width:48px}
+@media(max-width:760px){
+  .nav-audio-controls{
+    width:100%;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding-top:14px;
+    border-top:1px solid #ffffff20;
+    gap:10px;
+  }
+  .nav-audio-controls .site-sound-toggle,
+  .nav-audio-controls .abyxo-music-control{
+    max-width:100%;
+  }
+}
