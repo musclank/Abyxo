@@ -110,6 +110,7 @@ if (personalityArt) {
   const timeLabel = document.querySelector("#game-time");
   const bestLabel = document.querySelector("#game-best");
   const healthLabel = document.querySelector("#game-health");
+  const shootButton = document.querySelector("#game-shoot");
   const fullscreenButton = document.querySelector("#game-fullscreen");
   const gameShell = document.querySelector(".minigame-shell");
   function syncFullscreenState() {
@@ -230,6 +231,7 @@ if (personalityArt) {
   const W = 720, H = 420;
   const keys = { left: false, right: false };
   let player, drops, particles, score, level, health, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0, levelClock = 0;
+  let boss = null, bossShots = [], tentacleShots = [], shootClock = 0, bossClock = 0;
   let canvasScale = 1;
   let best = 0;
   try { best = Number(localStorage.getItem("abyxoArcadeBest") || 0) || 0; } catch (_) {}
@@ -262,6 +264,11 @@ if (personalityArt) {
     levelClock = 0;
     score = 0;
     level = 1;
+    boss = null;
+    bossShots = [];
+    tentacleShots = [];
+    shootClock = 0;
+    bossClock = 0;
     health = 5;
     updateHealth();
     timeLeft = 30;
@@ -400,6 +407,108 @@ if (personalityArt) {
     ctx.restore();
   }
 
+  function drawBoss() {
+    if (!boss) return;
+    ctx.save();
+    ctx.translate(boss.x, boss.y);
+    const pulse = 1 + Math.sin(elapsed * 4) * .035;
+    ctx.scale(pulse, pulse);
+    ctx.shadowColor = "#a879ff";
+    ctx.shadowBlur = 30;
+    const body = ctx.createRadialGradient(-18, -20, 5, 0, 0, 76);
+    body.addColorStop(0, "#e7caff");
+    body.addColorStop(.28, "#9c63e8");
+    body.addColorStop(1, "#32145f");
+    ctx.fillStyle = body;
+    ctx.beginPath(); ctx.ellipse(0, 0, 72, 58, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = "#d8b6ff"; ctx.lineWidth = 3; ctx.stroke();
+    ctx.shadowBlur = 0;
+    for (let i = 0; i < 6; i++) {
+      const x = -52 + i * 21;
+      ctx.strokeStyle = "#8d54d6"; ctx.lineWidth = 13; ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(x, 34);
+      ctx.quadraticCurveTo(x - 18, 66 + Math.sin(elapsed * 3 + i) * 9, x + Math.sin(elapsed * 2 + i) * 22, 91);
+      ctx.stroke();
+    }
+    ctx.fillStyle = "#fff";
+    ctx.beginPath(); ctx.ellipse(-24, -8, 13, 18, 0, 0, Math.PI * 2); ctx.ellipse(24, -8, 13, 18, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#ff405e";
+    ctx.beginPath(); ctx.arc(-21, -7, 6, 0, Math.PI * 2); ctx.arc(21, -7, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#fff"; ctx.font = "bold 12px 'DM Mono', monospace"; ctx.textAlign = "center";
+    ctx.fillText("ABYSSAL BOSS", 0, -78);
+    ctx.restore();
+
+    const barW = 250, barX = (W - barW) / 2, barY = 18;
+    ctx.fillStyle = "rgba(0,0,0,.55)"; ctx.fillRect(barX, barY, barW, 13);
+    ctx.fillStyle = "#ff456b"; ctx.fillRect(barX, barY, barW * Math.max(0, boss.hp / 50), 13);
+    ctx.strokeStyle = "#ffd5e0"; ctx.lineWidth = 1; ctx.strokeRect(barX, barY, barW, 13);
+    ctx.fillStyle = "#fff"; ctx.font = "bold 10px 'DM Mono', monospace"; ctx.textAlign = "center";
+    ctx.fillText("BOSS HP " + boss.hp + " / 50", W / 2, 48);
+  }
+
+  function drawBossShot(shot) {
+    ctx.save();
+    ctx.shadowColor = "#ff456b"; ctx.shadowBlur = 16;
+    ctx.fillStyle = "#ff5a79";
+    ctx.beginPath(); ctx.arc(shot.x, shot.y, 8, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = "#ffd1dc"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawTentacleShot(shot) {
+    ctx.save();
+    ctx.shadowColor = "#16d9f5"; ctx.shadowBlur = 18;
+    ctx.strokeStyle = "#a6f7ff"; ctx.lineWidth = 7; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(shot.x, shot.y + 12); ctx.quadraticCurveTo(shot.x - 9, shot.y, shot.x, shot.y - 13); ctx.stroke();
+    ctx.strokeStyle = "#16d9f5"; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(shot.x, shot.y + 10); ctx.lineTo(shot.x, shot.y - 12); ctx.stroke();
+    ctx.restore();
+  }
+
+  function startBossFight() {
+    boss = { x: W / 2, y: 105, hp: 50, direction: 1, fireClock: 0 };
+    bossShots = [];
+    tentacleShots = [];
+    bossClock = 0;
+    shootClock = 0;
+    drops.length = 0;
+    particles.length = 0;
+    timeLeft = 0;
+    timeLabel.textContent = "BOSS";
+    levelLabel.textContent = level + "/100 · BOSS";
+    playSound("level");
+    burst(W / 2, 110, "#bd8cff", 34);
+  }
+
+  function shootTentacle() {
+    if (!running || !boss || shootClock > 0) return;
+    tentacleShots.push({ x: player.x, y: player.y - 38, speed: 560 });
+    shootClock = .22;
+    tone(620, .08, "triangle", .07, 980);
+  }
+
+  function defeatBoss() {
+    burst(boss.x, boss.y, "#a6f7ff", 60);
+    boss = null;
+    bossShots = [];
+    tentacleShots = [];
+    playSound("win");
+    if (level >= 100) {
+      finishGame();
+      return;
+    }
+    level += 1;
+    levelClock = 0;
+    timeLeft = 30;
+    spawnClock = 0;
+    drops.length = 0;
+    particles.length = 0;
+    levelLabel.textContent = level + "/100";
+    timeLabel.textContent = "30";
+    playSound("level");
+  }
+
   function burst(x, y, color, amount = 12) {
     for (let i = 0; i < amount; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -424,6 +533,9 @@ if (personalityArt) {
   function drawScene(dt = 0) {
     drawBackground();
     if (drops) drops.forEach(drawDrop);
+    if (boss) drawBoss();
+    if (bossShots) bossShots.forEach(drawBossShot);
+    if (tentacleShots) tentacleShots.forEach(drawTentacleShot);
     if (particles) drawParticles(dt);
     drawPlayer();
   }
@@ -481,6 +593,50 @@ if (personalityArt) {
 
   function update(dt) {
     elapsed += dt;
+    shootClock = Math.max(0, shootClock - dt);
+    if (boss) {
+      bossClock += dt;
+      boss.x += boss.direction * (105 + Math.sin(bossClock * 2) * 25) * dt;
+      if (boss.x > W - 100) boss.direction = -1;
+      if (boss.x < 100) boss.direction = 1;
+      boss.fireClock += dt;
+      if (boss.fireClock >= 1.05) {
+        boss.fireClock = 0;
+        const dx = player.x - boss.x, dy = player.y - boss.y;
+        const length = Math.hypot(dx, dy) || 1;
+        bossShots.push({ x: boss.x, y: boss.y + 45, vx: dx / length * 185, vy: dy / length * 185 });
+      }
+      if (keys.left) player.x -= player.speed * dt;
+      if (keys.right) player.x += player.speed * dt;
+      player.x = Math.max(34, Math.min(W - 34, player.x));
+      player.hit = Math.max(0, player.hit - dt);
+      for (let i = tentacleShots.length - 1; i >= 0; i--) {
+        const shot = tentacleShots[i];
+        shot.y -= shot.speed * dt;
+        if (Math.abs(shot.x - boss.x) < 68 && Math.abs(shot.y - boss.y) < 58) {
+          boss.hp = Math.max(0, boss.hp - 1);
+          burst(shot.x, shot.y, "#16d9f5", 4);
+          tentacleShots.splice(i, 1);
+          if (boss.hp <= 0) { defeatBoss(); return; }
+        } else if (shot.y < -20) tentacleShots.splice(i, 1);
+      }
+      for (let i = bossShots.length - 1; i >= 0; i--) {
+        const shot = bossShots[i];
+        shot.x += shot.vx * dt; shot.y += shot.vy * dt;
+        if (Math.abs(shot.x - player.x) < 25 && Math.abs(shot.y - player.y) < 28 && player.hit <= 0) {
+          bossShots.splice(i, 1);
+          health = Math.max(0, health - 1);
+          player.hit = .9;
+          updateHealth();
+          burst(player.x, player.y, "#ff5a79", 18);
+          playSound("mine");
+          if (health <= 0) { gameOver(); return; }
+        } else if (shot.y < -30 || shot.y > H + 30 || shot.x < -30 || shot.x > W + 30) {
+          bossShots.splice(i, 1);
+        }
+      }
+      return;
+    }
     levelClock += dt;
     timeLeft = Math.max(0, 30 - levelClock);
     timeLabel.textContent = String(Math.ceil(timeLeft));
@@ -530,6 +686,8 @@ if (personalityArt) {
     if (levelClock >= 30) {
       if (level >= 100) {
         finishGame();
+      } else if (level % 10 === 0) {
+        startBossFight();
       } else {
         level += 1;
         playSound("level");
@@ -591,6 +749,13 @@ if (personalityArt) {
   stage.addEventListener("contextmenu", (event) => event.preventDefault());
   window.addEventListener("blur", () => { dragPointerId = null; });
   startButton.addEventListener("click", startGame);
+  if (shootButton) shootButton.addEventListener("click", shootTentacle);
+  window.addEventListener("keydown", (event) => {
+    if ((event.code === "Space" || event.code === "ArrowUp") && running && boss) {
+      event.preventDefault();
+      shootTentacle();
+    }
+  });
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
   if ("ResizeObserver" in window) new ResizeObserver(resizeCanvas).observe(stage);
