@@ -56,10 +56,21 @@
   }
   function extractList(payload) {
     if (Array.isArray(payload)) return payload;
-    for (const key of ["tokens","data","results","items","pools"]) {
-      if (Array.isArray(payload?.[key])) return payload[key];
-      if (payload?.[key] && typeof payload[key] === "object") {
-        for (const nested of ["tokens","items","results"]) if (Array.isArray(payload[key][nested])) return payload[key][nested];
+    const preferred = ["tokens","data","results","items","pools","trending","trendingTokens"];
+    for (const key of preferred) {
+      const value = payload?.[key];
+      if (Array.isArray(value)) return value;
+      if (value && typeof value === "object") {
+        const nested = extractList(value);
+        if (nested.length) return nested;
+      }
+    }
+    // Clanker describes this endpoint as a list of trending pools; tolerate
+    // wrapper objects that add another level such as { result: { pools: [] } }.
+    for (const value of Object.values(payload || {})) {
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        const nested = extractList(value);
+        if (nested.length) return nested;
       }
     }
     return [];
@@ -115,7 +126,7 @@
       dot.className = "is-live";
       updated.textContent = "Updated "+new Date().toLocaleTimeString();
     } catch (error) {
-      status.textContent = "DATA CONNECTION ISSUE";
+      status.textContent = "API ERROR: " + (error.message || "unknown error").slice(0,72);
       dot.className = "is-error";
       if (!tokens.length) {
         rows.innerHTML = '<tr><td colspan="7" class="clanker-message">'+escapeHtml(error.message)+' Please try again shortly.</td></tr>';
