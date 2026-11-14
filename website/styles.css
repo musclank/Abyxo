@@ -818,7 +818,7 @@ body.game-is-fullscreen{overflow:hidden}
 html,body{
   width:100%;
   max-width:100%;
-  overflow-x:clip;
+  overflow-x:hidden !important;
 }
 *,*::before,*::after{box-sizing:border-box}
 img,svg,video,canvas,iframe{max-width:100%}
