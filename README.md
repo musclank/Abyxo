@@ -21,7 +21,7 @@ abyxo/
 ```
 
 ## Project documentation
-
+\n- [Media kit](docs/MEDIA_KIT.md)\n
 - [Brand guide](docs/BRAND_GUIDE.md)
 - [Tokenomics draft](docs/TOKENOMICS.md)
 - [Roadmap draft](docs/ROADMAP.md)
