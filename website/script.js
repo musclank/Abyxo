@@ -141,7 +141,7 @@ if (personalityArt) {
   });
   const W = 720, H = 420;
   const keys = { left: false, right: false };
-  let player, drops, particles, score, level, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0, levelClock = 0;
+  let player, drops, particles, score, level, health, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0, levelClock = 0;
   let canvasScale = 1;
   let best = 0;
   try { best = Number(localStorage.getItem("abyxoArcadeBest") || 0) || 0; } catch (_) {}
@@ -174,6 +174,8 @@ if (personalityArt) {
     levelClock = 0;
     score = 0;
     level = 1;
+    health = 5;
+    updateHealth();
     timeLeft = 30;
     levelLabel.textContent = "1/100";
     spawnClock = 0;
@@ -338,6 +340,28 @@ if (personalityArt) {
     drawPlayer();
   }
 
+  function updateHealth() {
+    if (!healthLabel) return;
+    healthLabel.textContent = "♥".repeat(health) + "♡".repeat(5 - health);
+    healthLabel.setAttribute("aria-label", health + " of 5 lives remaining");
+  }
+
+  function gameOver() {
+    running = false;
+    cancelAnimationFrame(animationId);
+    keys.left = keys.right = false;
+    dragPointerId = null;
+    if (score > best) {
+      best = score;
+      bestLabel.textContent = String(best);
+      try { localStorage.setItem("abyxoArcadeBest", String(best)); } catch (_) {}
+    }
+    overlayTitle.textContent = "DIVE OVER!";
+    overlayCopy.textContent = "All 5 hearts are gone. You reached level " + level + " and collected " + score + " points. Take a breath and dive again!";
+    startButton.innerHTML = "TRY AGAIN <span>↻</span>";
+    overlay.hidden = false;
+  }
+
   function finishGame() {
     running = false;
     cancelAnimationFrame(animationId);
@@ -384,7 +408,14 @@ if (personalityArt) {
           score = Math.max(0, score - penalty);
           scoreLabel.textContent = String(score);
           player.hit = .7;
+          health = Math.max(0, health - 1);
+          updateHealth();
           burst(drop.x, drop.y, drop.type === "bomb" ? "#ff525c" : "#b58aff", drop.type === "bomb" ? 26 : 18);
+          if (health <= 0) {
+            drops.splice(i, 1);
+            gameOver();
+            return;
+          }
         }
         drops.splice(i, 1);
       } else if (drop.y > H + 30) {
