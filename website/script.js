@@ -78,20 +78,229 @@ if (personalityArt) {
   });
 }
 
-// Hidden five-tap easter egg
-const secretTrigger = document.querySelector("#secret-trigger");
-if (secretTrigger) {
-  let taps = 0;
-  const counter = document.querySelector("#secret-count");
-  const reveal = document.querySelector("#secret-reveal");
-  secretTrigger.addEventListener("click", () => {
-    taps = Math.min(taps + 1, 5);
-    counter.textContent = taps + " / 5";
-    if (taps === 5) {
-      reveal.hidden = false;
-      secretTrigger.innerHTML = "<span>✦</span> SECRET UNLOCKED <b>✓</b>";
-      secretTrigger.disabled = true;
-      secretTrigger.setAttribute("aria-label", "Secret unlocked");
+// ABYXO Arcade — collect treasure, dodge the sea mines
+(() => {
+  const canvas = document.querySelector("#abyxo-game");
+  const startButton = document.querySelector("#game-start");
+  if (!canvas || !startButton) return;
+
+  const ctx = canvas.getContext("2d");
+  const overlay = document.querySelector("#game-overlay");
+  const overlayTitle = document.querySelector("#game-overlay-title");
+  const overlayCopy = document.querySelector("#game-overlay-copy");
+  const scoreLabel = document.querySelector("#game-score");
+  const timeLabel = document.querySelector("#game-time");
+  const bestLabel = document.querySelector("#game-best");
+  const leftButton = document.querySelector("#game-left");
+  const rightButton = document.querySelector("#game-right");
+  const W = 720, H = 420;
+  const keys = { left: false, right: false };
+  let player, drops, score, timeLeft, running, lastFrame, spawnClock, animationId;
+  let best = 0;
+  try { best = Number(localStorage.getItem("abyxoArcadeBest") || 0) || 0; } catch (_) {}
+  bestLabel.textContent = String(best);
+
+  function resizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (!running) drawScene();
+  }
+
+  function resetGame() {
+    player = { x: W / 2, y: H - 54, width: 58, speed: 390, hit: 0 };
+    drops = [];
+    score = 0;
+    timeLeft = 30;
+    spawnClock = 0;
+    lastFrame = 0;
+    scoreLabel.textContent = "0";
+    timeLabel.textContent = "30";
+  }
+
+  function spawnDrop() {
+    const mine = Math.random() < .28;
+    drops.push({
+      x: 28 + Math.random() * (W - 56),
+      y: -28,
+      radius: mine ? 17 : 14,
+      speed: (mine ? 165 : 125) + Math.random() * 85 + (30 - timeLeft) * 2,
+      type: mine ? "mine" : "coin",
+      spin: Math.random() * Math.PI * 2
+    });
+  }
+
+  function drawBackground() {
+    const gradient = ctx.createLinearGradient(0, 0, 0, H);
+    gradient.addColorStop(0, "#0b2b48");
+    gradient.addColorStop(1, "#041323");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, W, H);
+    for (let i = 0; i < 34; i++) {
+      const x = (i * 137 + 29) % W;
+      const y = (i * 83 + 17) % H;
+      ctx.beginPath();
+      ctx.arc(x, y, (i % 3) + 1, 0, Math.PI * 2);
+      ctx.fillStyle = i % 4 === 0 ? "rgba(22,217,245,.32)" : "rgba(166,247,255,.16)";
+      ctx.fill();
     }
+    ctx.strokeStyle = "rgba(22,217,245,.08)";
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= W; x += 60) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+  }
+
+  function drawDrop(drop) {
+    ctx.save();
+    ctx.translate(drop.x, drop.y);
+    ctx.rotate(drop.spin);
+    if (drop.type === "coin") {
+      ctx.shadowColor = "#f8c84e";
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = "#f8c84e";
+      ctx.beginPath(); ctx.arc(0, 0, drop.radius, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = "#fff0a0"; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(0, 0, drop.radius - 4, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = "#8d5b0c"; ctx.font = "bold 17px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText("✦", 0, 1);
+    } else {
+      ctx.shadowColor = "#9b6cff"; ctx.shadowBlur = 15;
+      ctx.fillStyle = "#8b5cf6";
+      ctx.beginPath();
+      for (let i = 0; i < 12; i++) {
+        const a = i * Math.PI / 6;
+        const r = i % 2 ? drop.radius * .72 : drop.radius * 1.18;
+        const x = Math.cos(a) * r, y = Math.sin(a) * r;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath(); ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "#f4eaff"; ctx.font = "bold 15px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText("×", 0, 0);
+    }
+    ctx.restore();
+  }
+
+  function drawPlayer() {
+    if (!player) return;
+    ctx.save();
+    if (player.hit > 0 && Math.floor(player.hit * 14) % 2 === 0) ctx.globalAlpha = .45;
+    ctx.shadowColor = "#16d9f5"; ctx.shadowBlur = 24;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.font = "52px Arial";
+    ctx.fillText("🐙", player.x, player.y + 7);
+    ctx.shadowColor = "#f8c84e"; ctx.shadowBlur = 12;
+    ctx.font = "24px Arial";
+    ctx.fillText("👑", player.x + 2, player.y - 25);
+    ctx.restore();
+  }
+
+  function drawScene() {
+    drawBackground();
+    if (drops) drops.forEach(drawDrop);
+    drawPlayer();
+  }
+
+  function finishGame() {
+    running = false;
+    cancelAnimationFrame(animationId);
+    keys.left = keys.right = false;
+    leftButton.classList.remove("is-pressed");
+    rightButton.classList.remove("is-pressed");
+    if (score > best) {
+      best = score;
+      bestLabel.textContent = String(best);
+      try { localStorage.setItem("abyxoArcadeBest", String(best)); } catch (_) {}
+    }
+    overlayTitle.textContent = "DIVE COMPLETE!";
+    overlayCopy.textContent = "You collected " + score + " coins. " + (score >= 15 ? "The abyss is impressed, Abyxonaut!" : "Ready for another treasure run?");
+    startButton.innerHTML = "PLAY AGAIN <span>↻</span>";
+    overlay.hidden = false;
+    drawScene();
+  }
+
+  function update(dt) {
+    timeLeft = Math.max(0, timeLeft - dt);
+    timeLabel.textContent = String(Math.ceil(timeLeft));
+    if (keys.left) player.x -= player.speed * dt;
+    if (keys.right) player.x += player.speed * dt;
+    player.x = Math.max(34, Math.min(W - 34, player.x));
+    player.hit = Math.max(0, player.hit - dt);
+
+    spawnClock += dt;
+    const spawnEvery = Math.max(.38, .78 - (30 - timeLeft) * .009);
+    while (spawnClock >= spawnEvery) { spawnClock -= spawnEvery; spawnDrop(); }
+
+    for (let i = drops.length - 1; i >= 0; i--) {
+      const drop = drops[i];
+      drop.y += drop.speed * dt;
+      drop.spin += dt * (drop.type === "coin" ? 1.6 : -1.8);
+      const dx = drop.x - player.x, dy = drop.y - player.y;
+      if (Math.hypot(dx, dy) < drop.radius + 25) {
+        if (drop.type === "coin") {
+          score += 1;
+          scoreLabel.textContent = String(score);
+        } else {
+          score = Math.max(0, score - 2);
+          scoreLabel.textContent = String(score);
+          player.hit = .55;
+        }
+        drops.splice(i, 1);
+      } else if (drop.y > H + 30) {
+        drops.splice(i, 1);
+      }
+    }
+    if (timeLeft <= 0) finishGame();
+  }
+
+  function frame(timestamp) {
+    if (!running) return;
+    const dt = Math.min((timestamp - (lastFrame || timestamp)) / 1000, .04);
+    lastFrame = timestamp;
+    update(dt);
+    drawScene();
+    if (running) animationId = requestAnimationFrame(frame);
+  }
+
+  function startGame() {
+    cancelAnimationFrame(animationId);
+    resetGame();
+    running = true;
+    overlay.hidden = true;
+    animationId = requestAnimationFrame(frame);
+  }
+
+  function bindHold(button, direction) {
+    button.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      keys[direction] = true;
+      button.classList.add("is-pressed");
+      if (button.setPointerCapture) button.setPointerCapture(event.pointerId);
+    });
+    const release = () => { keys[direction] = false; button.classList.remove("is-pressed"); };
+    button.addEventListener("pointerup", release);
+    button.addEventListener("pointercancel", release);
+    button.addEventListener("lostpointercapture", release);
+    button.addEventListener("contextmenu", (event) => event.preventDefault());
+  }
+
+  bindHold(leftButton, "left");
+  bindHold(rightButton, "right");
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") { keys.left = true; event.preventDefault(); }
+    if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") { keys.right = true; event.preventDefault(); }
   });
-}
+  window.addEventListener("keyup", (event) => {
+    if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") keys.left = false;
+    if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") keys.right = false;
+  });
+  window.addEventListener("blur", () => { keys.left = keys.right = false; });
+  startButton.addEventListener("click", startGame);
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+  resetGame();
+  drawScene();
+})();
