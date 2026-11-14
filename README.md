@@ -23,6 +23,7 @@ abyxo/
 ## Project documentation
 
 - [Social launch kit](docs/SOCIAL_LAUNCH_KIT.md)
+- [Global leaderboard setup](website/SUPABASE_SETUP.md)
 - [Media kit](docs/MEDIA_KIT.md)
 - [Brand guide](docs/BRAND_GUIDE.md)
 - [Tokenomics draft](docs/TOKENOMICS.md)
