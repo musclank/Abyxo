@@ -801,3 +801,14 @@ body.game-is-fullscreen{overflow:hidden}
 .site-sound-toggle>span:first-child{font-size:14px}
 @media(max-width:600px){.site-sound-toggle{right:12px;bottom:12px;padding:9px 11px;font-size:8px}}
 @media(prefers-reduced-motion:reduce){.site-sound-toggle{transition:none}}
+
+/* ABYXO background ocean music player */
+.abyxo-music-control{position:fixed;right:18px;bottom:66px;z-index:1000;display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid #16d9f555;border-radius:999px;background:rgba(3,18,34,.94);color:#a6f7ff;box-shadow:0 8px 28px #0007,0 0 18px #16d9f51a;backdrop-filter:blur(12px)}
+.abyxo-music-toggle{display:inline-flex;align-items:center;gap:8px;padding:0;border:0;background:transparent;color:inherit;font:9px "DM Mono",monospace;letter-spacing:.08em;cursor:pointer;white-space:nowrap}
+.abyxo-music-toggle>span:first-child{font-size:12px}
+.abyxo-music-toggle[aria-pressed="true"]{color:#8fffff}
+.abyxo-volume-label{font:8px "DM Mono",monospace;color:#779bb2}
+.abyxo-music-volume{width:65px;accent-color:#16d9f5;cursor:pointer}
+.abyxo-music-toggle:focus-visible,.abyxo-music-volume:focus-visible{outline:2px solid #a6f7ff;outline-offset:4px}
+@media(max-width:600px){.abyxo-music-control{right:12px;bottom:60px;padding:8px 10px;gap:7px}.abyxo-music-toggle{font-size:8px}.abyxo-music-volume{width:48px}}
+@media(prefers-reduced-motion:reduce){.abyxo-music-control{scroll-behavior:auto}}
