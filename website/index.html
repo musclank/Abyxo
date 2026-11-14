@@ -106,9 +106,33 @@
       </div>
     </section>
 
-    <section class="secret-section section-wrap" aria-labelledby="secret-title">
-      <div class="secret-panel"><div><div class="section-kicker">NOT EVERYTHING IS WHAT IT SEEMS</div><h2 id="secret-title">UNLOCK THE<br><span>ABYSS.</span></h2><p>ABYXO left something behind. Tap the signal five times to see if you're paying attention.</p></div>
-        <div class="secret-action"><button class="secret-button" id="secret-trigger" type="button"><span>◉</span> TRACE THE SIGNAL <b id="secret-count">0 / 5</b></button><p class="secret-reveal" id="secret-reveal" aria-live="polite" hidden>🐙 SECRET FOUND: The crown is real. The mischief is eternal. Welcome, Abyxonaut.</p></div>
+    <section class="minigame-section section-wrap" aria-labelledby="minigame-title">
+      <div class="minigame-heading">
+        <div><div class="section-kicker">ABYXO ARCADE // GAME 001</div><h2 id="minigame-title">DIVE FOR<br><span>THE TREASURE.</span></h2></div>
+        <p>Help ABYXO collect the golden coins drifting through the abyss. Dodge the purple sea mines and see how much treasure you can grab in 30 seconds.</p>
+      </div>
+      <div class="minigame-shell">
+        <div class="game-topbar"><span><i class="game-live-dot"></i> DEEP-SEA TREASURE RUN</span><span>ROUND 001</span></div>
+        <div class="game-stats" aria-live="polite">
+          <div><small>SCORE</small><b id="game-score">0</b></div>
+          <div><small>TIME</small><b id="game-time">30</b></div>
+          <div><small>BEST</small><b id="game-best">0</b></div>
+        </div>
+        <div class="game-stage">
+          <canvas id="abyxo-game" width="720" height="420" aria-label="Minigame: move ABYXO to catch gold coins and avoid purple sea mines"></canvas>
+          <div class="game-overlay" id="game-overlay">
+            <span class="game-overlay-icon">🐙</span>
+            <b id="game-overlay-title">READY, ABYXONAUT?</b>
+            <p id="game-overlay-copy">Catch the gold. Dodge the mines. Survive for 30 seconds.</p>
+            <button class="game-start" id="game-start" type="button">START DIVE <span>↗</span></button>
+          </div>
+        </div>
+        <div class="game-controls" aria-label="Game movement controls">
+          <button class="game-move" id="game-left" type="button" aria-label="Move ABYXO left">←</button>
+          <span>MOVE ABYXO</span>
+          <button class="game-move" id="game-right" type="button" aria-label="Move ABYXO right">→</button>
+        </div>
+        <p class="game-help">DESKTOP: USE ← → KEYS &nbsp;·&nbsp; MOBILE: HOLD THE ARROW BUTTONS</p>
       </div>
     </section>
 
