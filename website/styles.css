@@ -689,3 +689,34 @@ body{
  .game-help{font-size:7px;letter-spacing:.06em}
 }
 @media(prefers-reduced-motion:reduce){.game-start,.game-move{transition:none}}
+
+
+/* ABYXO Arcade — fullscreen presentation */
+.game-topbar-actions{display:flex;align-items:center;gap:14px}
+.game-fullscreen{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid #16d9f555;border-radius:999px;background:#16d9f510;color:#a6f7ff;font:8px "DM Mono",monospace;letter-spacing:.1em;cursor:pointer;transition:background .2s,border-color .2s}
+.game-fullscreen:hover{background:#16d9f526;border-color:#16d9f5}
+.game-fullscreen:focus-visible{outline:2px solid #a6f7ff;outline-offset:3px}
+.game-fullscreen:first-letter{font-size:15px}
+.minigame-shell:fullscreen,.minigame-shell.game-fullscreen-fallback{
+  width:100%;height:100%;max-width:none;margin:0;padding:clamp(14px,3vw,34px);
+  border:0;border-radius:0;overflow:auto;background:radial-gradient(circle at 50% 0,#124265,#041323 65%);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.minigame-shell:fullscreen .game-stage,.minigame-shell.game-fullscreen-fallback .game-stage{
+  width:min(100%,1100px);max-height:calc(100vh - 230px);aspect-ratio:12/7;min-height:0;margin-inline:auto;flex:1 1 auto;
+}
+.minigame-shell:fullscreen .game-stats,.minigame-shell:fullscreen .game-topbar,.minigame-shell:fullscreen .game-controls,.minigame-shell:fullscreen .game-help,
+.minigame-shell.game-fullscreen-fallback .game-stats,.minigame-shell.game-fullscreen-fallback .game-topbar,.minigame-shell.game-fullscreen-fallback .game-controls,.minigame-shell.game-fullscreen-fallback .game-help{width:min(100%,1100px);margin-inline:auto}
+.minigame-shell:fullscreen .game-controls,.minigame-shell.game-fullscreen-fallback .game-controls{padding-bottom:8px}
+.minigame-shell:fullscreen .game-move,.minigame-shell.game-fullscreen-fallback .game-move{width:76px;height:54px}
+.minigame-shell:fullscreen .game-fullscreen-fallback{display:none}
+.minigame-shell.game-fullscreen-fallback{position:fixed;inset:0;z-index:9999}
+body.game-is-fullscreen{overflow:hidden}
+@media(max-width:760px){
+ .game-topbar-actions{gap:8px}
+ .game-fullscreen{padding:7px 8px;font-size:7px}
+ .minigame-shell:fullscreen,.minigame-shell.game-fullscreen-fallback{padding:12px}
+ .minigame-shell:fullscreen .game-stage,.minigame-shell.game-fullscreen-fallback .game-stage{max-height:calc(100vh - 240px);aspect-ratio:1.2;min-height:180px}
+ .minigame-shell:fullscreen .game-stats,.minigame-shell.game-fullscreen-fallback .game-stats{padding:10px 0}
+}
+@media(prefers-reduced-motion:reduce){.game-fullscreen{transition:none}}
