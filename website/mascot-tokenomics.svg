@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" role="img" aria-labelledby="title desc">
+<title id="title">ABYXO crowned octopus</title><desc id="desc">A cute mischievous dark blue octopus with cyan glowing eyes and a golden crown.</desc>
+<defs>
+ <radialGradient id="body" cx="35%" cy="25%" r="80%"><stop stop-color="#1764a5"/><stop offset=".55" stop-color="#0b3767"/><stop offset="1" stop-color="#071426"/></radialGradient>
+ <linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff0a0"/><stop offset=".45" stop-color="#f8c84e"/><stop offset="1" stop-color="#b87519"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<g fill="none" stroke="#1764a5" stroke-width="29" stroke-linecap="round"><path d="M165 292 C95 290 80 350 120 370 C145 382 158 358 143 349"/><path d="M205 315 C170 360 190 410 220 405 C245 400 234 380 220 377"/><path d="M253 316 C300 357 290 410 260 410 C235 410 230 390 244 380"/><path d="M300 291 C373 284 405 340 365 370 C340 388 325 360 342 346"/><path d="M144 258 C80 235 45 280 80 305 C105 323 115 295 99 284"/><path d="M331 254 C395 231 435 275 400 305 C375 325 365 295 379 281"/></g>
+<path d="M143 260 C133 194 171 147 239 145 C310 143 350 194 337 263 C328 317 292 344 240 344 C185 344 151 315 143 260Z" fill="url(#body)" stroke="#1b78aa" stroke-width="5"/>
+<path d="M177 241 Q196 218 218 241" fill="none" stroke="#071426" stroke-width="8" stroke-linecap="round"/>
+<path d="M263 241 Q285 218 304 241" fill="none" stroke="#071426" stroke-width="8" stroke-linecap="round"/>
+<ellipse cx="198" cy="256" rx="16" ry="22" fill="#16d9f5" filter="url(#glow)"/><ellipse cx="282" cy="256" rx="16" ry="22" fill="#16d9f5" filter="url(#glow)"/>
+<ellipse cx="202" cy="250" rx="5" ry="8" fill="#fff"/><ellipse cx="286" cy="250" rx="5" ry="8" fill="#fff"/>
+<path d="M226 289 Q240 302 255 287" fill="none" stroke="#071426" stroke-width="7" stroke-linecap="round"/>
+<path d="M228 291 L235 301 L242 293 L249 300 L256 288" fill="#fff" stroke="#fff" stroke-width="2"/>
+<path d="M170 156 L181 83 L218 116 L240 61 L263 116 L301 83 L311 158Z" fill="url(#gold)" stroke="#9c6419" stroke-width="7" stroke-linejoin="round"/>
+<path d="M180 148 H301" stroke="#fff0a0" stroke-width="7" stroke-linecap="round"/>
+<circle cx="240" cy="91" r="9" fill="#16d9f5"/><circle cx="183" cy="104" r="7" fill="#fff0a0"/><circle cx="297" cy="104" r="7" fill="#fff0a0"/>
+<path d="M170 160 Q240 177 311 160" fill="none" stroke="#f8c84e" stroke-width="11" stroke-linecap="round"/>
+<g fill="#8b5cf6" opacity=".9"><path d="M119 365 Q143 374 153 352" stroke="#8b5cf6" stroke-width="7" fill="none"/><path d="M205 405 Q224 412 230 389" stroke="#8b5cf6" stroke-width="7" fill="none"/><path d="M254 408 Q273 415 279 389" stroke="#8b5cf6" stroke-width="7" fill="none"/><path d="M355 367 Q375 368 381 345" stroke="#8b5cf6" stroke-width="7" fill="none"/></g>
+<g fill="#a6f7ff" opacity=".8"><circle cx="92" cy="157" r="5"/><circle cx="371" cy="173" r="7"/><circle cx="350" cy="91" r="4"/><circle cx="115" cy="105" r="3"/></g>
+<g transform="translate(345 345)"><circle r="49" fill="#f8c84e" stroke="#fff0a0" stroke-width="5"/><circle r="38" fill="#b87519" stroke="#fff0a0" stroke-width="3"/><path d="M0 -25 V25 M-17 -12 H17 M-17 12 H17" stroke="#fff0a0" stroke-width="5" stroke-linecap="round"/></g><g fill="#f8c84e"><circle cx="90" cy="110" r="7"/><circle cx="390" cy="125" r="6"/></g>
+</svg>
