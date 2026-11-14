@@ -30,8 +30,8 @@
   function numeric(value) {
     if (typeof value === "number") return value;
     if (typeof value === "string") {
-      const clean = value.trim().replace(/[$,%\\s,]/g, "").toUpperCase();
-      const match = clean.match(/^(-?\\d+(?:\\.\\d+)?)([KMB])?$/);
+      const clean = value.trim().replace(/[$,%\s,]/g, "").toUpperCase();
+      const match = clean.match(/^(-?\d+(?:\.\d+)?)([KMB])?$/);
       if (!match) return Number(clean);
       return Number(match[1]) * ({K:1e3,M:1e6,B:1e9}[match[2]] || 1);
     }
