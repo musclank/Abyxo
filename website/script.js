@@ -150,8 +150,7 @@ if (personalityArt) {
 
   function resizeCanvas() {
     const dpr = Math.min(window.devicePixelRatio || 1, 3);
-    const rect = stage.getBoundingClientRect();
-    const scale = Math.min(dpr, Math.max(1, rect.width / W));
+    const scale = dpr;
     const pixelWidth = Math.round(W * scale);
     const pixelHeight = Math.round(H * scale);
     if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
