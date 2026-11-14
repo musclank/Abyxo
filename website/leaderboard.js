@@ -190,6 +190,6 @@
   setMode("signup");
   client.auth.getSession().then(({ data }) => updateSession(data.session?.user || null));
   client.auth.onAuthStateChange((_event, session) => {
-    updateSession(session?.user || null);
+    window.setTimeout(() => updateSession(session?.user || null), 0);
   });
 })();
