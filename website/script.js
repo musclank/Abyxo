@@ -541,6 +541,7 @@ if (personalityArt) {
       checkpointButton.textContent = "CONTINUE WITHOUT SAVING";
       startButton.insertAdjacentElement("afterend", checkpointButton);
     }
+    checkpointButton.textContent = "CONTINUE WITHOUT SAVING";
     checkpointButton.hidden = false;
     checkpointButton.onclick = () => {
       checkpointButton.hidden = true;
