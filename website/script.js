@@ -1,3 +1,14 @@
+// Restore the visitor's selected ABYXO theme on every page.
+(() => {
+  try {
+    const savedTheme = localStorage.getItem("abyxo-theme");
+    if (["dark", "light", "ocean"].includes(savedTheme)) {
+      if (savedTheme === "dark") document.documentElement.removeAttribute("data-theme");
+      else document.documentElement.setAttribute("data-theme", savedTheme);
+    }
+  } catch (_) {}
+})();
+
 const toggle = document.querySelector(".menu-toggle");
 const nav = document.querySelector(".nav");
 
