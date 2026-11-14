@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="ABYXO Top Clankers — live rankings from the public Clanker API.">
+  <title>Top Clankers — ABYXO</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./clanker-top.css">
+</head>
+<body class="clanker-page">
+  <div class="ocean-glow glow-one"></div><div class="ocean-glow glow-two"></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="ABYXO home"><img src="./logo.svg" alt="ABYXO — Small Creature. Deep Chaos."></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="./" class="nav-item">Home</a>
+      <a href="./clanker-top.html" class="nav-item active" aria-current="page">Top Clankers</a>
+      <a class="nav-cta" href="https://www.clanker.world/clankers" target="_blank" rel="noopener noreferrer"><span>Clanker</span><b>↗</b></a>
+    </nav>
+  </header>
+  <main class="section-wrap clanker-main">
+    <section class="clanker-hero">
+      <div class="section-kicker"><span class="pulse-dot"></span> CLANKER DATA // LIVE FEED</div>
+      <div class="clanker-hero-grid">
+        <div>
+          <h1>TOP<br><span>CLANKERS.</span></h1>
+          <p>Ten tokens making the biggest moves across Clanker. Live market data, straight from Clanker's public API.</p>
+        </div>
+        <div class="clanker-mascot-wrap"><img src="./mascot-signal.svg" alt="ABYXO mascot watching the Clanker market"><span>THE ABYSS IS WATCHING</span></div>
+      </div>
+    </section>
+    <section class="clanker-board" aria-labelledby="clanker-board-title">
+      <div class="clanker-board-head">
+        <div><div class="section-kicker">THE CURRENT RANKINGS</div><h2 id="clanker-board-title">THE TOP 10</h2></div>
+        <div class="clanker-live-status"><i id="clanker-live-dot"></i><span id="clanker-status" role="status">CONNECTING TO CLANKER</span></div>
+      </div>
+      <div class="clanker-controls">
+        <div class="clanker-sort-label">RANK BY</div>
+        <div class="clanker-sort" role="group" aria-label="Sort tokens">
+          <button type="button" data-sort="volume24h" class="active" aria-pressed="true">24H VOLUME</button>
+          <button type="button" data-sort="marketCap" aria-pressed="false">MARKET CAP</button>
+          <button type="button" data-sort="liquidity" aria-pressed="false">LIQUIDITY</button>
+        </div>
+        <div class="clanker-refresh-wrap"><span id="clanker-updated">Waiting for first update</span><button type="button" id="clanker-refresh">↻ REFRESH</button></div>
+      </div>
+      <div class="clanker-table-wrap">
+        <table class="clanker-table">
+          <thead><tr><th>#</th><th>TOKEN</th><th>24H</th><th>VOLUME 24H</th><th>LIQUIDITY</th><th>MARKET CAP</th><th></th></tr></thead>
+          <tbody id="clanker-rows"><tr><td colspan="7" class="clanker-message">Reaching into the Clanker ocean…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="clanker-mobile-list" id="clanker-mobile-list" aria-live="polite"></div>
+      <div class="clanker-board-foot"><span>DATA SOURCE: CLANKER PUBLIC API</span><span>AUTO-REFRESH: 60 SECONDS</span></div>
+    </section>
+    <p class="clanker-disclaimer">Market data is provided by Clanker and may be delayed or unavailable. Rankings are informational only, not financial advice.</p>
+  </main>
+  <footer class="site-footer section-wrap"><a class="brand" href="./"><img src="./logo.svg" alt="ABYXO"></a><p>SMALL CREATURE. DEEP CHAOS.</p><span class="footer-note">ABYXO // CLANKER LIVE DATA</span></footer>
+  <script src="./clanker-top.js"></script>
+</body>
+</html>
