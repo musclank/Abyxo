@@ -399,7 +399,10 @@ if (personalityArt) {
       drop.y += drop.speed * dt;
       drop.spin += dt * (drop.type === "coin" ? 1.6 : -1.8);
       const dx = drop.x - player.x, dy = drop.y - player.y;
-      if (Math.hypot(dx, dy) < drop.radius + 25) {
+      // Match the visible 86×86 mascot sprite instead of using an undersized circle.
+      const hitX = Math.abs(dx) < drop.radius + 40;
+      const hitY = Math.abs(dy) < drop.radius + 38;
+      if (hitX && hitY) {
         if (drop.type === "coin") {
           score += drop.points;
           scoreLabel.textContent = String(score);
