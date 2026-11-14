@@ -98,6 +98,7 @@ if (personalityArt) {
   const scoreLabel = document.querySelector("#game-score");
   const timeLabel = document.querySelector("#game-time");
   const bestLabel = document.querySelector("#game-best");
+  const healthLabel = document.querySelector("#game-health");
   const fullscreenButton = document.querySelector("#game-fullscreen");
   const gameShell = document.querySelector(".minigame-shell");
   function syncFullscreenState() {
