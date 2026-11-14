@@ -22,7 +22,6 @@ abyxo/
 
 ## Project documentation
 
-- [Promotional asset pack](https://musclank.github.io/Abyxo/promo.html)
 - [Social launch kit](docs/SOCIAL_LAUNCH_KIT.md)
 - [Media kit](docs/MEDIA_KIT.md)
 - [Brand guide](docs/BRAND_GUIDE.md)
