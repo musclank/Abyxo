@@ -37,6 +37,22 @@
     @keyframes loreFloat{50%{transform:translateY(-12px) rotate(2deg)}}
     .lore-art-label{position:absolute;bottom:18px;left:20px;font:9px "DM Mono",monospace;letter-spacing:.14em;color:#75a4bd}
     .lore-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}
+    .monster-card{position:relative;overflow:hidden;isolation:isolate;min-height:290px;padding:0;background:linear-gradient(155deg,#0d2941,#071426 72%);border-color:#16d9f52b}
+    .monster-card:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 48%,#16d9f51c,transparent 64%);z-index:-1}
+    .monster-visual{height:155px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 85%,#16d9f526,transparent 65%)}
+    .monster-visual svg{width:84%;height:145px;overflow:visible;filter:drop-shadow(0 0 12px #16d9f55c);animation:monsterDrift 6s ease-in-out infinite}
+    .monster-visual .eye{fill:#8fffff;filter:drop-shadow(0 0 7px #16d9f5)}
+    .monster-visual .silhouette{fill:#020a16;stroke:#17627b;stroke-width:1.5}
+    .monster-card:nth-child(2) .monster-visual svg{animation-delay:-2s}
+    .monster-card:nth-child(3) .monster-visual svg{animation-delay:-4s}
+    @keyframes monsterDrift{50%{transform:translateY(-7px) scale(1.025)}}
+    .monster-card-content{padding:8px 23px 24px}
+    .monster-card-content small{display:block;color:#16d9f5;font:9px "DM Mono",monospace;letter-spacing:.13em}
+    .monster-card-content h3{font-size:17px;margin:9px 0}
+    .monster-card-content p{font-size:13px;line-height:1.7;color:#9cb1c7;margin:0}
+    .map-stop{position:relative;overflow:hidden}
+    .map-stop:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,#16d9f51c,transparent 70%);top:4px;right:-30px;pointer-events:none}
+    .lore-art.monster-depth{background:radial-gradient(ellipse at 50% 80%,#0c536b 0%,#0a2035 45%,#06101f 78%)}
     .lore-card{padding:25px;border:1px solid #ffffff1a;background:#0c2038;min-height:205px}
     .lore-card .icon{font-size:27px}.lore-card small{display:block;margin-top:18px;color:#16d9f5;font:9px "DM Mono",monospace;letter-spacing:.13em}
     .lore-card h3{font-size:17px;margin:10px 0}.lore-card p{font-size:13px;line-height:1.7;color:#9cb1c7;margin:0}
@@ -59,7 +75,7 @@
     .lore-quote blockquote{font-size:clamp(24px,4vw,40px);font-weight:700;letter-spacing:-.04em;line-height:1.2;margin:0 auto;max-width:760px}
     .lore-quote span{display:block;margin-top:18px;color:#16d9f5;font:10px "DM Mono",monospace;letter-spacing:.15em}
     @media(max-width:760px){.lore-hero{min-height:0;padding-block:65px 45px}.lore-hero:after{right:-180px;top:45px}.lore-section{padding:70px 0}.lore-two{grid-template-columns:1fr;gap:28px}.lore-cards{grid-template-columns:1fr}.map-stops{grid-template-columns:1fr 1fr}.map-stop{min-height:125px}.classified{grid-template-columns:1fr}.reveal-button{justify-self:start}.lore-quote{padding:35px 20px}}
-    @media(prefers-reduced-motion:reduce){.lore-art img{animation:none}}
+    @media(max-width:760px){.monster-card{min-height:0}.monster-visual{height:140px}}\n    @media(prefers-reduced-motion:reduce){.lore-art img,.monster-visual svg{animation:none}}
   </style>
 </head>
 <body>
@@ -152,9 +168,9 @@
       <div class="section-kicker">05 / THREATS & RUMOURS</div>
       <h2>NOT EVERYTHING<br><span>WANTS YOU HERE</span></h2>
       <div class="lore-cards">
-        <article class="lore-card"><div class="icon">🦈</div><small>THREAT LEVEL: DRAMATIC</small><h3>The Scroll Shark</h3><p>Swims endlessly through timelines, hunting for attention and unfinished punchlines.</p></article>
-        <article class="lore-card"><div class="icon">🪼</div><small>THREAT LEVEL: UNPREDICTABLE</small><h3>The Ghost Jelly</h3><p>Appears in abandoned chats, leaves one cryptic emoji, and vanishes for three months.</p></article>
-        <article class="lore-card"><div class="icon">🦀</div><small>THREAT LEVEL: ANNOYING</small><h3>The FUD Crab</h3><p>Pinches every new idea before it has a chance to grow. Easily distracted by shiny objects.</p></article>
+        <article class="lore-card monster-card"><div class="monster-visual" aria-hidden="true"><svg viewBox="0 0 260 150"><path class="silhouette" d="M18 89 Q36 55 84 55 Q117 19 169 45 L226 26 L207 67 L245 91 L192 91 Q158 125 104 103 L48 117 Z"/><path class="silhouette" d="M100 58 L75 27 L124 48 M173 55 L205 36 L190 70"/><circle class="eye" cx="173" cy="67" r="4"/></svg></div><div class="monster-card-content"><small>THREAT LEVEL: DRAMATIC</small><h3>The Scroll Shark</h3><p>A vast shadow cruising the timeline abyss, drawn to attention and unfinished punchlines.</p></div></article>
+        <article class="lore-card monster-card"><div class="monster-visual" aria-hidden="true"><svg viewBox="0 0 260 150"><path class="silhouette" d="M130 16 C85 16 65 54 79 83 Q88 104 112 106 L105 139 L125 117 L139 144 L151 112 Q181 107 190 82 C204 47 174 16 130 16Z"/><path class="silhouette" d="M91 91 Q63 115 55 139 M111 105 L91 145 M169 103 L190 143 M187 88 Q215 111 220 137"/><circle class="eye" cx="112" cy="72" r="3.5"/><circle class="eye" cx="148" cy="72" r="3.5"/></svg></div><div class="monster-card-content"><small>THREAT LEVEL: UNPREDICTABLE</small><h3>The Ghost Jelly</h3><p>A colossal translucent shadow drifting through abandoned chats, glowing when nobody is watching.</p></div></article>
+        <article class="lore-card monster-card"><div class="monster-visual" aria-hidden="true"><svg viewBox="0 0 260 150"><path class="silhouette" d="M74 80 Q73 43 130 38 Q188 43 186 80 L169 106 L91 106 Z"/><path class="silhouette" d="M78 73 L27 43 L18 59 L66 96 M183 73 L233 43 L243 60 L194 96 M94 100 L58 129 L76 138 L112 107 M166 100 L202 129 L184 138 L148 107"/><path class="silhouette" d="M104 44 L95 20 L121 37 M156 44 L166 20 L139 37"/><circle class="eye" cx="111" cy="72" r="4"/><circle class="eye" cx="149" cy="72" r="4"/></svg></div><div class="monster-card-content"><small>THREAT LEVEL: ANNOYING</small><h3>The FUD Crab</h3><p>A hulking trench-dweller with glowing eyes and claws that snap at every new idea.</p></div></article>
       </div>
     </section>
 
