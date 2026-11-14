@@ -27,7 +27,7 @@ if (signalButton && signalMessage) {
     "“The ocean is big. My plans are bigger.”",
     "“Eight arms. Zero attention span.”",
     "“I came for the treasure. I stayed for the chaos.”",
-    "“深? Too deep? Perfect.”",
+    "“Too deep? Perfect.”",
     "“Stay curious. The abyss has snacks.”",
     "“Tiny crown. Monumental mischief.”",
     "“If you hear bubbles, that's probably me.”"
