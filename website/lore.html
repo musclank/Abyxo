@@ -18,7 +18,49 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css">\n
+  <style>
+    .lore-hero{position:relative;min-height:390px;display:grid;align-content:center;padding-block:78px 55px;overflow:hidden}
+    .lore-hero:after{content:"";position:absolute;width:340px;height:340px;border:1px solid #16d9f52b;border-radius:50%;right:8%;top:20px;box-shadow:0 0 0 34px #16d9f508,0 0 0 70px #16d9f505;pointer-events:none}
+    .lore-hero h1{font-size:clamp(58px,9vw,108px);max-width:800px;margin:20px 0}
+    .lore-hero p{max-width:580px;color:#aebfd0;line-height:1.8;font-size:16px}
+    .lore-index{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;position:relative;z-index:1}
+    .lore-index a{font:10px "DM Mono",monospace;letter-spacing:.08em;color:#a6f7ff;border:1px solid #16d9f544;padding:10px 12px;border-radius:2px}
+    .lore-index a:hover{background:#16d9f51a;border-color:#16d9f5}
+    .lore-section{padding:92px 0;border-top:1px solid #ffffff13}
+    .lore-section.alt{background:linear-gradient(110deg,#0a1b30aa,#0b2037aa)}
+    .lore-two{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}
+    .lore-copy{color:#aebfd0;font-size:15px;line-height:1.85;max-width:570px}
+    .lore-copy strong{color:#eafaff}
+    .lore-art{min-height:300px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse,#123a55 0%,#0a1a2d 58%,transparent 75%);border:1px solid #16d9f522}
+    .lore-art img{width:min(75%,280px);filter:drop-shadow(0 0 35px #16d9f544);animation:loreFloat 5s ease-in-out infinite}
+    @keyframes loreFloat{50%{transform:translateY(-12px) rotate(2deg)}}
+    .lore-art-label{position:absolute;bottom:18px;left:20px;font:9px "DM Mono",monospace;letter-spacing:.14em;color:#75a4bd}
+    .lore-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:35px}
+    .lore-card{padding:25px;border:1px solid #ffffff1a;background:#0c2038;min-height:205px}
+    .lore-card .icon{font-size:27px}.lore-card small{display:block;margin-top:18px;color:#16d9f5;font:9px "DM Mono",monospace;letter-spacing:.13em}
+    .lore-card h3{font-size:17px;margin:10px 0}.lore-card p{font-size:13px;line-height:1.7;color:#9cb1c7;margin:0}
+    .abyss-map{position:relative;margin-top:38px;padding:35px 24px;border:1px solid #16d9f533;background:radial-gradient(ellipse at 50% 45%,#123651,#081629 72%);overflow:hidden}
+    .map-line{position:absolute;inset:10% 15%;border:1px dashed #16d9f544;border-radius:50%;transform:rotate(-13deg);pointer-events:none}
+    .map-stops{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+    .map-stop{min-height:150px;padding:18px 14px;background:#071426cc;border:1px solid #ffffff20;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .map-stop b{font-size:28px}.map-stop strong{font-size:12px;margin:10px 0 5px}.map-stop span{font:9px "DM Mono",monospace;color:#83a3bd;letter-spacing:.08em}
+    .classified{margin-top:30px;padding:30px;border:1px solid #8b5cf655;background:linear-gradient(120deg,#171633,#0b1d34);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+    .classified p{color:#aebfd0;line-height:1.7;margin-bottom:0}
+    .reveal-button{background:#8b5cf6;color:white;border:0;padding:14px 18px;font:700 10px "DM Mono",monospace;letter-spacing:.08em;cursor:pointer}
+    .secret-message{display:none;grid-column:1/-1;padding:18px;border-left:2px solid #8b5cf6;color:#e6dcff;line-height:1.8;background:#8b5cf610}
+    .secret-message.visible{display:block}
+    .diary{margin-top:35px;border-left:1px solid #16d9f555;padding-left:26px;display:grid;gap:22px}
+    .diary-entry{position:relative;padding:2px 0 8px}
+    .diary-entry:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#16d9f5;left:-31px;top:5px;box-shadow:0 0 12px #16d9f5}
+    .diary-entry small{font:9px "DM Mono",monospace;color:#16d9f5;letter-spacing:.14em}
+    .diary-entry h3{font-size:18px;margin:7px 0}.diary-entry p{margin:0;color:#9cb1c7;line-height:1.7;font-size:13px}
+    .lore-quote{padding:50px 30px;text-align:center;background:linear-gradient(120deg,#0e2944,#0b1c32);border:1px solid #ffffff1b;margin-top:30px}
+    .lore-quote blockquote{font-size:clamp(24px,4vw,40px);font-weight:700;letter-spacing:-.04em;line-height:1.2;margin:0 auto;max-width:760px}
+    .lore-quote span{display:block;margin-top:18px;color:#16d9f5;font:10px "DM Mono",monospace;letter-spacing:.15em}
+    @media(max-width:760px){.lore-hero{min-height:0;padding-block:65px 45px}.lore-hero:after{right:-180px;top:45px}.lore-section{padding:70px 0}.lore-two{grid-template-columns:1fr;gap:28px}.lore-cards{grid-template-columns:1fr}.map-stops{grid-template-columns:1fr 1fr}.map-stop{min-height:125px}.classified{grid-template-columns:1fr}.reveal-button{justify-self:start}.lore-quote{padding:35px 20px}}
+    @media(prefers-reduced-motion:reduce){.lore-art img{animation:none}}
+  </style>
 </head>
 <body>
   <div class="ocean-glow glow-one"></div><div class="ocean-glow glow-two"></div>
@@ -36,18 +78,109 @@
     </nav>
   </header>
   <main id="top">
-    <div class="page-heading section-wrap"><div class="section-kicker">ABYXO / LORE</div><h1>THE LORE</h1><p>Meet the crowned octopus at the heart of ABYXO.</p></div><section class="content-section section-wrap" id="lore">
-      <div class="section-kicker">01 / ORIGIN STORY</div>
-      <div class="two-col">
-        <h2>THE DEEP<br>WAS NEVER<br><span>THIS LOUD</span></h2>
-        <div class="body-copy">
-          <p>They say a strange signal echoed through the deepest part of the chain. Something answered.</p>
-          <p>Meet ABYXO: a tiny abyss-born octopus with glowing eyes, questionable intentions, and a crown it definitely did not earn. Now it has surfaced on Base to collect memes and cause beautifully harmless chaos.</p>
+
+    <section class="lore-hero section-wrap">
+      <div class="section-kicker"><span class="pulse-dot"></span> ABYXO ARCHIVES / FILE 008</div>
+      <h1>WELCOME TO<br><span>THE ABYSS</span></h1>
+      <p>Every legend starts somewhere. This one started at the bottom of the ocean, with one tiny creature, one questionable crown, and a signal nobody could ignore.</p>
+      <nav class="lore-index" aria-label="Explore the lore">
+        <a href="#origin">01 / ORIGIN</a><a href="#creature">02 / CREATURE</a><a href="#map">03 / THE ABYSS</a><a href="#treasures">04 / RELICS</a><a href="#classified">05 / SECRETS</a><a href="#diary">06 / DIARY</a>
+      </nav>
+    </section>
+
+    <section class="lore-section section-wrap" id="origin">
+      <div class="section-kicker">01 / THE ORIGIN STORY</div>
+      <div class="lore-two">
+        <div><h2>THE DEEP<br>WAS NEVER<br><span>THIS LOUD</span></h2></div>
+        <div class="lore-copy">
+          <p>Long before the memes reached the surface, a strange little signal pulsed through the deepest trenches of the internet. It travelled past forgotten wallets, abandoned group chats, and the remains of old trends.</p>
+          <p>Something answered. A small, dark-blue octopus emerged from the digital deep, eyes glowing cyan and a golden crown sitting proudly on its head. Nobody knows where the crown came from. ABYXO refuses to comment.</p>
+          <p>Now the creature has surfaced on <strong>Base</strong>, carrying one mission: turn the quietest corner of the abyss into the loudest place on the timeline.</p>
           <p class="highlight-line">Cute face. Suspicious plans. Eight ways to cause trouble.</p>
         </div>
       </div>
     </section>
-    
+
+    <section class="lore-section alt" id="creature">
+      <div class="section-wrap">
+        <div class="section-kicker">02 / SUBJECT IDENTIFIED</div>
+        <div class="lore-two">
+          <div class="lore-art"><img src="./mascot.svg" alt="ABYXO, the small dark-blue crowned octopus with glowing cyan eyes"><span class="lore-art-label">ENTITY 008 · STATUS: UNCONTAINED</span></div>
+          <div><h2>MEET THE<br><span>CREATURE</span></h2><div class="lore-copy">
+            <p>Small enough to fit in a treasure chest. Confident enough to claim the entire ocean.</p>
+            <p><strong>Species:</strong> Abyssal internet octopus<br><strong>Known traits:</strong> Glowing cyan eyes, eight busy arms, permanent gold crown<br><strong>Habitat:</strong> The deep web, Base, and wherever memes thrive<br><strong>Temperament:</strong> Mischievous. Dramatic. Surprisingly charming.</p>
+            <p>The crown is not removable. The attitude is not negotiable. The creature's intentions remain classified.</p>
+          </div></div>
+        </div>
+        <div class="lore-cards">
+          <article class="lore-card"><div class="icon">👑</div><small>TRAIT 001</small><h3>The Crown</h3><p>Officially self-appointed. Unofficially non-negotiable. It has never once been taken off.</p></article>
+          <article class="lore-card"><div class="icon">✨</div><small>TRAIT 002</small><h3>Cyan Eyes</h3><p>They glow brighter whenever a fresh meme enters the water. Scientists remain confused.</p></article>
+          <article class="lore-card"><div class="icon">🐙</div><small>TRAIT 003</small><h3>Eight Arms</h3><p>One for the memes, one for the mission, and six for activities ABYXO will not disclose.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lore-section section-wrap" id="map">
+      <div class="section-kicker">03 / UNCHARTED TERRITORY</div>
+      <h2>MAP OF THE<br><span>ABYSS</span></h2>
+      <p class="lore-copy">A very unofficial guide to the places ABYXO claims to have discovered. Explore at your own risk. Bring snacks.</p>
+      <div class="abyss-map">
+        <div class="map-line"></div>
+        <div class="map-stops">
+          <div class="map-stop"><b>🌊</b><strong>The Surface</strong><span>WHERE THE MEMES BEGIN</span></div>
+          <div class="map-stop"><b>🫧</b><strong>Bubble District</strong><span>RUMOURS & REACTIONS</span></div>
+          <div class="map-stop"><b>🗝️</b><strong>Forgotten Trench</strong><span>LOST INTERNET LORE</span></div>
+          <div class="map-stop"><b>👑</b><strong>The Crown Zone</strong><span>ABYXO'S TERRITORY</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lore-section alt" id="treasures">
+      <div class="section-wrap">
+        <div class="section-kicker">04 / LOST TREASURES</div>
+        <h2>RELICS FROM<br><span>THE DEEP</span></h2>
+        <p class="lore-copy">The abyss is full of strange discoveries. Some are priceless. Some are probably just shiny rocks.</p>
+        <div class="lore-cards">
+          <article class="lore-card"><div class="icon">🪙</div><small>RELIC 001</small><h3>The First Coin</h3><p>A legendary golden disc said to have made the creature's eyes sparkle. Its whereabouts are unknown.</p></article>
+          <article class="lore-card"><div class="icon">📡</div><small>RELIC 002</small><h3>The Deep Signal</h3><p>A mysterious transmission that called ABYXO toward the surface. The source remains untraceable.</p></article>
+          <article class="lore-card"><div class="icon">📜</div><small>RELIC 003</small><h3>The Eight Rules</h3><p>An ancient note with eight rules. ABYXO ate the paper before anyone could read them.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lore-section section-wrap" id="enemies">
+      <div class="section-kicker">05 / THREATS & RUMOURS</div>
+      <h2>NOT EVERYTHING<br><span>WANTS YOU HERE</span></h2>
+      <div class="lore-cards">
+        <article class="lore-card"><div class="icon">🦈</div><small>THREAT LEVEL: DRAMATIC</small><h3>The Scroll Shark</h3><p>Swims endlessly through timelines, hunting for attention and unfinished punchlines.</p></article>
+        <article class="lore-card"><div class="icon">🪼</div><small>THREAT LEVEL: UNPREDICTABLE</small><h3>The Ghost Jelly</h3><p>Appears in abandoned chats, leaves one cryptic emoji, and vanishes for three months.</p></article>
+        <article class="lore-card"><div class="icon">🦀</div><small>THREAT LEVEL: ANNOYING</small><h3>The FUD Crab</h3><p>Pinches every new idea before it has a chance to grow. Easily distracted by shiny objects.</p></article>
+      </div>
+    </section>
+
+    <section class="lore-section alt" id="classified">
+      <div class="section-wrap">
+        <div class="section-kicker">06 / CLASSIFIED ARCHIVES</div>
+        <h2>YOU FOUND<br><span>SOMETHING?</span></h2>
+        <div class="classified">
+          <div><div class="section-kicker">RESTRICTED FILE // 008-A</div><h3>THE CREATURE LEFT A NOTE</h3><p>Most visitors never notice this file. ABYXO hopes you are not most visitors.</p></div>
+          <button class="reveal-button" id="reveal-secret" type="button" aria-expanded="false">DECRYPT FILE ↗</button>
+          <div class="secret-message" id="secret-message" aria-live="polite">“If you can read this, you are officially part of the abyss. Tell nobody where the snacks are hidden. Especially the FUD Crab.”<br><br><strong>— ABYXO 🐙</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lore-section section-wrap" id="diary">
+      <div class="section-kicker">07 / ABYXO'S PRIVATE LOG</div>
+      <h2>FIELD NOTES<br><span>FROM THE DEEP</span></h2>
+      <div class="diary">
+        <article class="diary-entry"><small>ENTRY 001 / THE AWAKENING</small><h3>Something is glowing</h3><p>Woke up in the dark. Found a crown. It fits. This feels important.</p></article>
+        <article class="diary-entry"><small>ENTRY 002 / FIRST CONTACT</small><h3>The surface is weird</h3><p>Discovered humans arguing about pictures of animals. I think I understand them.</p></article>
+        <article class="diary-entry"><small>ENTRY 003 / NEW TERRITORY</small><h3>Base looks interesting</h3><p>Found a new place to make noise. Eight arms are better than two. Obviously.</p></article>
+        <article class="diary-entry"><small>ENTRY 004 / CURRENT STATUS</small><h3>The abyss is calling</h3><p>The Abyxonauts are gathering. The next chapter is still being written.</p></article>
+      </div>
+      <div class="lore-quote"><blockquote>“The ocean is big. My plans are bigger.”</blockquote><span>— ABYXO, CROWNED TROUBLEMAKER</span></div>
+    </section>
   </main>
   <footer class="site-footer section-wrap">
     <a class="brand" href="./"><img src="./logo.svg" alt="ABYXO — Small Creature. Deep Chaos."></a>
@@ -55,7 +188,7 @@
     <span class="footer-note">An independent meme coin concept. DYOR. Nothing here is financial advice.</span>
       <nav class="legal-links" aria-label="Legal information"><a href="./disclaimer.html">Disclaimer</a><a href="./privacy.html">Privacy</a><a href="./terms.html">Terms</a><a href="./risk-disclosure.html">Risk disclosure</a></nav>
   </footer>
-  <script src="./script.js"></script>
+  <script>\n    (() => { const button = document.getElementById("reveal-secret"); const secret = document.getElementById("secret-message"); if (button && secret) button.addEventListener("click", () => { const open = secret.classList.toggle("visible"); button.setAttribute("aria-expanded", String(open)); button.textContent = open ? "CLOSE FILE ×" : "DECRYPT FILE ↗"; }); })();\n  </script>\n  <script src="./script.js"></script>
   <script src="./site-sound.js"></script>
 </body>
 </html>
