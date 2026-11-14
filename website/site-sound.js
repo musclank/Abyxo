@@ -13,7 +13,11 @@
   control.setAttribute("aria-label", enabled ? "Turn website sound off" : "Turn website sound on");
   control.innerHTML = '<span aria-hidden="true">♫</span><span class="site-sound-label"></span>';
   control.querySelector(".site-sound-label").textContent = enabled ? "SITE SOUND ON" : "SITE SOUND OFF";
-  document.body.appendChild(control);
+  const navControls = document.createElement("div");
+  navControls.className = "nav-audio-controls";
+  navControls.appendChild(control);
+  const siteNav = document.querySelector(".site-header .nav");
+  (siteNav || document.body).appendChild(navControls);
   function getAudio() {
     if (!enabled) return null;
     const AudioClass = window.AudioContext || window.webkitAudioContext;
@@ -77,7 +81,7 @@
   const musicControl = document.createElement("div");
   musicControl.className = "abyxo-music-control";
   musicControl.innerHTML = '<button type="button" class="abyxo-music-toggle" aria-pressed="false"><span aria-hidden="true">▶</span><span class="abyxo-music-label">PLAY OCEAN MUSIC</span></button><label class="abyxo-volume-label" for="abyxo-music-volume">VOL</label><input id="abyxo-music-volume" class="abyxo-music-volume" type="range" min="0" max="100" value="28" aria-label="Background music volume">';
-  document.body.appendChild(musicControl);
+  navControls.appendChild(musicControl);
   const musicButton = musicControl.querySelector(".abyxo-music-toggle");
   const musicLabel = musicControl.querySelector(".abyxo-music-label");
   const musicIcon = musicButton.querySelector("span");
