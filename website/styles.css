@@ -748,3 +748,37 @@ body.game-is-fullscreen{overflow:hidden}
 
 /* Five-heart survival HUD */
 .game-stats>.game-health-stat b{color:#ff6474;font-size:clamp(12px,2vw,18px);letter-spacing:.04em;white-space:nowrap;text-shadow:0 0 10px #ff526044}
+
+
+/* ABYXO Global Leaderboard */
+.global-leaderboard{padding-block:clamp(58px,8vw,108px)}
+.leaderboard-heading{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:30px}
+.leaderboard-heading h2{margin:10px 0 0;font-size:clamp(38px,7vw,76px);line-height:.9;letter-spacing:-.065em}
+.leaderboard-heading h2 span{color:#16d9f5}
+.leaderboard-heading>p{max-width:310px;color:#a9bfd1;font-size:13px;line-height:1.8}
+.leaderboard-layout{display:grid;grid-template-columns:minmax(250px,.82fr) minmax(0,1.4fr);gap:18px;align-items:start}
+.leaderboard-account,.leaderboard-rankings{min-width:0;padding:clamp(17px,3vw,25px);border:1px solid rgba(22,217,245,.2);border-radius:18px;background:linear-gradient(145deg,rgba(12,39,62,.94),rgba(4,17,31,.96));box-shadow:0 18px 55px rgba(0,0,0,.16)}
+.leaderboard-card-kicker,.leaderboard-table-head{font:10px "DM Mono",monospace;letter-spacing:.14em;color:#a6f7ff}
+.leaderboard-session{margin:15px 0;color:#f4f7fc;font-size:14px;line-height:1.6}
+.leaderboard-auth-form{display:grid;gap:12px}
+.leaderboard-auth-form label{display:grid;gap:7px;color:#9cb6c9;font:9px "DM Mono",monospace;letter-spacing:.12em}
+.leaderboard-auth-form input{width:100%;min-width:0;padding:12px 13px;border:1px solid rgba(166,247,255,.2);border-radius:9px;background:#061525;color:#f4f7fc;font:13px "Space Grotesk",sans-serif;letter-spacing:normal;outline:none}
+.leaderboard-auth-form input:focus{border-color:#16d9f5;box-shadow:0 0 0 3px rgba(22,217,245,.1)}
+.leaderboard-submit{padding:13px;border:0;border-radius:9px;background:#16d9f5;color:#041323;font:700 10px "DM Mono",monospace;letter-spacing:.1em;cursor:pointer}
+.leaderboard-submit:disabled{opacity:.55;cursor:wait}
+.leaderboard-auth-actions{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.leaderboard-text-button,.leaderboard-table-head button{padding:4px 0;border:0;background:none;color:#a6f7ff;font:10px "DM Mono",monospace;cursor:pointer}
+.leaderboard-status,.leaderboard-footnote{color:#819caf;font-size:11px;line-height:1.7}
+.leaderboard-status{min-height:30px;margin:12px 0 0}
+.leaderboard-player-best{margin-top:12px;padding:12px;border-radius:9px;background:rgba(22,217,245,.08);color:#a6f7ff;font:11px "DM Mono",monospace}
+.leaderboard-table-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid rgba(166,247,255,.12)}
+.leaderboard-list{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.leaderboard-list li{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 3px;border-bottom:1px solid rgba(166,247,255,.08);color:#eaf6ff;font-size:12px}
+.leaderboard-list li.is-current{background:rgba(22,217,245,.08);border-radius:7px;padding-inline:8px}
+.leaderboard-rank{color:#7f9db3;font:10px "DM Mono",monospace}
+.leaderboard-rank.top-one{color:#f8c84e}
+.leaderboard-player{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.leaderboard-score{color:#a6f7ff;font:700 12px "DM Mono",monospace;font-variant-numeric:tabular-nums}
+.leaderboard-empty{display:block!important;padding:24px 4px!important;color:#819caf!important;line-height:1.6}
+.leaderboard-footnote{margin:14px 0 0}
+@media(max-width:760px){.leaderboard-heading{display:block}.leaderboard-heading>p{margin-top:18px}.leaderboard-layout{grid-template-columns:1fr}.leaderboard-list li{grid-template-columns:34px minmax(0,1fr) auto}}
