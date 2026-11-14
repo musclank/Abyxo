@@ -70,7 +70,7 @@
   });
 
   // Optional site-wide background music. The MP3 is uploaded separately to /audio/.
-  const music = new Audio("./audio/deep-ocean.mp3");
+  const music = new Audio("./deep-ocean.mp3");
   music.loop = true;
   music.preload = "none";
   music.volume = 0.28;
@@ -91,7 +91,7 @@
         musicLabel.textContent = "OCEAN MUSIC ON";
       } catch (_) {
         musicLabel.textContent = "MP3 NOT UPLOADED";
-        musicButton.setAttribute("aria-label", "Upload audio/deep-ocean.mp3 to enable music");
+        musicButton.setAttribute("aria-label", "Upload deep-ocean.mp3 to enable music");
       }
     } else {
       music.pause();
