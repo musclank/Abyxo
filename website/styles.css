@@ -858,3 +858,27 @@ main,header,footer,section,article,aside,nav,
     max-width:calc(100vw - 20px);
   }
 }
+
+/* MOBILE VIEWPORT WIDTH — keep the page canvas aligned to the device viewport */
+html {
+  min-width: 100%;
+  background-color: #071426;
+}
+@media (max-width: 760px) {
+  html, body {
+    width: 100%;
+    min-width: 100vw;
+    max-width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: clip !important;
+  }
+  body {
+    position: relative;
+    background-color: #071426;
+  }
+  .site-sound-toggle,
+  .abyxo-music-control {
+    right: max(10px, env(safe-area-inset-right));
+  }
+}
