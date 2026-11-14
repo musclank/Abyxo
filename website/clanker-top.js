@@ -23,7 +23,7 @@
     name: ["name","tokenName","displayName"],
     symbol: ["symbol","ticker"],
     address: ["tokenAddress","address","contractAddress","token_address"],
-    image: ["imageUrl","image_url","image","logoUrl","logoURI","logo"],
+    image: ["imageUrl","image_url","imgUrl","img_url","tokenImage","token_image","imageURI","imageUri","logoUrl","logo_url","logoURI","logo","iconUrl","icon","avatar","picture"],
     chain: ["chainName","chain","network"]
   };
 
@@ -66,6 +66,18 @@
     }
     return undefined;
   }
+  function imageSource(value) {
+    if (!value) return "";
+    if (typeof value === "object") {
+      return imageSource(value.url || value.uri || value.src || value.original || value.imageUrl || value.image || value.ipfs);
+    }
+    const raw = String(value).trim();
+    if (!raw) return "";
+    if (raw.startsWith("ipfs://")) return "https://ipfs.io/ipfs/" + raw.slice(7).replace(/^ipfs\\//, "");
+    if (raw.startsWith("ipfs/")) return "https://ipfs.io/" + raw;
+    if (raw.startsWith("//")) return "https:" + raw;
+    return raw;
+  }
   function tokenObject(item) {
     const objects = nestedObjects(item);
     const token = objects.find(obj =>
@@ -83,7 +95,7 @@
       name: deepPick([token, ...objects], aliases.name) || "Unknown token",
       symbol: deepPick([token, ...objects], aliases.symbol) || "—",
       address: deepPick([token, ...objects], aliases.address) || "",
-      image: deepPick([token, ...objects], aliases.image) || "",
+      image: imageSource(deepPick([token, ...objects], aliases.image)) || "",
       chain: deepPick([token, ...objects], aliases.chain) || "",
       volume24h: numeric(deepPick([market, ...objects], aliases.volume24h)),
       marketCap: numeric(deepPick([market, ...objects], aliases.marketCap)),
