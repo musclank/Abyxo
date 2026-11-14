@@ -490,6 +490,67 @@ if (personalityArt) {
     tone(620, .08, "triangle", .07, 980);
   }
 
+  let overlayMode = "start";
+  let checkpointButton = null;
+  let savedCheckpoint = null;
+  const checkpointKey = "abyxoArcadeCheckpoint";
+
+  function prepareNextLevel() {
+    level += 1;
+    levelClock = 0;
+    timeLeft = 30;
+    spawnClock = 0;
+    drops.length = 0;
+    particles.length = 0;
+    boss = null;
+    bossShots = [];
+    tentacleShots = [];
+    levelLabel.textContent = level + "/100";
+    timeLabel.textContent = "30";
+    playSound("level");
+    overlay.hidden = true;
+    running = true;
+    lastFrame = 0;
+    animationId = requestAnimationFrame(frame);
+  }
+
+  function saveCheckpoint() {
+    const checkpoint = { level, score, health, best, savedAt: Date.now() };
+    try {
+      localStorage.setItem(checkpointKey, JSON.stringify(checkpoint));
+      savedCheckpoint = checkpoint;
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function showBossCheckpoint() {
+    running = false;
+    cancelAnimationFrame(animationId);
+    keys.left = keys.right = false;
+    dragPointerId = null;
+    overlayMode = "checkpoint";
+    overlayTitle.textContent = "BOSS DEFEATED!";
+    overlayCopy.textContent = "Level " + level + " cleared. Save your dive progress before continuing to level " + (level + 1) + "?";
+    startButton.innerHTML = "SAVE & CONTINUE <span>✓</span>";
+    if (!checkpointButton) {
+      checkpointButton = document.createElement("button");
+      checkpointButton.type = "button";
+      checkpointButton.className = startButton.className + " game-continue-unsaved";
+      checkpointButton.textContent = "CONTINUE WITHOUT SAVING";
+      startButton.insertAdjacentElement("afterend", checkpointButton);
+    }
+    checkpointButton.hidden = false;
+    checkpointButton.onclick = () => {
+      checkpointButton.hidden = true;
+      try { localStorage.removeItem(checkpointKey); } catch (_) {}
+      prepareNextLevel();
+    };
+    overlay.hidden = false;
+    drawScene();
+  }
+
   function defeatBoss() {
     burst(boss.x, boss.y, "#a6f7ff", 60);
     boss = null;
@@ -502,14 +563,7 @@ if (personalityArt) {
       return;
     }
     level += 1;
-    levelClock = 0;
-    timeLeft = 30;
-    spawnClock = 0;
-    drops.length = 0;
-    particles.length = 0;
-    levelLabel.textContent = level + "/100";
-    timeLabel.textContent = "30";
-    playSound("level");
+    showBossCheckpoint();
   }
 
   function burst(x, y, color, amount = 12) {
@@ -719,9 +773,41 @@ if (personalityArt) {
     unlockAudio();
     playSound("start");
     cancelAnimationFrame(animationId);
+    if (overlayMode === "checkpoint") {
+      const saved = saveCheckpoint();
+      if (!saved) overlayCopy.textContent = "Browser storage is unavailable. Continuing this dive without a saved checkpoint.";
+      if (checkpointButton) checkpointButton.hidden = true;
+      overlayMode = "playing";
+      prepareNextLevel();
+      return;
+    }
+    if (overlayMode === "saved" && savedCheckpoint) {
+      resetGame();
+      level = savedCheckpoint.level;
+      score = savedCheckpoint.score;
+      health = savedCheckpoint.health;
+      best = Math.max(best, savedCheckpoint.best || 0);
+      levelClock = 0;
+      timeLeft = 30;
+      levelLabel.textContent = level + "/100";
+      scoreLabel.textContent = String(score);
+      timeLabel.textContent = "30";
+      updateHealth();
+      bestLabel.textContent = String(best);
+      try { localStorage.removeItem(checkpointKey); } catch (_) {}
+      savedCheckpoint = null;
+      overlayMode = "playing";
+      running = true;
+      overlay.hidden = true;
+      if (checkpointButton) checkpointButton.hidden = true;
+      animationId = requestAnimationFrame(frame);
+      return;
+    }
     resetGame();
     running = true;
     overlay.hidden = true;
+    overlayMode = "playing";
+    if (checkpointButton) checkpointButton.hidden = true;
     animationId = requestAnimationFrame(frame);
   }
 
@@ -753,6 +839,34 @@ if (personalityArt) {
   stage.addEventListener("contextmenu", (event) => event.preventDefault());
   window.addEventListener("blur", () => { dragPointerId = null; });
   startButton.addEventListener("click", startGame);
+  try {
+    const rawCheckpoint = localStorage.getItem(checkpointKey);
+    if (rawCheckpoint) {
+      const checkpoint = JSON.parse(rawCheckpoint);
+      if (checkpoint && Number.isFinite(checkpoint.level) && checkpoint.level >= 2 && checkpoint.level <= 100 &&
+          Number.isFinite(checkpoint.score) && Number.isFinite(checkpoint.health) && checkpoint.health > 0) {
+        savedCheckpoint = checkpoint;
+        overlayMode = "saved";
+        overlayTitle.textContent = "SAVED DIVE FOUND";
+        overlayCopy.textContent = "Resume from level " + checkpoint.level + " with " + checkpoint.score + " points and " + checkpoint.health + " hearts?";
+        startButton.innerHTML = "RESUME SAVED GAME <span>↗</span>";
+        if (!checkpointButton) {
+          checkpointButton = document.createElement("button");
+          checkpointButton.type = "button";
+          checkpointButton.className = startButton.className + " game-continue-unsaved";
+          checkpointButton.textContent = "START A NEW GAME";
+          startButton.insertAdjacentElement("afterend", checkpointButton);
+        }
+        checkpointButton.hidden = false;
+        checkpointButton.onclick = () => {
+          try { localStorage.removeItem(checkpointKey); } catch (_) {}
+          overlayMode = "start";
+          checkpointButton.hidden = true;
+          startGame();
+        };
+      }
+    }
+  } catch (_) {}
   window.addEventListener("keydown", (event) => {
     if ((event.code === "Space" || event.code === "ArrowUp") && running && boss) {
       event.preventDefault();
