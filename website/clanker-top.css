@@ -52,3 +52,10 @@
  .clanker-board-foot{font-size:7px;flex-wrap:wrap}
 }
 @media(prefers-reduced-motion:reduce){.clanker-mascot-wrap img{filter:none}}
+
+.clanker-official-button{display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:10px 15px;border:1px solid #16d9f56b;border-radius:999px;background:linear-gradient(110deg,#102c45,#0a1b30);color:#dffaff;text-decoration:none;font:600 9px "DM Mono",monospace;letter-spacing:.09em;box-shadow:0 0 22px #16d9f512;transition:border-color .2s ease,background .2s ease,transform .2s ease}
+.clanker-official-button img{width:24px;height:24px;border-radius:50%;object-fit:cover;background:#fff}
+.clanker-official-button b{color:#16d9f5;font-size:15px}
+.clanker-official-button:hover{border-color:#16d9f5;background:#10304a;transform:translateY(-2px)}
+.clanker-official-button:focus-visible{outline:2px solid #a6f7ff;outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.clanker-official-button{transition:none}.clanker-official-button:hover{transform:none}}
