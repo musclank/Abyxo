@@ -720,3 +720,37 @@ body.game-is-fullscreen{overflow:hidden}
  .minigame-shell:fullscreen .game-stats,.minigame-shell.game-fullscreen-fallback .game-stats{padding:10px 0}
 }
 @media(prefers-reduced-motion:reduce){.game-fullscreen{transition:none}}
+
+
+/* ABYXO Arcade — HD rendering polish */
+.game-stage{
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 50% 0,rgba(22,217,245,.16),transparent 58%),
+    linear-gradient(180deg,#082b49,#020d1b);
+  box-shadow:inset 0 0 42px rgba(0,0,0,.32),0 0 28px rgba(22,217,245,.08);
+}
+#abyxo-game{
+  width:100%;
+  height:100%;
+  display:block;
+  image-rendering:auto;
+  -webkit-font-smoothing:antialiased;
+}
+.game-stage:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  box-shadow:inset 0 1px rgba(255,255,255,.09),inset 0 -35px 55px rgba(0,5,16,.16);
+}
+.game-overlay{
+  background:linear-gradient(180deg,rgba(4,19,35,.48),rgba(4,19,35,.82));
+}
+.game-overlay-icon{
+  filter:drop-shadow(0 0 18px rgba(22,217,245,.75));
+}
+@media(prefers-reduced-motion:reduce){
+  .game-overlay-icon{filter:none}
+}
