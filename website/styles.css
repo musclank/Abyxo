@@ -35,3 +35,14 @@
 @media(max-width:760px){.details-section{padding-top:75px;padding-bottom:75px}.details-heading{grid-template-columns:1fr;gap:20px;margin-bottom:30px}.details-heading h2{font-size:44px}.roadmap-section{padding:75px 0}.roadmap-item{grid-template-columns:48px 1fr;gap:12px;padding:23px 4px}.roadmap-number{font-size:19px}.token-card{min-height:135px;padding:18px}.hero-art .mascot{animation-duration:6s}}
 @media(max-width:380px){.section-wrap,.site-header{width:calc(100% - 28px)}.brand img{width:124px}.hero h1{font-size:49px}.hero-actions .button{width:100%;justify-content:space-between}.token-grid{gap:8px}.token-card{padding:14px}.token-card strong{font-size:18px}.roadmap-item p{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.hero-art .bubble-one,.hero-art .bubble-two,.hero-art .bubble-three{animation:none}.signal-card,.token-card,.roadmap-item,.button,.nav a{transition:none}}
+
+/* Abyxonauts community identity */
+.community-principles{display:grid;gap:10px;margin:25px 0 18px}
+.community-principles article{display:flex;align-items:center;gap:15px;padding:13px 15px;border:1px solid #ffffff1b;background:#071a2d}
+.community-principles article>span{font:11px "DM Mono",monospace;color:var(--cyan)}
+.community-principles article strong{display:block;font-size:10px;letter-spacing:.12em;color:var(--white)}
+.community-principles article small{display:block;margin-top:4px;font-size:11px;line-height:1.5;color:#91a9bf}
+.community-safety{padding:15px 17px;border-left:2px solid var(--gold);background:#f8c84e0b}
+.community-safety strong{font:10px "DM Mono",monospace;letter-spacing:.12em;color:var(--gold)}
+.community-safety p{margin:7px 0 0;font-size:11px;line-height:1.7;color:#aebfd0}
+@media(max-width:760px){.community-principles{margin-top:20px}.community-principles article{padding:12px}.community-safety{padding:13px}}
