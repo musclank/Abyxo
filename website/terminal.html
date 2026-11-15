@@ -149,6 +149,50 @@
         output.appendChild(node);
         output.scrollTop = output.scrollHeight;
       }
+      function renderHelp() {
+        line("AVAILABLE COMMANDS — TAP A COMMAND TO RUN IT", "system");
+        const commands = [
+          ["help", "Show all commands"],
+          ["scan", "Scan the fictional abyssal network"],
+          ["watch", "Keep scanning until another command"],
+          ["watch stop", "Stop continuous scanning"],
+          ["decrypt", "Reveal the sealed ABYXO archive"],
+          ["lore", "Display the creature's origin signal"],
+          ["map", "Explore the abyss map"],
+          ["treasures", "List legendary relics"],
+          ["threats", "Identify creatures in the trench"],
+          ["diary", "Read ABYXO's private field notes"],
+          ["mascot", "Inspect Entity 008"],
+          ["mascot --ascii", "Render the ABYXO mascot in terminal art"],
+          ["mascot --scan", "Run a fictional Entity 008 scan"],
+          ["base", "Check the Base Chain destination"],
+          ["community", "Find the Abyxonaut signal"],
+          ["signal", "Receive a random abyss transmission"],
+          ["inventory", "Check your explorer inventory"],
+          ["fortune", "Get a questionable prediction"],
+          ["status", "Check terminal connection status"],
+          ["whoami", "Identify your abyssal access level"],
+          ["history", "Show commands used this session"],
+          ["theme", "Change website theme"],
+          ["clear", "Clear the terminal screen"]
+        ];
+        commands.forEach(([command, description]) => {
+          const row = document.createElement("p");
+          row.className = "terminal-line system";
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "terminal-command-link";
+          button.textContent = command;
+          button.setAttribute("aria-label", "Run command: " + command);
+          button.addEventListener("click", () => {
+            run(command);
+            input.focus();
+          });
+          row.append(button, document.createTextNode("  — " + description));
+          output.appendChild(row);
+        });
+        output.scrollTop = output.scrollHeight;
+      }
       function pick(items) {
         return items[Math.floor(Math.random() * items.length)];
       }
