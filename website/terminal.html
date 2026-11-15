@@ -150,6 +150,19 @@
       function pick(items) {
         return items[Math.floor(Math.random() * items.length)];
       }
+      function startWatch(showNotice = true) {
+        if (watchTimer !== null) return;
+        if (showNotice) line("CONTINUOUS ABYSS WATCH ENABLED. ENTER ANY NEW COMMAND TO PAUSE.", "success");
+        line("[WATCH] Monitoring trench signals...", "system");
+        const updates = [
+          "[WATCH] Surface relay: faint meme activity detected.",
+          "[WATCH] Bubble District: three new signals drifting past.",
+          "[WATCH] Forgotten Trench: sonar echo returned. No threat confirmed.",
+          "[WATCH] Crown Zone: Entity 008 is still roaming freely.",
+          "[WATCH] Deep network stable. Continuing passive scan..."
+        ];
+        watchTimer = window.setInterval(() => line(pick(updates), "system"), 4500);
+      }
       function applyTheme(theme) {
         if (theme === "reset" || theme === "dark") {
           localStorage.setItem("abyxo-theme", "dark");
@@ -216,18 +229,7 @@
               line("WATCH LOOP IS ALREADY RUNNING. ENTER ANY NEW COMMAND TO PAUSE IT.", "warning");
               break;
             }
-            line("CONTINUOUS ABYSS WATCH ENABLED. ENTER ANY NEW COMMAND TO PAUSE.", "success");
-            line("[WATCH] Monitoring trench signals...", "system");
-            watchTimer = window.setInterval(() => {
-              const updates = [
-                "[WATCH] Surface relay: faint meme activity detected.",
-                "[WATCH] Bubble District: three new signals drifting past.",
-                "[WATCH] Forgotten Trench: sonar echo returned. No threat confirmed.",
-                "[WATCH] Crown Zone: Entity 008 is still roaming freely.",
-                "[WATCH] Deep network stable. Continuing passive scan..."
-              ];
-              line(pick(updates), "system");
-            }, 4500);
+            startWatch();
             break;
           case "scan":
             line("PINGING THE ABYSSAL GRID...", "system");
@@ -347,7 +349,8 @@
             line("UNKNOWN COMMAND: " + raw + " — TYPE 'help' TO SEE AVAILABLE COMMANDS.", "error");
         }
       }
-      ["BOOTING ABYXO DEEP TERMINAL...", "ESTABLISHING SECURE TRENCH LINK...", "SIGNAL FOUND // ENTITY 008 RESPONDING.", "ACCESS GRANTED, ABYXONAUT.", "Type 'help' to see available commands."].forEach((item, index) => line(item, index === 3 ? "success" : "system"));
+      ["BOOTING ABYXO DEEP TERMINAL...", "ESTABLISHING SECURE TRENCH LINK...", "SIGNAL FOUND // ENTITY 008 RESPONDING.", "ACCESS GRANTED, ABYXONAUT.", "Automatic watch is active. Enter any command to pause it; type 'watch' to resume."].forEach((item, index) => line(item, index === 3 ? "success" : "system"));
+      startWatch(false);
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         const value = input.value;
