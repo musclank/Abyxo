@@ -10,12 +10,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://abyxo.xyz/clanker-top.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
+<url>
     <loc>https://abyxo.xyz/community.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
