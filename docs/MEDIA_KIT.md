@@ -112,7 +112,7 @@ Use the official SVG assets and palette above when creating these graphics.
 
 ## 8. Official links and verification
 
-- **Website:** https://musclank.github.io/Abyxo/
+- **Website:** https://abyxo.xyz/
 - **Source repository:** https://github.com/musclank/Abyxo
 - **Network theme:** Base
 - **Telegram / X:** not yet confirmed for publication
