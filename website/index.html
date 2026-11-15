@@ -152,48 +152,7 @@
   <script src="./script.js"></script>
   <script src="./leaderboard.js"></script>
   <script src="./site-sound.js"></script>
-  <script>
-    (() => {
-      const address = "0x62Bde7b5410BF36a125b4ECA7f5dD478F983cCcC";
-      const api = "https://api.dexscreener.com/latest/dex/tokens/" + address;
-      const set = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = value; };
-      const money = value => {
-        if (value == null || !Number.isFinite(Number(value))) return "—";
-        const n = Number(value);
-        if (n >= 1) return "$" + n.toLocaleString("en-US", {maximumFractionDigits:n >= 1000 ? 0 : 4});
-        if (n >= 0.0001) return "$" + n.toLocaleString("en-US", {maximumFractionDigits:8});
-        return "$" + n.toExponential(3);
-      };
-      async function refreshMarketWatch() {
-        try {
-          const response = await fetch(api, {headers:{"accept":"application/json"},cache:"no-store"});
-          if (!response.ok) throw new Error("Market data unavailable");
-          const data = await response.json();
-          const pairs = (data.pairs || []).filter(pair => pair.chainId === "base" && pair.baseToken && pair.baseToken.address.toLowerCase() === address.toLowerCase());
-          pairs.sort((a,b) => Number(b.liquidity?.usd || 0) - Number(a.liquidity?.usd || 0));
-          const pair = pairs[0];
-          if (!pair) {
-            set("home-market-status", "NO INDEXED BASE PAIR");
-            set("home-market-updated", "NO ACTIVE BASE PAIR RETURNED · CHECK BACK SOON");
-            return;
-          }
-          set("home-abyxo-price", money(pair.priceUsd));
-          const change = pair.priceChange?.h24;
-          set("home-abyxo-change", change == null ? "24H CHANGE UNAVAILABLE" : (Number(change) > 0 ? "+" : "") + Number(change).toFixed(2) + "% / 24H");
-          set("home-abyxo-mcap", money(pair.marketCap ?? pair.fdv));
-          set("home-abyxo-liquidity", money(pair.liquidity?.usd));
-          set("home-abyxo-volume", money(pair.volume?.h24));
-          set("home-market-status", "LIVE DATA");
-          set("home-market-updated", "UPDATED " + new Date().toLocaleTimeString() + " · " + (pair.dexId || "BASE DEX").toUpperCase());
-        } catch (_) {
-          set("home-market-status", "FEED UNAVAILABLE");
-          set("home-market-updated", "COULD NOT FETCH DATA · AUTOMATIC RETRY ENABLED");
-        }
-      }
-      refreshMarketWatch();
-      window.setInterval(refreshMarketWatch, 60000);
-    })();
-  </script>
+
   <script>
     (() => {
       const button = document.getElementById("copy-abyxo-ca");
