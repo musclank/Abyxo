@@ -86,6 +86,20 @@
         <span class="ca-copy-feedback" id="ca-copy-feedback" aria-live="polite"></span>
       </div>
     </section>
+    <section class="home-market-watch section-wrap" id="abyxo-market-watch" aria-labelledby="home-market-title">
+      <div class="home-market-heading">
+        <div><div class="section-kicker"><span class="pulse-dot"></span> BASE / LIVE MARKET FEED</div><h2 id="home-market-title">ABYXO <span>MARKET WATCH</span></h2><p>Live market snapshot for the official ABYXO contract. Automatically refreshes every 60 seconds.</p></div>
+        <span class="home-market-status" id="home-market-status" role="status" aria-live="polite">CONNECTING…</span>
+      </div>
+      <div class="home-market-grid" aria-label="ABYXO live market statistics">
+        <article><span>PRICE (USD)</span><strong id="home-abyxo-price">—</strong><small id="home-abyxo-change">Waiting for market data</small></article>
+        <article><span>MARKET CAP</span><strong id="home-abyxo-mcap">—</strong><small>USD</small></article>
+        <article><span>LIQUIDITY</span><strong id="home-abyxo-liquidity">—</strong><small>USD</small></article>
+        <article><span>24H VOLUME</span><strong id="home-abyxo-volume">—</strong><small>USD</small></article>
+      </div>
+      <div class="home-market-footer"><span id="home-market-updated">PUBLIC DATA · BASE NETWORK</span><a href="./tokenomics.html#live-statistics">FULL MARKET DASHBOARD ↗</a><a href="https://dexscreener.com/base/0x62bde7b5410bf36a125b4eca7f5dd478f983cccc" target="_blank" rel="noopener noreferrer">OPEN DEXSCREENER ↗</a></div>
+      <p class="home-market-note">Data provided by DexScreener and may be delayed. Values remain blank when no verified Base trading pair is returned.</p>
+    </section>
     <section class="abyss-transmission section-wrap" aria-labelledby="transmission-title">
       <div class="transmission-orbit transmission-orbit--one"></div><div class="transmission-orbit transmission-orbit--two"></div>
       <div class="transmission-copy">
@@ -151,6 +165,48 @@
   <script src="./script.js"></script>
   <script src="./leaderboard.js"></script>
   <script src="./site-sound.js"></script>
+  <script>
+    (() => {
+      const address = "0x62Bde7b5410BF36a125b4ECA7f5dD478F983cCcC";
+      const api = "https://api.dexscreener.com/latest/dex/tokens/" + address;
+      const set = (id, value) => { const node = document.getElementById(id); if (node) node.textContent = value; };
+      const money = value => {
+        if (value == null || !Number.isFinite(Number(value))) return "—";
+        const n = Number(value);
+        if (n >= 1) return "$" + n.toLocaleString("en-US", {maximumFractionDigits:n >= 1000 ? 0 : 4});
+        if (n >= 0.0001) return "$" + n.toLocaleString("en-US", {maximumFractionDigits:8});
+        return "$" + n.toExponential(3);
+      };
+      async function refreshMarketWatch() {
+        try {
+          const response = await fetch(api, {headers:{"accept":"application/json"},cache:"no-store"});
+          if (!response.ok) throw new Error("Market data unavailable");
+          const data = await response.json();
+          const pairs = (data.pairs || []).filter(pair => pair.chainId === "base" && pair.baseToken && pair.baseToken.address.toLowerCase() === address.toLowerCase());
+          pairs.sort((a,b) => Number(b.liquidity?.usd || 0) - Number(a.liquidity?.usd || 0));
+          const pair = pairs[0];
+          if (!pair) {
+            set("home-market-status", "NO INDEXED BASE PAIR");
+            set("home-market-updated", "NO ACTIVE BASE PAIR RETURNED · CHECK BACK SOON");
+            return;
+          }
+          set("home-abyxo-price", money(pair.priceUsd));
+          const change = pair.priceChange?.h24;
+          set("home-abyxo-change", change == null ? "24H CHANGE UNAVAILABLE" : (Number(change) > 0 ? "+" : "") + Number(change).toFixed(2) + "% / 24H");
+          set("home-abyxo-mcap", money(pair.marketCap ?? pair.fdv));
+          set("home-abyxo-liquidity", money(pair.liquidity?.usd));
+          set("home-abyxo-volume", money(pair.volume?.h24));
+          set("home-market-status", "LIVE DATA");
+          set("home-market-updated", "UPDATED " + new Date().toLocaleTimeString() + " · " + (pair.dexId || "BASE DEX").toUpperCase());
+        } catch (_) {
+          set("home-market-status", "FEED UNAVAILABLE");
+          set("home-market-updated", "COULD NOT FETCH DATA · AUTOMATIC RETRY ENABLED");
+        }
+      }
+      refreshMarketWatch();
+      window.setInterval(refreshMarketWatch, 60000);
+    })();
+  </script>
   <script>
     (() => {
       const button = document.getElementById("copy-abyxo-ca");
