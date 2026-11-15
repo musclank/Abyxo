@@ -86,20 +86,126 @@
         <span class="ca-copy-feedback" id="ca-copy-feedback" aria-live="polite"></span>
       </div>
     </section>
-    <section class="home-market-watch section-wrap" id="abyxo-market-watch" aria-labelledby="home-market-title">
-      <div class="home-market-heading">
-        <div><div class="section-kicker"><span class="pulse-dot"></span> BASE / LIVE MARKET FEED</div><h2 id="home-market-title">ABYXO <span>MARKET WATCH</span></h2><p>Live market snapshot for the official ABYXO contract. Automatically refreshes every 60 seconds.</p></div>
-        <span class="home-market-status" id="home-market-status" role="status" aria-live="polite">CONNECTING…</span>
-      </div>
-      <div class="home-market-grid" aria-label="ABYXO live market statistics">
-        <article><span>PRICE (USD)</span><strong id="home-abyxo-price">—</strong><small id="home-abyxo-change">Waiting for market data</small></article>
-        <article><span>MARKET CAP</span><strong id="home-abyxo-mcap">—</strong><small>USD</small></article>
-        <article><span>LIQUIDITY</span><strong id="home-abyxo-liquidity">—</strong><small>USD</small></article>
-        <article><span>24H VOLUME</span><strong id="home-abyxo-volume">—</strong><small>USD</small></article>
-      </div>
-      <div class="home-market-footer"><span id="home-market-updated">PUBLIC DATA · BASE NETWORK</span><a href="./tokenomics.html#live-statistics">FULL MARKET DASHBOARD ↗</a><a href="https://dexscreener.com/base/0x62bde7b5410bf36a125b4eca7f5dd478f983cccc" target="_blank" rel="noopener noreferrer">OPEN DEXSCREENER ↗</a></div>
-      <p class="home-market-note">Data provided by DexScreener and may be delayed. Values remain blank when no verified Base trading pair is returned.</p>
-    </section>
+    <section class="token-live-panel section-wrap" id="live-statistics" aria-labelledby="token-live-title">
+        <div class="token-live-heading">
+          <div>
+            <div class="section-kicker">04 / LIVE ON-CHAIN + MARKET DATA</div>
+            <h2 id="token-live-title">ABYXO <span>MARKET WATCH</span></h2>
+            <p>Live market information for the official ABYXO contract on Base. Values are fetched from public market-data and Base RPC endpoints.</p>
+          </div>
+          <span class="token-live-badge token-live-badge--live" id="token-live-badge"><i aria-hidden="true"></i> CONNECTING</span>
+        </div>
+        <div class="token-live-status" id="token-live-status" role="status" aria-live="polite">
+          <span class="token-live-orbit" aria-hidden="true">◉</span>
+          <div><strong id="token-live-status-title">CONNECTING TO THE ABYSS</strong><small id="token-live-status-copy">Requesting current ABYXO market data…</small></div>
+        </div>
+        <div class="token-live-grid" aria-label="Live ABYXO market statistics">
+          <article><span>TOKEN PRICE</span><strong id="abyxo-price">—</strong><small id="abyxo-price-change">USD</small></article>
+          <article><span>MARKET CAP</span><strong id="abyxo-market-cap">—</strong><small>USD</small></article>
+          <article><span>FULLY DILUTED VALUE</span><strong id="abyxo-fdv">—</strong><small>USD</small></article>
+          <article><span>LIQUIDITY</span><strong id="abyxo-liquidity">—</strong><small>USD</small></article>
+          <article><span>24H VOLUME</span><strong id="abyxo-volume">—</strong><small>USD</small></article>
+          <article><span>24H TRANSACTIONS</span><strong id="abyxo-transactions">—</strong><small id="abyxo-buy-sell">Buys / sells</small></article>
+        </div>
+        <div class="token-live-chart" id="abyxo-chart-wrap">
+          <div><span>LIVE PRICE CHART</span><strong id="abyxo-pair-name">Waiting for active Base pair…</strong></div>
+          <div class="token-live-chart-empty" id="abyxo-chart-empty">Searching public market data<span>CHART WILL APPEAR WHEN A TRACKED BASE PAIR IS FOUND</span></div>
+          <iframe id="abyxo-dex-chart" title="ABYXO live price chart on DexScreener" loading="lazy" referrerpolicy="no-referrer" allow="clipboard-write" hidden></iframe>
+        </div>
+        <div class="token-live-actions">
+          <a class="ca-explorer-link" href="https://www.clanker.world/clanker/0x62Bde7b5410BF36a125b4ECA7f5dD478F983cCcC" target="_blank" rel="noopener noreferrer">VIEW ON CLANKER ↗</a>
+          <a class="ca-explorer-link" href="https://dexscreener.com/base/0x62bde7b5410bf36a125b4eca7f5dd478f983cccc" target="_blank" rel="noopener noreferrer">OPEN DEXSCREENER ↗</a>
+          <button class="ca-copy-button" id="tokenomics-copy-ca" type="button">COPY CONTRACT</button>
+        </div>
+        <p class="token-live-footnote">Market data is supplied by DexScreener and may be delayed or unavailable until a liquidity pool is indexed. Total supply is read from the token contract on Base. A dash means the source has not returned a verified value; it does not mean zero.</p>
+      </section>
+      <script>
+      (() => {
+        const ADDRESS = "0x62Bde7b5410BF36a125b4ECA7f5dD478F983cCcC";
+        const API = "https://api.dexscreener.com/latest/dex/tokens/" + ADDRESS;
+        const $ = (id) => document.getElementById(id);
+        const money = (value) => {
+          if (value === null || value === undefined || !Number.isFinite(Number(value))) return "—";
+          const n = Number(value);
+          if (n >= 1) return "$" + n.toLocaleString("en-US", {maximumFractionDigits: n >= 1000 ? 0 : 4});
+          if (n >= 0.0001) return "$" + n.toLocaleString("en-US", {maximumFractionDigits: 8});
+          return "$" + n.toExponential(3);
+        };
+        const compact = (value) => value == null || !Number.isFinite(Number(value)) ? "—" :
+          Number(value).toLocaleString("en-US", {notation:"compact", maximumFractionDigits:2});
+        const setText = (id, value) => { const el = $(id); if (el) el.textContent = value; };
+        const status = (title, copy, live) => {
+          setText("token-live-status-title", title);
+          setText("token-live-status-copy", copy);
+          setText("token-live-badge", live ? "LIVE DATA" : "DATA STATUS");
+          const badge = $("token-live-badge");
+          if (badge) badge.classList.toggle("is-live", !!live);
+        };
+        async function loadSupply() {
+          try {
+            const [supplyRes, decimalsRes] = await Promise.all([
+              fetch("https://mainnet.base.org", {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_call",params:[{to:ADDRESS,data:"0x18160ddd"},"latest"]})}),
+              fetch("https://mainnet.base.org", {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:2,method:"eth_call",params:[{to:ADDRESS,data:"0x313ce567"},"latest"]})})
+            ]);
+            const [supplyJson, decimalsJson] = await Promise.all([supplyRes.json(),decimalsRes.json()]);
+            if (supplyJson.result && decimalsJson.result) {
+              const raw = BigInt(supplyJson.result);
+              const decimals = Number(BigInt(decimalsJson.result));
+              const whole = Number(raw) / Math.pow(10, decimals);
+              setText("abyxo-total-supply", compact(whole));
+            } else setText("abyxo-total-supply", "Unavailable");
+          } catch (_) { setText("abyxo-total-supply", "Unavailable"); }
+        }
+        async function loadMarket() {
+          try {
+            const response = await fetch(API, {headers:{"accept":"application/json"},cache:"no-store"});
+            if (!response.ok) throw new Error("Market API returned " + response.status);
+            const data = await response.json();
+            const pairs = (data.pairs || []).filter(p => p.chainId === "base" && p.baseToken && p.baseToken.address.toLowerCase() === ADDRESS.toLowerCase());
+            pairs.sort((a,b) => Number(b.liquidity?.usd || 0) - Number(a.liquidity?.usd || 0));
+            const pair = pairs[0];
+            if (!pair) {
+              status("NO INDEXED BASE PAIR YET", "Contract lookup succeeded, but DexScreener has not returned an active Base trading pair for this address. Market values will appear once indexed.", false);
+              return;
+            }
+            setText("abyxo-price", money(pair.priceUsd));
+            const change = pair.priceChange?.h24;
+            setText("abyxo-price-change", change == null ? "24H change unavailable" : (Number(change) > 0 ? "+" : "") + Number(change).toFixed(2) + "% / 24H");
+            setText("abyxo-market-cap", money(pair.marketCap ?? pair.fdv));
+            setText("abyxo-fdv", money(pair.fdv));
+            setText("abyxo-liquidity", money(pair.liquidity?.usd));
+            setText("abyxo-volume", money(pair.volume?.h24));
+            const buys = Number(pair.txns?.h24?.buys || 0), sells = Number(pair.txns?.h24?.sells || 0);
+            setText("abyxo-transactions", compact(buys + sells));
+            setText("abyxo-buy-sell", compact(buys) + " buys / " + compact(sells) + " sells · 24H");
+            setText("abyxo-pair-name", (pair.baseToken.symbol || "ABYXO") + " / " + (pair.quoteToken?.symbol || "pair") + " · " + (pair.dexId || "DEX"));
+            const chart = $("abyxo-dex-chart");
+            chart.src = "https://dexscreener.com/base/" + pair.pairAddress + "?embed=1&theme=dark&trades=0&info=0";
+            chart.hidden = false;
+            $("abyxo-chart-empty").hidden = true;
+            status("MARKET FEED CONNECTED", "Showing the most liquid Base pair returned for the official ABYXO contract. Last refreshed " + new Date().toLocaleTimeString() + ".", true);
+          } catch (error) {
+            status("MARKET DATA TEMPORARILY UNAVAILABLE", "Could not retrieve DexScreener data right now. The page will retry automatically.", false);
+          }
+        }
+        const copy = $("tokenomics-copy-ca");
+        if (copy) copy.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(ADDRESS);
+            copy.textContent = "COPIED";
+          } catch (_) {
+            const field = document.createElement("textarea"); field.value = ADDRESS; document.body.appendChild(field); field.select();
+            try { document.execCommand("copy"); copy.textContent = "COPIED"; } catch (_) { copy.textContent = "COPY FAILED"; }
+            field.remove();
+          }
+          setTimeout(() => { copy.textContent = "COPY CONTRACT"; }, 1800);
+        });
+        loadSupply();
+        loadMarket();
+        setInterval(loadMarket, 60000);
+      })();
+      </script>
+    <p class="disclaimer section-wrap">Market data is supplied by DexScreener and may be delayed. Values are shown only when a matching Base trading pair is returned.</p>
     <section class="abyss-transmission section-wrap" aria-labelledby="transmission-title">
       <div class="transmission-orbit transmission-orbit--one"></div><div class="transmission-orbit transmission-orbit--two"></div>
       <div class="transmission-copy">
