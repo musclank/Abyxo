@@ -1192,3 +1192,14 @@ html {
 :root[data-theme="light"] .home-market-footer a{color:#075d78}
 @media(max-width:760px){.home-market-watch{margin-top:16px;padding:20px 16px}.home-market-heading{display:block}.home-market-status{display:inline-flex;margin-top:15px}.home-market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-market-grid article{min-height:94px;padding:13px}.home-market-footer{gap:12px}.home-market-footer span{width:100%}}
 @media(max-width:360px){.home-market-grid{gap:7px}.home-market-grid article{padding:11px}.home-market-grid article>span{font-size:7px}}
+
+/* Homepage — classified archive teaser */
+.home-found-something{padding-top:76px;padding-bottom:30px}
+.home-found-heading h2{font-size:clamp(38px,5vw,58px);line-height:1.02;margin:18px 0 28px}
+.home-found-heading h2 span{color:var(--cyan)}
+.home-found-card{padding:clamp(22px,4vw,34px);border:1px solid #8b5cf655;border-radius:18px;background:radial-gradient(circle at 90% 10%,#8b5cf51c,transparent 38%),linear-gradient(120deg,#171633,#0b1d34);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.home-found-card h3{margin:10px 0 8px;font-size:clamp(18px,2.2vw,24px)}
+.home-found-card p{max-width:58ch;color:#aebfd0;line-height:1.7;margin:0}
+.home-found-card .reveal-button{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:#8b5cf6;color:white;border:0;border-radius:8px;padding:14px 18px;font:700 10px "DM Mono",monospace;letter-spacing:.08em;text-decoration:none;transition:transform .2s ease,background .2s ease}
+.home-found-card .reveal-button:hover{background:#a078ff;transform:translateY(-2px)}
+@media(max-width:560px){.home-found-something{padding-top:54px;padding-bottom:18px}.home-found-card{grid-template-columns:1fr;gap:18px}.home-found-card .reveal-button{justify-self:start}}
