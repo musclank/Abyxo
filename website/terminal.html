@@ -107,6 +107,7 @@
         "AVAILABLE COMMANDS",
         "  help        Show all commands",
         "  scan        Scan the fictional abyssal network",
+        "  watch       Keep scanning until you enter another command",
         "  decrypt     Reveal the sealed ABYXO archive",
         "  lore        Display the creature's origin signal",
         "  map         Explore the abyss map",
@@ -126,6 +127,7 @@
         "  clear       Clear the terminal screen"
       ];
       const usedCommands = [];
+      let watchTimer = null;
       const transmissions = [
         "A bubble just delivered a very important meme. It was classified as extremely silly.",
         "The crown is glowing. Either destiny is calling or someone found the snack stash.",
@@ -189,10 +191,43 @@
         const argument = parts[1] || "";
         if (!command) return;
         line("abyxo@trench:~$ " + raw, "command");
+        if (watchTimer !== null && command !== "watch") {
+          window.clearInterval(watchTimer);
+          watchTimer = null;
+          line("[WATCH LOOP PAUSED] New command received. Returning control to operator.", "warning");
+        }
         if (command !== "clear" && command !== "history") usedCommands.push(command);
         switch (command) {
           case "help":
             help.forEach((item) => line(item, "system"));
+            break;
+          case "watch":
+            if (argument === "stop") {
+              if (watchTimer !== null) {
+                window.clearInterval(watchTimer);
+                watchTimer = null;
+                line("CONTINUOUS SCAN STOPPED.", "success");
+              } else {
+                line("NO ACTIVE WATCH LOOP.", "system");
+              }
+              break;
+            }
+            if (watchTimer !== null) {
+              line("WATCH LOOP IS ALREADY RUNNING. ENTER ANY NEW COMMAND TO PAUSE IT.", "warning");
+              break;
+            }
+            line("CONTINUOUS ABYSS WATCH ENABLED. ENTER ANY NEW COMMAND TO PAUSE.", "success");
+            line("[WATCH] Monitoring trench signals...", "system");
+            watchTimer = window.setInterval(() => {
+              const updates = [
+                "[WATCH] Surface relay: faint meme activity detected.",
+                "[WATCH] Bubble District: three new signals drifting past.",
+                "[WATCH] Forgotten Trench: sonar echo returned. No threat confirmed.",
+                "[WATCH] Crown Zone: Entity 008 is still roaming freely.",
+                "[WATCH] Deep network stable. Continuing passive scan..."
+              ];
+              line(pick(updates), "system");
+            }, 4500);
             break;
           case "scan":
             line("PINGING THE ABYSSAL GRID...", "system");
