@@ -1038,3 +1038,18 @@ html {
 @media(prefers-reduced-motion:reduce){
   .page-transition-overlay{display:none!important;transition:none!important}
 }
+
+
+/* ABYXO homepage contract address */
+.ca-strip-content{display:grid;gap:10px;min-width:0;flex:1}
+.ca-address-row{display:flex;align-items:center;gap:9px;min-width:0;flex-wrap:wrap}
+.ca-address{min-width:0;overflow-wrap:anywhere;color:#eaf8ff;font:11px/1.6 "DM Mono",monospace;letter-spacing:.01em}
+.ca-copy-button,.ca-explorer-link{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border:1px solid #16d9f566;border-radius:7px;background:#16d9f512;color:#a6f7ff;font:9px "DM Mono",monospace;letter-spacing:.08em;white-space:nowrap;cursor:pointer}
+.ca-copy-button:hover,.ca-explorer-link:hover{background:#16d9f526;border-color:#16d9f5}
+.ca-copy-feedback{min-height:12px;color:#91dce8;font:9px "DM Mono",monospace}
+@media(max-width:560px){
+  .ca-strip-content{width:100%}
+  .ca-address-row{align-items:stretch}
+  .ca-address{width:100%;font-size:10px}
+  .ca-copy-button,.ca-explorer-link{flex:1}
+}
