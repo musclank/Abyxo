@@ -1106,3 +1106,10 @@ html {
 .footer-social-link{display:inline-flex;align-items:center;gap:8px;color:var(--aqua);font:10px "DM Mono",monospace;letter-spacing:.04em;white-space:nowrap}
 .community-x-button{margin-top:14px}
 @media(max-width:760px){.social-link{justify-content:center;padding:8px 0}.social-link svg{width:18px;height:18px}}
+
+
+/* Remove any legacy arrow decoration from the five home navigation bubbles. */
+.home-explore .explore-bubble::after,
+.home-explore .explore-bubble b,
+.home-explore .explore-bubble .explore-arrow,
+.home-explore .explore-bubble .arrow{display:none!important;content:none!important}
