@@ -30,65 +30,18 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
   <style>
-    .terminal-page{padding:62px 0 90px;min-height:72vh}
-    .terminal-heading{margin-bottom:28px}
-    .terminal-heading h1{font-size:clamp(42px,7vw,76px);margin:20px 0 14px}
-    .terminal-heading p{max-width:650px;color:#aebfd0;line-height:1.8}
-    .terminal-frame{position:relative;max-width:900px;margin:0 auto;border:1px solid #16d9f55c;background:#030b14;box-shadow:0 0 50px #16d9f510, inset 0 0 35px #16d9f508;overflow:hidden}
-    .terminal-frame:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,#8ffaff06 4px);z-index:2}
-    .terminal-top{min-height:48px;padding:0 17px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0c2038;border-bottom:1px solid #16d9f533;font:10px "DM Mono",monospace;letter-spacing:.1em;color:#9bb8ca}
-    .terminal-top strong{color:#9fffff;font-weight:500}
-    .terminal-lights{display:flex;gap:6px}.terminal-lights i{width:7px;height:7px;border-radius:50%;background:#16d9f5;box-shadow:0 0 9px #16d9f5}.terminal-lights i:nth-child(2){background:#8b5cf6;box-shadow:0 0 9px #8b5cf6}.terminal-lights i:nth-child(3){background:#f8c84e;box-shadow:0 0 9px #f8c84e}
-    .terminal-status{display:flex;gap:16px;align-items:center}
-    .terminal-screen{height:min(54vh,480px);min-height:300px;overflow-y:auto;padding:22px 22px 16px;font:13px/1.8 "DM Mono",monospace;color:#a6f7ff;scrollbar-color:#17627b #071426;scrollbar-width:thin}
-    .terminal-line{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 5px}
-    .terminal-line.system{color:#8aa9bf}.terminal-line.success{color:#8dffbd}.terminal-line.warning{color:#f8c84e}.terminal-line.error{color:#ff8c9c}.terminal-line.command{color:#f4f7fc}
-    .terminal-prompt{display:flex;align-items:center;gap:9px;padding:0 22px 20px;font:13px "DM Mono",monospace}
-    .terminal-prompt label{color:#16d9f5;white-space:nowrap}
-    .terminal-prompt input{width:100%;min-width:0;background:transparent;border:0;border-bottom:1px solid #16d9f54a;border-radius:0;padding:10px 2px;color:#f4f7fc;font:inherit;outline:none}
-    .terminal-prompt input:focus{border-color:#16d9f5;box-shadow:0 1px #16d9f5}
-    .terminal-prompt input::placeholder{color:#54718a}
-    .terminal-actions{max-width:900px;margin:14px auto 0;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
-    .terminal-chip{border:1px solid #16d9f544;background:#0c2038;color:#a6f7ff;padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer}
-    .terminal-chip:hover,.terminal-chip:focus-visible{border-color:#16d9f5;background:#10304a;outline:none}
-    .terminal-hint{margin:16px 0 0;color:#718ba5;font:10px/1.8 "DM Mono",monospace}
-    .terminal-theme-switcher{max-width:900px;margin:14px auto 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-    .terminal-theme-label{width:100%;color:#718ba5;font:10px "DM Mono",monospace;letter-spacing:.12em}
-    .terminal-theme-button{border:1px solid var(--term-accent,#16d9f5);background:var(--term-button-bg,#0c2038);color:var(--term-text,#a6f7ff);padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
-    .terminal-theme-button:hover,.terminal-theme-button:focus-visible{filter:brightness(1.25);outline:2px solid var(--term-accent,#16d9f5);outline-offset:2px}
-    .terminal-theme-button[aria-pressed="true"]{background:var(--term-accent,#16d9f5);color:var(--term-active-text,#03111a);font-weight:700}
-    .terminal-frame[data-terminal-theme="abyss"]{--term-accent:#16d9f5;--term-text:#a6f7ff;--term-button-bg:#0c2038;--term-active-text:#03111a;background:#030b14;border-color:#16d9f577}
-    .terminal-frame[data-terminal-theme="kelp"]{--term-accent:#70f0a0;--term-text:#c1ffd5;--term-button-bg:#0b2b20;--term-active-text:#062014;background:#04130e;border-color:#70f0a077}
-    .terminal-frame[data-terminal-theme="sunken-gold"]{--term-accent:#f2c66d;--term-text:#ffe7ae;--term-button-bg:#332511;--term-active-text:#241600;background:#171006;border-color:#f2c66d77}
-    .terminal-frame[data-terminal-theme="royal"]{--term-accent:#bd9aff;--term-text:#e1d2ff;--term-button-bg:#25163d;--term-active-text:#170b2a;background:#10091d;border-color:#bd9aff77}
-    .terminal-frame[data-terminal-theme="abyssal-red"]{--term-accent:#ff8295;--term-text:#ffd0d8;--term-button-bg:#3a1721;--term-active-text:#260810;background:#19080e;border-color:#ff829577}
-    .terminal-frame[data-terminal-theme] .terminal-top{background:var(--term-button-bg);border-color:color-mix(in srgb,var(--term-accent) 35%,transparent);color:var(--term-text)}
-    .terminal-frame[data-terminal-theme] .terminal-top strong,.terminal-frame[data-terminal-theme] .terminal-prompt label{color:var(--term-accent)}
-    .terminal-frame[data-terminal-theme] .terminal-screen{color:var(--term-text);scrollbar-color:var(--term-accent) var(--term-button-bg)}
-    .terminal-frame[data-terminal-theme] .terminal-prompt input{color:var(--term-text);border-color:color-mix(in srgb,var(--term-accent) 40%,transparent)}
-    .terminal-frame[data-terminal-theme] .terminal-prompt input:focus{border-color:var(--term-accent);box-shadow:0 1px var(--term-accent)}
-    .terminal-frame[data-terminal-theme] .terminal-line.system{color:color-mix(in srgb,var(--term-text) 72%,#8295a8)}
-    .terminal-frame[data-terminal-theme] .terminal-line.success{color:var(--term-accent)}
-    .terminal-frame[data-terminal-theme] .terminal-line.command{color:#fff}
-    .terminal-frame[data-terminal-bg="trench"] .terminal-screen{background:radial-gradient(ellipse at 50% 110%,#07516b88 0,transparent 58%),linear-gradient(180deg,#061a2d 0%,#020811 100%);background-attachment:local}
-    .terminal-frame[data-terminal-bg="biolume"] .terminal-screen{background:radial-gradient(circle at 15% 25%,#39e89b30 0 2px,transparent 3px),radial-gradient(circle at 78% 62%,#39e89b25 0 3px,transparent 4px),radial-gradient(ellipse at 80% 0%,#0a694b66,transparent 55%),linear-gradient(145deg,#03170f,#061d20 70%,#020b12);background-size:54px 58px,83px 77px,auto,auto}
-    .terminal-frame[data-terminal-bg="sonar"] .terminal-screen{background:repeating-radial-gradient(circle at 50% 50%,transparent 0 38px,#22d3ee20 39px 40px,transparent 41px 78px),linear-gradient(135deg,#041426,#061e32 55%,#020a14)}
-    .terminal-frame[data-terminal-bg="relic"] .terminal-screen{background:radial-gradient(ellipse at 18% 15%,#f4c76a30,transparent 35%),radial-gradient(circle at 85% 80%,#b8792b22 0 2px,transparent 3px),linear-gradient(145deg,#211707,#100d08 58%,#090b10);background-size:auto,42px 46px,auto}
-    .terminal-frame[data-terminal-bg="volcanic"] .terminal-screen{background:radial-gradient(ellipse at 50% 100%,#b51f3b55,transparent 52%),radial-gradient(circle at 20% 20%,#ff617522 0 2px,transparent 3px),linear-gradient(160deg,#230b18,#100711 65%,#08060c);background-size:auto,57px 63px,auto}
-    .terminal-frame[data-terminal-theme] .terminal-screen{background-color:transparent}
-    .terminal-background-switcher{max-width:900px;margin:14px auto 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-    .terminal-background-label{width:100%;color:#718ba5;font:10px "DM Mono",monospace;letter-spacing:.12em}
-    .terminal-background-button{border:1px solid #16d9f544;background:#071726;color:#a6f7ff;padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer}
-    .terminal-background-button:hover,.terminal-background-button:focus-visible{filter:brightness(1.3);outline:2px solid #16d9f5;outline-offset:2px}
-    .terminal-background-button[aria-pressed="true"]{background:#16465a;border-color:#16d9f5;color:#fff}
-    .terminal-theme-options{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
-    .terminal-theme-option{border:1px solid #16d9f566;background:#0c2038;color:#a6f7ff;padding:8px 12px;font:10px "DM Mono",monospace;cursor:pointer}
-    .terminal-theme-option:hover,.terminal-theme-option:focus-visible{border-color:#16d9f5;background:#103b52;outline:2px solid #16d9f544}
-    @media(max-width:760px){.terminal-theme-option{min-height:38px;padding-inline:14px}}
-    .terminal-back{display:inline-flex;margin-top:28px;color:#a6f7ff;font:10px "DM Mono",monospace;letter-spacing:.1em}
-    .terminal-back:hover{color:white}
-    @media(max-width:760px){.terminal-page{padding:48px 0 70px}.terminal-screen{height:52vh;min-height:280px;padding:17px 14px;font-size:12px}.terminal-prompt{padding:0 14px 17px;font-size:12px}.terminal-top{padding-inline:12px;font-size:9px}.terminal-status{gap:8px}.terminal-actions{gap:7px}.terminal-chip{padding:9px 10px}}
-    @media(prefers-reduced-motion:reduce){.terminal-frame:before{display:none}}
+    .terminal-page{padding:62px 0 90px;min-height:72vh}.terminal-heading{margin-bottom:28px}.terminal-heading h1{font-size:clamp(42px,7vw,76px);margin:20px 0 14px}.terminal-heading p{max-width:650px;color:#aebfd0;line-height:1.8}
+    .terminal-frame{position:relative;z-index:0;max-width:980px;margin:0 auto;border:1px solid #16d9f55c;background:#030b14;box-shadow:0 0 50px #16d9f510;overflow:hidden}.terminal-frame:before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,#8ffaff06 4px);z-index:2}
+    .terminal-top{min-height:54px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0c2038;border-bottom:1px solid #16d9f533;font:10px "DM Mono",monospace;letter-spacing:.1em;color:#9bb8ca}.terminal-top strong{color:#9fffff;font-weight:500}.terminal-lights{display:flex;gap:6px}.terminal-lights i{width:7px;height:7px;border-radius:50%;background:#16d9f5;box-shadow:0 0 9px #16d9f5}.terminal-lights i:nth-child(2){background:#8b5cf6}.terminal-lights i:nth-child(3){background:#f8c84e}.terminal-status{display:flex;gap:16px;align-items:center}
+    .chat-shell{position:relative;z-index:1;display:flex;flex-direction:column;min-height:590px;background:radial-gradient(ellipse at 50% 0%,#0a314455,transparent 52%),#030b14}.chat-intro{padding:25px 24px 18px;border-bottom:1px solid #16d9f51c}.chat-bot-id{display:flex;align-items:center;gap:12px}.chat-avatar{width:44px;height:44px;object-fit:contain;padding:5px;border:1px solid #16d9f566;border-radius:14px;background:#082238;box-shadow:0 0 24px #16d9f51c}.chat-bot-name{font:600 14px "Space Grotesk",sans-serif;color:#e9fbff;letter-spacing:.04em}.chat-bot-sub{margin-top:4px;color:#7fa8ba;font:10px "DM Mono",monospace;letter-spacing:.08em}.chat-online{margin-left:auto;display:flex;align-items:center;gap:7px;color:#83f6bc;font:10px "DM Mono",monospace}.chat-online:before{content:"";width:6px;height:6px;border-radius:50%;background:#57f3a5;box-shadow:0 0 10px #57f3a5}
+    .chat-messages{height:390px;min-height:330px;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:17px;scrollbar-color:#17627b #071426;scrollbar-width:thin}.chat-message{display:flex;gap:10px;max-width:88%;align-items:flex-start;animation:chat-in .24s ease-out}.chat-message.user{align-self:flex-end;flex-direction:row-reverse}.chat-mini-avatar{width:27px;height:27px;flex:0 0 27px;object-fit:contain;border-radius:9px;background:#0b2639;padding:3px}.chat-bubble{padding:12px 14px;border:1px solid #16d9f52b;background:#091b2b;border-radius:3px 13px 13px 13px;color:#c4e3ed;font:13px/1.75 "Space Grotesk",sans-serif;overflow-wrap:anywhere;white-space:pre-wrap}.chat-message.user .chat-bubble{border-color:#168fae55;background:#0b3041;border-radius:13px 3px 13px 13px;color:#effcff}.chat-sender{display:block;margin-bottom:5px;color:#5fdcf0;font:9px "DM Mono",monospace;letter-spacing:.1em}.chat-message.user .chat-sender{text-align:right;color:#9ad7e5}
+    .chat-typing{display:inline-flex;gap:4px;padding:5px 2px}.chat-typing i{width:5px;height:5px;border-radius:50%;background:#59dff2;animation:chat-pulse .8s infinite alternate}.chat-typing i:nth-child(2){animation-delay:.2s}.chat-typing i:nth-child(3){animation-delay:.4s}.chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 18px}.chat-suggestion{border:1px solid #16d9f544;background:#082033;color:#9cefff;padding:8px 11px;border-radius:3px;font:10px "DM Mono",monospace;cursor:pointer}.chat-suggestion:hover,.chat-suggestion:focus-visible{border-color:#16d9f5;background:#10354b;color:#fff;outline:none}.chat-suggestion:disabled{opacity:.5}
+    .chat-compose{display:flex;gap:10px;align-items:flex-end;padding:16px 20px 18px;border-top:1px solid #16d9f526;background:#061321}.chat-compose textarea{width:100%;min-width:0;min-height:46px;max-height:120px;resize:vertical;border:1px solid #16d9f544;border-radius:3px;background:#030d18;color:#e8fbff;padding:13px 14px;font:13px/1.5 "Space Grotesk",sans-serif;outline:none}.chat-compose textarea:focus{border-color:#16d9f5;box-shadow:0 0 0 2px #16d9f514}.chat-compose textarea::placeholder{color:#58778c}.chat-send{height:46px;min-width:48px;border:1px solid #16d9f5;background:#0c5268;color:#eaffff;cursor:pointer;font:18px "DM Mono",monospace}.chat-send:hover{background:#117b96;box-shadow:0 0 18px #16d9f533}.chat-footnote{padding:0 20px 15px;color:#58788c;background:#061321;font:9px/1.6 "DM Mono",monospace}
+    .terminal-theme-switcher,.terminal-background-switcher{max-width:980px;margin:14px auto 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}.terminal-theme-label,.terminal-background-label{width:100%;color:#718ba5;font:10px "DM Mono",monospace;letter-spacing:.12em}.terminal-theme-button,.terminal-background-button{border:1px solid #16d9f544;background:#0c2038;color:#a6f7ff;padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer}.terminal-theme-button[aria-pressed="true"],.terminal-background-button[aria-pressed="true"]{background:#16465a;border-color:#16d9f5;color:#fff}
+    .terminal-frame[data-terminal-theme="abyss"]{--term-accent:#16d9f5;border-color:#16d9f577}.terminal-frame[data-terminal-theme="kelp"]{--term-accent:#70f0a0;border-color:#70f0a077}.terminal-frame[data-terminal-theme="sunken-gold"]{--term-accent:#f2c66d;border-color:#f2c66d77}.terminal-frame[data-terminal-theme="royal"]{--term-accent:#bd9aff;border-color:#bd9aff77}.terminal-frame[data-terminal-theme="abyssal-red"]{--term-accent:#ff8295;border-color:#ff829577}.terminal-frame[data-terminal-theme] .terminal-top{background:color-mix(in srgb,var(--term-accent) 15%,#071426)}.terminal-frame[data-terminal-theme] .chat-shell{background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--term-accent) 13%,transparent),transparent 55%),#030b14}.terminal-frame[data-terminal-theme] .chat-bubble{border-color:color-mix(in srgb,var(--term-accent) 25%,transparent)}
+    .terminal-frame[data-terminal-bg="trench"] .chat-shell{background:radial-gradient(ellipse at 50% 110%,#07516b55,transparent 58%),linear-gradient(180deg,#061a2d,#020811)}.terminal-frame[data-terminal-bg="biolume"] .chat-shell{background:radial-gradient(circle at 15% 25%,#39e89b20 0 2px,transparent 3px),radial-gradient(circle at 78% 62%,#39e89b18 0 3px,transparent 4px),linear-gradient(145deg,#03170f,#061d20 70%,#020b12)}.terminal-frame[data-terminal-bg="sonar"] .chat-shell{background:repeating-radial-gradient(circle at 50% 50%,transparent 0 38px,#22d3ee16 39px 40px,transparent 41px 78px),linear-gradient(135deg,#041426,#061e32 55%,#020a14)}.terminal-frame[data-terminal-bg="relic"] .chat-shell{background:radial-gradient(ellipse at 18% 15%,#f4c76a25,transparent 35%),linear-gradient(145deg,#211707,#100d08 58%,#090b10)}.terminal-frame[data-terminal-bg="volcanic"] .chat-shell{background:radial-gradient(ellipse at 50% 100%,#b51f3b44,transparent 52%),linear-gradient(160deg,#230b18,#100711 65%,#08060c)}
+    .terminal-hint{max-width:980px;margin:16px auto 0;color:#718ba5;font:10px/1.8 "DM Mono",monospace}.terminal-back{display:inline-flex;margin-top:28px;color:#a6f7ff;font:10px "DM Mono",monospace;letter-spacing:.1em}.terminal-back:hover{color:white}@keyframes chat-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}@keyframes chat-pulse{from{opacity:.35;transform:translateY(0)}to{opacity:1;transform:translateY(-3px)}}
+    @media(max-width:760px){.terminal-page{padding:48px 0 70px}.terminal-top{padding-inline:12px;font-size:9px}.terminal-status{gap:8px}.chat-shell{min-height:550px}.chat-intro{padding:18px 14px 14px}.chat-messages{height:390px;min-height:300px;padding:18px 13px}.chat-message{max-width:96%}.chat-bubble{font-size:12px;padding:10px 11px}.chat-suggestions{padding:0 13px 14px}.chat-compose{padding:13px 12px 14px;gap:7px}.chat-compose textarea{font-size:12px}.chat-online{font-size:9px}.terminal-theme-switcher,.terminal-background-switcher{gap:7px}.terminal-theme-button,.terminal-background-button{padding:9px 10px;font-size:9px}}@media(prefers-reduced-motion:reduce){.terminal-frame:before{display:none}.chat-message,.chat-typing i{animation:none}}
   </style>
 </head>
 <body>
@@ -114,31 +67,17 @@
       <h1>ABYXO <span>DEEP TERMINAL</span></h1>
       <p>A forgotten console is still transmitting from the trench. Type a command, follow the signal, and see what the creature left behind.</p>
     </div>
-    <section class="terminal-frame" aria-label="Interactive ABYXO terminal">
-      <div class="terminal-top"><span><strong>ABYXO://DEEP-NET</strong> &nbsp; ROOT ACCESS</span><span class="terminal-status"><span>LINK: STABLE</span><span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span></span></div>
-      <div class="terminal-screen" id="terminal-output" role="log" aria-live="polite" aria-relevant="additions"></div>
-      <form class="terminal-prompt" id="terminal-form" autocomplete="off">
-        <label for="terminal-input">abyxo@trench:~$</label>
-        <input id="terminal-input" name="command" type="text" placeholder="type help and press Enter" spellcheck="false" autocapitalize="off" aria-label="Enter a terminal command">
-      </form>
+    <section class="terminal-frame" aria-label="ABYXO chatbot" data-terminal-theme="abyss" data-terminal-bg="trench">
+      <div class="terminal-top"><span><strong>ABYXO://DEEP-NET</strong> &nbsp; AI INTERFACE</span><span class="terminal-status"><span>LINK: STABLE</span><span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span></span></div>
+      <div class="chat-shell">
+        <div class="chat-intro"><div class="chat-bot-id"><img class="chat-avatar" src="./mascot.svg" alt="ABYXO mascot"><div><div class="chat-bot-name">ABYXO <span style="color:#64dff1">BOT</span></div><div class="chat-bot-sub">ENTITY 008 · YOUR GUIDE TO THE ABYSS</div></div><span class="chat-online">ONLINE</span></div></div>
+        <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-relevant="additions"></div>
+        <div class="chat-suggestions" id="chat-suggestions"><button class="chat-suggestion" type="button" data-chat-prompt="Who is ABYXO?">WHO IS ABYXO?</button><button class="chat-suggestion" type="button" data-chat-prompt="Tell me the lore">THE LORE</button><button class="chat-suggestion" type="button" data-chat-prompt="What is Base?">BASE NETWORK</button><button class="chat-suggestion" type="button" data-chat-prompt="Show me your commands">HELP</button></div>
+        <form class="chat-compose" id="chat-form" autocomplete="off"><textarea id="chat-input" rows="1" placeholder="Message ABYXO... ask me anything about the abyss" aria-label="Message ABYXO" maxlength="1000"></textarea><button class="chat-send" type="submit" aria-label="Send message">↑</button></form>
+        <div class="chat-footnote">LOCAL CHAT SIMULATION · NO EXTERNAL AI API · YOUR DEVICE IS NOT ACCESSED</div>
+      </div>
     </section>
-    <div class="terminal-theme-switcher" id="terminal-theme-switcher" aria-label="Terminal color themes">
-      <span class="terminal-theme-label">CHOOSE YOUR TERMINAL THEME</span>
-      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="abyss" aria-pressed="true">01 · ABYSS</button>
-      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="kelp" aria-pressed="false">02 · KELP</button>
-      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="sunken-gold" aria-pressed="false">03 · SUNKEN GOLD</button>
-      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="royal" aria-pressed="false">04 · ROYAL</button>
-      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="abyssal-red" aria-pressed="false">05 · ABYSSAL RED</button>
-    </div>
-    <div class="terminal-background-switcher" id="terminal-background-switcher" aria-label="Terminal background styles">
-      <span class="terminal-background-label">CHOOSE YOUR ABYSS BACKGROUND</span>
-      <button class="terminal-background-button" type="button" data-terminal-bg-choice="trench" aria-pressed="true">01 · DEEP TRENCH</button>
-      <button class="terminal-background-button" type="button" data-terminal-bg-choice="biolume" aria-pressed="false">02 · BIOLUMINESCENT</button>
-      <button class="terminal-background-button" type="button" data-terminal-bg-choice="sonar" aria-pressed="false">03 · SONAR GRID</button>
-      <button class="terminal-background-button" type="button" data-terminal-bg-choice="relic" aria-pressed="false">04 · SUNKEN RELIC</button>
-      <button class="terminal-background-button" type="button" data-terminal-bg-choice="volcanic" aria-pressed="false">05 · VOLCANIC RIFT</button>
-    </div>
-    <p class="terminal-hint">TIP: COMMANDS ARE SIMULATED FOR THE ABYXO EXPERIENCE. THIS TERMINAL DOES NOT ACCESS YOUR DEVICE OR ANY EXTERNAL SYSTEM.</p>
+    <p class="terminal-hint">ABYXO BOT IS A CHARACTER-DRIVEN LOCAL CHAT EXPERIENCE. IT DOES NOT CONNECT TO AN EXTERNAL AI SERVICE.</p>
     <a class="terminal-back" href="./lore.html">← RETURN TO THE LORE ARCHIVE</a>
   </main>
   <footer class="site-footer section-wrap">
@@ -149,382 +88,34 @@
   </footer>
   <script>
     (() => {
-      const output = document.getElementById("terminal-output");
-      const form = document.getElementById("terminal-form");
-      const input = document.getElementById("terminal-input");
-      const terminalFrame = document.querySelector(".terminal-frame");
-      const terminalThemeButtons = document.querySelectorAll("[data-terminal-theme-choice]");
-      const terminalBackgroundButtons = document.querySelectorAll("[data-terminal-bg-choice]");
-      if (!output || !form || !input || !terminalFrame) return;
-      function setTerminalTheme(theme) {
-        const allowed = ["abyss", "kelp", "sunken-gold", "royal", "abyssal-red"];
-        const selected = allowed.includes(theme) ? theme : "abyss";
-        terminalFrame.dataset.terminalTheme = selected;
-        try { localStorage.setItem("abyxo-terminal-theme", selected); } catch (error) {}
-        terminalThemeButtons.forEach((button) => {
-          button.setAttribute("aria-pressed", String(button.dataset.terminalThemeChoice === selected));
-        });
-      }
-      let savedTerminalTheme = "abyss";
-      try { savedTerminalTheme = localStorage.getItem("abyxo-terminal-theme") || "abyss"; } catch (error) {}
-      setTerminalTheme(savedTerminalTheme);
-      terminalThemeButtons.forEach((button) => button.addEventListener("click", () => {
-        setTerminalTheme(button.dataset.terminalThemeChoice);
-      }));
-      function setTerminalBackground(background) {
-        const allowed = ["trench", "biolume", "sonar", "relic", "volcanic"];
-        const selected = allowed.includes(background) ? background : "trench";
-        terminalFrame.dataset.terminalBg = selected;
-        try { localStorage.setItem("abyxo-terminal-background", selected); } catch (error) {}
-        terminalBackgroundButtons.forEach((button) => {
-          button.setAttribute("aria-pressed", String(button.dataset.terminalBgChoice === selected));
-        });
-      }
-      let savedTerminalBackground = "trench";
-      try { savedTerminalBackground = localStorage.getItem("abyxo-terminal-background") || "trench"; } catch (error) {}
-      setTerminalBackground(savedTerminalBackground);
-      terminalBackgroundButtons.forEach((button) => button.addEventListener("click", () => {
-        setTerminalBackground(button.dataset.terminalBgChoice);
-      }));
-      const secret = [
-        "ARCHIVE 008-A // CREATURE'S PRIVATE NOTE",
-        "If you can read this, you found the signal.",
-        "The crown was never the treasure. The friends we made in the abyss were.",
-        "Keep one eye on the surface. Keep seven on the memes.",
-        "— ABYXO"
+      const messages=document.getElementById("chat-messages"),form=document.getElementById("chat-form"),input=document.getElementById("chat-input"),frame=document.querySelector(".terminal-frame");
+      if(!messages||!form||!input||!frame)return;
+      const themes=["abyss","kelp","sunken-gold","royal","abyssal-red"],backgrounds=["trench","biolume","sonar","relic","volcanic"];
+      function load(key,allowed,fallback,attr){let v=fallback;try{v=localStorage.getItem(key)||fallback}catch(e){}if(!allowed.includes(v))v=fallback;frame.dataset[attr]=v;return v}
+      let theme=load("abyxo-terminal-theme",themes,"abyss","terminalTheme"),bg=load("abyxo-terminal-background",backgrounds,"trench","terminalBg");
+      document.querySelectorAll("[data-terminal-theme-choice]").forEach(b=>{b.setAttribute("aria-pressed",String(b.dataset.terminalThemeChoice===theme));b.addEventListener("click",()=>{theme=b.dataset.terminalThemeChoice;frame.dataset.terminalTheme=theme;try{localStorage.setItem("abyxo-terminal-theme",theme)}catch(e){}document.querySelectorAll("[data-terminal-theme-choice]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))})});
+      document.querySelectorAll("[data-terminal-bg-choice]").forEach(b=>{b.setAttribute("aria-pressed",String(b.dataset.terminalBgChoice===bg));b.addEventListener("click",()=>{bg=b.dataset.terminalBgChoice;frame.dataset.terminalBg=bg;try{localStorage.setItem("abyxo-terminal-background",bg)}catch(e){}document.querySelectorAll("[data-terminal-bg-choice]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)))})});
+      const knowledge=[
+        [["who are you","who is abyxo","what is abyxo","about abyxo"],"I'm ABYXO. A tiny, crowned octopus from the deepest corner of the internet. Small creature. Deep chaos. Eight arms, one crown, and absolutely no plans to behave. 🐙"],
+        [["lore","origin","story","where did you come from"],"The story begins far below the surface. Entity 008 emerged from the digital deep, claimed a golden crown, and found a new home in the Base ecosystem. The mission? Turn a quiet corner of the abyss into the loudest place on the timeline. Explore the archive at abyxo.xyz/lore.html."],
+        [["base","blockchain","network","chain"],"Base is the onchain home ABYXO is building around. Think of it as our launchpad from the deep: fast, accessible, and full of room for internet culture. Always verify official links before interacting with any token or contract."],
+        [["community","abyxonaut","friends","join"],"The Abyxonauts are the explorers, meme-makers, and curious creatures of the deep. Find the community through abyxo.xyz/community.html. There's room for one more in the trench."],
+        [["mascot","octopus","creature","tentacle"],"Entity 008: dark-blue abyssal octopus, glowing cyan eyes, mischievous energy, permanent gold crown. Threat level: adorable, but dangerous. Containment status: not a chance."],
+        [["token","coin","contract","ca","address"],"Token details are not available in this local demo yet. Don't trust random contract addresses in chat. Check only the official ABYXO website and verified project channels for launch information."],
+        [["roadmap","plan","future","next"],"Our expedition is mapped in stages: build the world, grow the Abyxonaut community, and keep expanding the experience. The public roadmap lives at abyxo.xyz/roadmap.html."],
+        [["price","chart","market","buy","sell"],"I can't provide live prices or trading data from this offline chat. Check trusted market sources and official project links. Meme coins are highly volatile. DYOR, Abyxonaut."],
+        [["help","command","what can you do","menu"],"Ask me about ABYXO, the lore, mascot, Base, community, or roadmap. Try: “Who is ABYXO?”, “Tell me the lore”, “How do I join the community?”, or “What is Base?”"],
+        [["hello","hi","hey","hai","halo","yo"],"Well, well... a new signal from the surface. Greetings, Abyxonaut! I'm ABYXO. What brings you down to my little corner of the abyss?"],
+        [["thank","thanks","makasih","terima kasih"],"Anytime, Abyxonaut. The trench is friendlier with you around. Now go make some beautiful chaos."],
+        [["website","link","official","url"],"You're already in the official deep-net. Main portal: https://abyxo.xyz. Explore the lore, roadmap, community, arcade, and more."]
       ];
-      const help = [
-        "AVAILABLE COMMANDS",
-        "  help        Show all commands",
-        "  scan        Scan the fictional abyssal network",
-        "  watch       Keep scanning until you enter another command",
-        "  decrypt     Reveal the sealed ABYXO archive",
-        "  lore        Display the creature's origin signal",
-        "  map         Explore the abyss map",
-        "  treasures   List legendary relics",
-        "  threats     Identify creatures in the trench",
-        "  diary       Read ABYXO's private field notes",
-        "  mascot      Inspect Entity 008",
-        "  mascot --ascii  Render the ABYXO mascot in terminal art",
-        "  mascot --scan   Run a fictional Entity 008 scan",
-        "  base        Check the Base Chain destination",
-        "  community   Find the Abyxonaut signal",
-        "  signal      Receive a random abyss transmission",
-        "  inventory   Check your explorer inventory",
-        "  fortune     Get a questionable prediction",
-        "  status      Check terminal connection status",
-        "  whoami      Identify your abyssal access level",
-        "  history     Show commands used this session",
-        "  theme       Change the whole website theme (dark/light/ocean/reset)",
-        "  clear       Clear the terminal screen"
-      ];
-      const usedCommands = [];
-      let watchTimer = null;
-      const transmissions = [
-        "A bubble just delivered a very important meme. It was classified as extremely silly.",
-        "The crown is glowing. Either destiny is calling or someone found the snack stash.",
-        "Eight arms detected. Productivity estimate: suspiciously high.",
-        "A new Abyxonaut has entered the trench. The FUD Crab has been notified. It is not happy."
-      ];
-      const fortunes = [
-        "A shiny relic awaits you. It may be a coin. It may be a spoon.",
-        "The next signal you follow will lead to something unexpected. Probably bubbles.",
-        "Your timeline is about to get deeper. Stay hydrated, Abyxonaut.",
-        "The crown sees potential in you. The crown sees potential in everyone."
-      ];
-      function line(text, type = "") {
-        const node = document.createElement("p");
-        node.className = "terminal-line" + (type ? " " + type : "");
-        node.textContent = text;
-        output.appendChild(node);
-        output.scrollTop = output.scrollHeight;
-      }
-      function renderHelp() {
-        line("AVAILABLE COMMANDS — TAP A COMMAND TO RUN IT", "system");
-        const commands = [
-          ["help", "Show all commands"],
-          ["scan", "Scan the fictional abyssal network"],
-          ["watch", "Keep scanning until another command"],
-          ["watch stop", "Stop continuous scanning"],
-          ["decrypt", "Reveal the sealed ABYXO archive"],
-          ["lore", "Display the creature's origin signal"],
-          ["map", "Explore the abyss map"],
-          ["treasures", "List legendary relics"],
-          ["threats", "Identify creatures in the trench"],
-          ["diary", "Read ABYXO's private field notes"],
-          ["mascot", "Inspect Entity 008"],
-          ["mascot --ascii", "Render the ABYXO mascot in terminal art"],
-          ["mascot --scan", "Run a fictional Entity 008 scan"],
-          ["base", "Check the Base Chain destination"],
-          ["community", "Find the Abyxonaut signal"],
-          ["signal", "Receive a random abyss transmission"],
-          ["inventory", "Check your explorer inventory"],
-          ["fortune", "Get a questionable prediction"],
-          ["status", "Check terminal connection status"],
-          ["whoami", "Identify your abyssal access level"],
-          ["history", "Show commands used this session"],
-          ["theme", "Change website theme"],
-          ["clear", "Clear the terminal screen"]
-        ];
-        commands.forEach(([command, description]) => {
-          const row = document.createElement("p");
-          row.className = "terminal-line system";
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "terminal-command-link";
-          button.textContent = command;
-          button.setAttribute("aria-label", "Run command: " + command);
-          button.addEventListener("click", () => {
-            run(command);
-            input.focus();
-          });
-          row.append(button, document.createTextNode("  — " + description));
-          output.appendChild(row);
-        });
-        output.scrollTop = output.scrollHeight;
-      }
-      function pick(items) {
-        return items[Math.floor(Math.random() * items.length)];
-      }
-      function startWatch(showNotice = true) {
-        if (watchTimer !== null) return;
-        if (showNotice) line("CONTINUOUS ABYSS WATCH ENABLED. ENTER ANY NEW COMMAND TO PAUSE.", "success");
-        line("[WATCH] Monitoring trench signals...", "system");
-        const updates = [
-          "[WATCH] Surface relay: faint meme activity detected.",
-          "[WATCH] Bubble District: three new signals drifting past.",
-          "[WATCH] Forgotten Trench: sonar echo returned. No threat confirmed.",
-          "[WATCH] Crown Zone: Entity 008 is still roaming freely.",
-          "[WATCH] Deep network stable. Continuing passive scan..."
-        ];
-        watchTimer = window.setInterval(() => line(pick(updates), "system"), 4500);
-      }
-      function applyTheme(theme) {
-        if (theme === "reset" || theme === "dark") {
-          localStorage.setItem("abyxo-theme", "dark");
-          document.documentElement.removeAttribute("data-theme");
-          line("DEFAULT ABYXO DARK THEME RESTORED. THIS SETTING IS SAVED.", "success");
-          return;
-        }
-        if (theme === "light" || theme === "ocean") {
-          localStorage.setItem("abyxo-theme", theme);
-          document.documentElement.setAttribute("data-theme", theme);
-          line("THEME UPDATED: " + theme.toUpperCase() + ". IT WILL FOLLOW YOU ACROSS THE WEBSITE.", "success");
-          return;
-        }
-        line("UNKNOWN THEME. CHOOSE DARK, LIGHT, OCEAN, OR RESET.", "error");
-      }
-      function showThemeOptions() {
-        line("CHOOSE A THEME — TAP AN OPTION:", "system");
-        const options = document.createElement("div");
-        options.className = "terminal-theme-options";
-        [
-          { label: "DARK · DEFAULT", value: "dark" },
-          { label: "LIGHT", value: "light" },
-          { label: "OCEAN", value: "ocean" },
-          { label: "RESET", value: "reset" }
-        ].forEach((item) => {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "terminal-theme-option";
-          button.textContent = item.label;
-          button.addEventListener("click", () => applyTheme(item.value));
-          options.appendChild(button);
-        });
-        output.appendChild(options);
-        output.scrollTop = output.scrollHeight;
-      }
-      function run(raw) {
-        const parts = raw.trim().toLowerCase().split(/\\s+/);
-        const command = parts[0];
-        const argument = parts[1] || "";
-        if (!command) return;
-        line("abyxo@trench:~$ " + raw, "command");
-        if (watchTimer !== null && command !== "watch") {
-          window.clearInterval(watchTimer);
-          watchTimer = null;
-          line("[WATCH LOOP PAUSED] New command received. Returning control to operator.", "warning");
-        }
-        if (command !== "clear" && command !== "history") usedCommands.push(command);
-        switch (command) {
-          case "help":
-            help.forEach((item) => line(item, "system"));
-            break;
-          case "watch":
-            if (argument === "stop") {
-              if (watchTimer !== null) {
-                window.clearInterval(watchTimer);
-                watchTimer = null;
-                line("CONTINUOUS SCAN STOPPED.", "success");
-              } else {
-                line("NO ACTIVE WATCH LOOP.", "system");
-              }
-              break;
-            }
-            if (watchTimer !== null) {
-              line("WATCH LOOP IS ALREADY RUNNING. ENTER ANY NEW COMMAND TO PAUSE IT.", "warning");
-              break;
-            }
-            startWatch();
-            break;
-          case "scan":
-            line("PINGING THE ABYSSAL GRID...", "system");
-            line("[OK] SURFACE RELAY ............ ONLINE", "success");
-            line("[OK] BUBBLE DISTRICT .......... DETECTED", "success");
-            line("[WARN] FORGOTTEN TRENCH ....... SIGNAL UNSTABLE", "warning");
-            line("[FOUND] CROWN ZONE ........... ENTITY 008", "success");
-            line("[INFO] UNKNOWN SHADOW ......... KEEP YOUR EYES OPEN", "warning");
-            break;
-          case "decrypt":
-            line("DECRYPTION KEY ACCEPTED // ARCHIVE 008-A OPEN", "success");
-            secret.forEach((item) => line(item, "success"));
-            break;
-          case "lore":
-            line("ORIGIN TRACE: A tiny crowned octopus emerged from the digital deep.", "system");
-            line("DESTINATION: BASE ECOSYSTEM.", "system");
-            line("MISSION: TURN THE QUIETEST CORNER OF THE ABYSS INTO THE LOUDEST PLACE ON THE TIMELINE.", "success");
-            line("FULL RECORD: ./lore.html", "system");
-            break;
-          case "map":
-            line("ABYSS NAVIGATION // FOUR KNOWN ZONES", "system");
-            line("01  THE SURFACE       — WHERE THE MEMES BEGIN", "success");
-            line("02  BUBBLE DISTRICT   — RUMOURS & REACTIONS", "success");
-            line("03  FORGOTTEN TRENCH  — LOST INTERNET LORE", "warning");
-            line("04  THE CROWN ZONE    — ABYXO TERRITORY", "success");
-            break;
-          case "treasures":
-            line("RELIC REGISTER // HANDLE WITH CURIOSITY", "system");
-            line("🪙 THE FIRST COIN — whereabouts unknown", "success");
-            line("📡 THE DEEP SIGNAL — source untraceable", "success");
-            line("📜 THE EIGHT RULES — paper reportedly eaten by ABYXO", "warning");
-            break;
-          case "threats":
-            line("TRENCH THREAT DATABASE", "system");
-            line("SCROLL SHARK — feeds on attention and unfinished punchlines", "warning");
-            line("GHOST JELLY — drifts through abandoned chats", "warning");
-            line("FUD CRAB — snaps at every new idea", "warning");
-            line("RECOMMENDATION: STAY CURIOUS. DO NOT FEED THE CRAB.", "success");
-            break;
-          case "diary":
-            line("PRIVATE FIELD NOTES // ENTITY 008", "system");
-            line("001 / THE AWAKENING — Found a crown. It fits. This feels important.", "success");
-            line("002 / FIRST CONTACT — Humans argue about pictures of animals. Fascinating.", "success");
-            line("003 / NEW TERRITORY — Base looks interesting. Eight arms are better than two.", "success");
-            line("004 / CURRENT STATUS — The Abyxonauts are gathering.", "success");
-            break;
-          case "mascot":
-            if (argument === "--ascii") {
-              line("       .-========-.", "success");
-              line("      /  THE CROWN  \\", "success");
-              line("      '------||-----'", "success");
-              line("             ||", "success");
-              line('        .-""""-.' , "success");
-              line("       /  (o)  (o)  \\", "success");
-              line("      |      __      |", "success");
-              line("      |   .-____-.   |", "success");
-              line("       \\  \\____/  /", "success");
-              line("        '._      _.'", "success");
-              line("       __/|\\____/|\\__", "success");
-              line("      /___|  ||  |___\\", "success");
-              line("          ABYXO", "success");
-              line("SMALL CREATURE. DEEP CHAOS.", "system");
-            } else if (argument === "--scan") {
-              line("ENTITY 008 // BIOMETRIC SCAN INITIALIZED", "system");
-              line("[OK] OCTOPUS SIGNATURE ........ CONFIRMED", "success");
-              line("[OK] CYAN EYE GLOW ............ ACTIVE", "success");
-              line("[OK] GOLD CROWN ............... PERMANENT", "success");
-              line("[WARN] CHAOS LEVEL ............ UNMEASURABLE", "warning");
-              line("[OK] THREAT ASSESSMENT ........ ADORABLE, BUT DANGEROUS", "success");
-              line("SCAN COMPLETE // ENTITY 008 REMAINS UNCONTAINED.", "warning");
-            } else {
-              line("ENTITY 008 // ABYXO", "success");
-              line("SPECIES: ABYSSAL INTERNET OCTOPUS", "system");
-              line("FEATURES: DARK-BLUE BODY / GLOWING CYAN EYES / PERMANENT GOLD CROWN", "system");
-              line("TEMPERAMENT: MISCHIEVOUS / DRAMATIC / SURPRISINGLY CHARMING", "system");
-              line("TRY: mascot --ascii  |  mascot --scan", "system");
-              line("CONTAINMENT STATUS: NOT A CHANCE.", "warning");
-            }
-            break;
-          case "base":
-            line("DESTINATION NETWORK: BASE", "success");
-            line("STATUS: ABYXO'S DIGITAL HOME", "system");
-            line("MISSION: BUILD, EXPLORE, AND MAKE SOME MEME-POWERED NOISE.", "system");
-            line("REMINDER: ALWAYS VERIFY CONTRACT DETAILS THROUGH OFFICIAL PROJECT CHANNELS.", "warning");
-            break;
-          case "community":
-            line("COMMUNITY CHANNEL: ABYXONAUTS", "success");
-            line("SIGNAL: FRIENDS OF THE DEEP", "system");
-            line("MISSION: KEEP THE ABYSS LOUD, WELCOMING, AND FUN.", "system");
-            line("Find the community through the official Community page.", "system");
-            break;
-          case "signal":
-            line("INCOMING TRANSMISSION...", "system");
-            line(pick(transmissions), "success");
-            break;
-          case "inventory":
-            line("EXPLORER INVENTORY // CLEARANCE 008", "system");
-            line("[1] One questionable map", "success");
-            line("[2] Three air bubbles", "success");
-            line("[3] A suspiciously shiny pebble", "success");
-            line("[4] Zero snacks (the FUD Crab was here)", "warning");
-            break;
-          case "fortune":
-            line("CONSULTING THE ANCIENT BUBBLES...", "system");
-            line(pick(fortunes), "success");
-            break;
-          case "status":
-            line("CONNECTION: STABLE", "success");
-            line("ENTITY 008: UNCONTAINED", "warning");
-            line("ENCRYPTION: LOCAL SIMULATION", "system");
-            line("EXTERNAL SYSTEM ACCESS: NONE", "system");
-            break;
-          case "whoami":
-            line("IDENTITY: ABYXONAUT", "success");
-            line("ACCESS: CURIOUS VISITOR // CLEARANCE 008", "system");
-            line("WELCOME TO THE DEEP.", "success");
-            break;
-          case "history":
-            line("SESSION COMMAND HISTORY", "system");
-            if (usedCommands.length) usedCommands.forEach((item, index) => line(String(index + 1).padStart(2, "0") + "  " + item, "system"));
-            else line("No commands recorded yet.", "system");
-            break;
-          case "theme": {
-            if (!argument) {
-              line("CURRENT THEME: " + (localStorage.getItem("abyxo-theme") || "dark").toUpperCase(), "success");
-              showThemeOptions();
-            } else {
-              applyTheme(argument);
-            }
-            break;
-          }
-          case "clear":
-            output.replaceChildren();
-            break;
-          case "sudo":
-            line("NICE TRY, ABYXONAUT. THE CROWN HAS ROOT ACCESS.", "warning");
-            break;
-          case "hello":
-          case "hi":
-            line("GREETINGS FROM THE TRENCH. ABYXO WAVES ALL EIGHT ARMS.", "success");
-            break;
-          default:
-            line("UNKNOWN COMMAND: " + raw + " — TYPE 'help' TO SEE AVAILABLE COMMANDS.", "error");
-        }
-      }
-      ["BOOTING ABYXO DEEP TERMINAL...", "ESTABLISHING SECURE TRENCH LINK...", "SIGNAL FOUND // ENTITY 008 RESPONDING.", "ACCESS GRANTED, ABYXONAUT.", "Automatic watch is active. Enter any command to pause it; type 'watch' to resume."].forEach((item, index) => line(item, index === 3 ? "success" : "system"));
-      startWatch(false);
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const value = input.value;
-        input.value = "";
-        run(value);
-      });
-      document.querySelectorAll("[data-command]").forEach((button) => button.addEventListener("click", () => {
-        const command = button.dataset.command;
-        run(command);
-        input.focus();
-      }));
-      input.focus({ preventScroll: true });
+      const fallback=["Interesting signal. I don't have a file on that one yet, but I'm listening. Try asking me about ABYXO, the lore, Base, the mascot, or the Abyxonauts.","That message reached the trench, but my little brain tentacle couldn't classify it. Ask me about the project or type “help” for suggested topics.","The abyss is vast and my archive is still growing. I can help with ABYXO lore, community, mascot details, Base, and the roadmap."];
+      function add(text,who){const row=document.createElement("div");row.className="chat-message "+who;if(who==="bot"){const img=document.createElement("img");img.className="chat-mini-avatar";img.src="./mascot.svg";img.alt="";row.append(img)}const bubble=document.createElement("div");bubble.className="chat-bubble";const sender=document.createElement("span");sender.className="chat-sender";sender.textContent=who==="bot"?"ABYXO · ENTITY 008":"YOU";const body=document.createElement("span");body.textContent=text;bubble.append(sender,body);row.append(bubble);messages.append(row);messages.scrollTop=messages.scrollHeight}
+      function answer(q){const n=q.toLowerCase(),hit=knowledge.find(x=>x[0].some(k=>n.includes(k)));return hit?hit[1]:fallback[Math.floor(Math.random()*fallback.length)]}
+      function send(q){q=q.trim();if(!q)return;add(q,"user");document.querySelectorAll(".chat-suggestion").forEach(b=>b.disabled=true);const row=document.createElement("div");row.className="chat-message bot";row.id="chat-typing";const img=document.createElement("img");img.className="chat-mini-avatar";img.src="./mascot.svg";img.alt="";const bubble=document.createElement("div");bubble.className="chat-bubble";const label=document.createElement("span");label.className="chat-sender";label.textContent="ABYXO · THINKING";const dots=document.createElement("span");dots.className="chat-typing";dots.innerHTML="<i></i><i></i><i></i>";bubble.append(label,dots);row.append(img,bubble);messages.append(row);messages.scrollTop=messages.scrollHeight;window.setTimeout(()=>{row.remove();add(answer(q),"bot");document.querySelectorAll(".chat-suggestion").forEach(b=>b.disabled=false);input.focus()},500+Math.min(q.length*9,900))}
+      form.addEventListener("submit",e=>{e.preventDefault();const v=input.value;input.value="";send(v)});input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();form.requestSubmit()}});
+      document.querySelectorAll("[data-chat-prompt]").forEach(b=>b.addEventListener("click",()=>send(b.dataset.chatPrompt)));
+      add("Signal received. Welcome to the deep, Abyxonaut. I'm ABYXO — your slightly chaotic guide to the abyss. Ask me anything about the project, or choose a prompt below. 🐙","bot");input.focus({preventScroll:true});
     })();
   </script>
   <script src="./script.js"></script>
