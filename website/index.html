@@ -85,7 +85,7 @@
         <article><span>CONTRACT ADDRESS</span><strong>—</strong><small>Not announced</small></article>
         <article><span>MARKET DATA</span><strong>—</strong><small>Available after launch</small></article>
       </div>
-      <p class="token-live-footnote">The previous Base contract and its market feed are no longer presented as ABYXO's Solana token. Follow official ABYXO channels for verified launch information.</p>
+      <p class="token-live-footnote">No live contract address or market feed has been announced yet. Follow official ABYXO channels for verified launch information.</p>
     </section>
     <section class="abyss-transmission section-wrap" aria-labelledby="transmission-title">
       <div class="transmission-orbit transmission-orbit--one"></div><div class="transmission-orbit transmission-orbit--two"></div>
@@ -153,29 +153,5 @@
   <script src="./leaderboard.js"></script>
   <script src="./site-sound.js"></script>
 
-  <script>
-    (() => {
-      const button = document.getElementById("copy-abyxo-ca");
-      const addressEl = document.getElementById("abyxo-contract-address");
-      const feedback = document.getElementById("ca-copy-feedback");
-      if (!button || !addressEl || !feedback) return;
-      button.addEventListener("click", async () => {
-        const address = addressEl.textContent.trim();
-        try {
-          await navigator.clipboard.writeText(address);
-          button.textContent = "COPIED ✓";
-          feedback.textContent = "Contract address copied.";
-        } catch {
-          const range = document.createRange();
-          range.selectNodeContents(addressEl);
-          const selection = window.getSelection();
-          selection.removeAllRanges();
-          selection.addRange(range);
-          feedback.textContent = "Select and copy the highlighted address.";
-        }
-        window.setTimeout(() => { button.textContent = "COPY CA"; }, 2200);
-      });
-    })();
-  </script>
 </body>
 </html>
