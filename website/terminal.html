@@ -41,6 +41,24 @@
     .terminal-chip{border:1px solid #16d9f544;background:#0c2038;color:#a6f7ff;padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer}
     .terminal-chip:hover,.terminal-chip:focus-visible{border-color:#16d9f5;background:#10304a;outline:none}
     .terminal-hint{margin:16px 0 0;color:#718ba5;font:10px/1.8 "DM Mono",monospace}
+    .terminal-theme-switcher{max-width:900px;margin:14px auto 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+    .terminal-theme-label{width:100%;color:#718ba5;font:10px "DM Mono",monospace;letter-spacing:.12em}
+    .terminal-theme-button{border:1px solid var(--term-accent,#16d9f5);background:var(--term-button-bg,#0c2038);color:var(--term-text,#a6f7ff);padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+    .terminal-theme-button:hover,.terminal-theme-button:focus-visible{filter:brightness(1.25);outline:2px solid var(--term-accent,#16d9f5);outline-offset:2px}
+    .terminal-theme-button[aria-pressed="true"]{background:var(--term-accent,#16d9f5);color:var(--term-active-text,#03111a);font-weight:700}
+    .terminal-frame[data-terminal-theme="abyss"]{--term-accent:#16d9f5;--term-text:#a6f7ff;--term-button-bg:#0c2038;--term-active-text:#03111a;background:#030b14;border-color:#16d9f577}
+    .terminal-frame[data-terminal-theme="kelp"]{--term-accent:#70f0a0;--term-text:#c1ffd5;--term-button-bg:#0b2b20;--term-active-text:#062014;background:#04130e;border-color:#70f0a077}
+    .terminal-frame[data-terminal-theme="sunken-gold"]{--term-accent:#f2c66d;--term-text:#ffe7ae;--term-button-bg:#332511;--term-active-text:#241600;background:#171006;border-color:#f2c66d77}
+    .terminal-frame[data-terminal-theme="royal"]{--term-accent:#bd9aff;--term-text:#e1d2ff;--term-button-bg:#25163d;--term-active-text:#170b2a;background:#10091d;border-color:#bd9aff77}
+    .terminal-frame[data-terminal-theme="abyssal-red"]{--term-accent:#ff8295;--term-text:#ffd0d8;--term-button-bg:#3a1721;--term-active-text:#260810;background:#19080e;border-color:#ff829577}
+    .terminal-frame[data-terminal-theme] .terminal-top{background:var(--term-button-bg);border-color:color-mix(in srgb,var(--term-accent) 35%,transparent);color:var(--term-text)}
+    .terminal-frame[data-terminal-theme] .terminal-top strong,.terminal-frame[data-terminal-theme] .terminal-prompt label{color:var(--term-accent)}
+    .terminal-frame[data-terminal-theme] .terminal-screen{color:var(--term-text);scrollbar-color:var(--term-accent) var(--term-button-bg)}
+    .terminal-frame[data-terminal-theme] .terminal-prompt input{color:var(--term-text);border-color:color-mix(in srgb,var(--term-accent) 40%,transparent)}
+    .terminal-frame[data-terminal-theme] .terminal-prompt input:focus{border-color:var(--term-accent);box-shadow:0 1px var(--term-accent)}
+    .terminal-frame[data-terminal-theme] .terminal-line.system{color:color-mix(in srgb,var(--term-text) 72%,#8295a8)}
+    .terminal-frame[data-terminal-theme] .terminal-line.success{color:var(--term-accent)}
+    .terminal-frame[data-terminal-theme] .terminal-line.command{color:#fff}
     .terminal-theme-options{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
     .terminal-theme-option{border:1px solid #16d9f566;background:#0c2038;color:#a6f7ff;padding:8px 12px;font:10px "DM Mono",monospace;cursor:pointer}
     .terminal-theme-option:hover,.terminal-theme-option:focus-visible{border-color:#16d9f5;background:#103b52;outline:2px solid #16d9f544}
@@ -81,6 +99,14 @@
         <input id="terminal-input" name="command" type="text" placeholder="type help and press Enter" spellcheck="false" autocapitalize="off" aria-label="Enter a terminal command">
       </form>
     </section>
+    <div class="terminal-theme-switcher" id="terminal-theme-switcher" aria-label="Terminal color themes">
+      <span class="terminal-theme-label">CHOOSE YOUR TERMINAL THEME</span>
+      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="abyss" aria-pressed="true">01 · ABYSS</button>
+      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="kelp" aria-pressed="false">02 · KELP</button>
+      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="sunken-gold" aria-pressed="false">03 · SUNKEN GOLD</button>
+      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="royal" aria-pressed="false">04 · ROYAL</button>
+      <button class="terminal-theme-button" type="button" data-terminal-theme-choice="abyssal-red" aria-pressed="false">05 · ABYSSAL RED</button>
+    </div>
     <p class="terminal-hint">TIP: COMMANDS ARE SIMULATED FOR THE ABYXO EXPERIENCE. THIS TERMINAL DOES NOT ACCESS YOUR DEVICE OR ANY EXTERNAL SYSTEM.</p>
     <a class="terminal-back" href="./lore.html">← RETURN TO THE LORE ARCHIVE</a>
   </main>
@@ -95,7 +121,24 @@
       const output = document.getElementById("terminal-output");
       const form = document.getElementById("terminal-form");
       const input = document.getElementById("terminal-input");
-      if (!output || !form || !input) return;
+      const terminalFrame = document.querySelector(".terminal-frame");
+      const terminalThemeButtons = document.querySelectorAll("[data-terminal-theme-choice]");
+      if (!output || !form || !input || !terminalFrame) return;
+      function setTerminalTheme(theme) {
+        const allowed = ["abyss", "kelp", "sunken-gold", "royal", "abyssal-red"];
+        const selected = allowed.includes(theme) ? theme : "abyss";
+        terminalFrame.dataset.terminalTheme = selected;
+        try { localStorage.setItem("abyxo-terminal-theme", selected); } catch (error) {}
+        terminalThemeButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.terminalThemeChoice === selected));
+        });
+      }
+      let savedTerminalTheme = "abyss";
+      try { savedTerminalTheme = localStorage.getItem("abyxo-terminal-theme") || "abyss"; } catch (error) {}
+      setTerminalTheme(savedTerminalTheme);
+      terminalThemeButtons.forEach((button) => button.addEventListener("click", () => {
+        setTerminalTheme(button.dataset.terminalThemeChoice);
+      }));
       const secret = [
         "ARCHIVE 008-A // CREATURE'S PRIVATE NOTE",
         "If you can read this, you found the signal.",
