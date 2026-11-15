@@ -1053,3 +1053,9 @@ html {
   .ca-address{width:100%;font-size:10px}
   .ca-copy-button,.ca-explorer-link{flex:1}
 }
+
+
+/* Homepage contract address — coming soon */
+.ca-strip .ca-strip-value{justify-content:flex-end}
+.ca-strip .ca-status-dot{background:#f8c84e;box-shadow:0 0 10px #f8c84e88}
+@media(max-width:560px){.ca-strip .ca-strip-value{justify-content:flex-start}}
