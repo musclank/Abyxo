@@ -10,9 +10,9 @@
 
   A community-driven deep-sea universe built around a crowned octopus, internet culture, and the Base ecosystem.
 
-  [![Live Website](https://img.shields.io/badge/Live%20Website-Visit%20ABYXO-08c7d8?style=for-the-badge)](https://musclank.github.io/Abyxo/)
+  [![Live Website](https://img.shields.io/badge/Live%20Website-Visit%20ABYXO-08c7d8?style=for-the-badge)](https://abyxo.xyz/)
   [![Network](https://img.shields.io/badge/Ecosystem-Base-2454ff?style=for-the-badge)](https://www.base.org/)
-  [![Hosting](https://img.shields.io/badge/Hosted%20on-GitHub%20Pages-181717?style=for-the-badge&logo=github)](https://pages.github.com/)
+  [![Hosting](https://img.shields.io/badge/Hosted%20on-Vercel-181717?style=for-the-badge&logo=github)](https://pages.github.com/)
 
 </div>
 
@@ -28,14 +28,14 @@ The project combines a distinctive visual identity with an interactive, multi-pa
 
 ## Explore ABYXO
 
-- **[Visit the live website](https://musclank.github.io/Abyxo/)**
-- [The Lore](https://musclank.github.io/Abyxo/lore.html) — the creature, its world, and the story of the abyss.
-- [The Signal](https://musclank.github.io/Abyxo/signal.html) — transmissions and project updates.
-- [Tokenomics](https://musclank.github.io/Abyxo/tokenomics.html) — project token information and disclosures.
-- [Roadmap](https://musclank.github.io/Abyxo/roadmap.html) — planned project direction.
-- [Community](https://musclank.github.io/Abyxo/community.html) — meet the Abyxonauts.
-- [Top Clankers](https://musclank.github.io/Abyxo/clanker-top.html) — Clanker ecosystem discovery page.
-- [Terminal](https://musclank.github.io/Abyxo/terminal.html) — interactive ABYXO experience.
+- **[Visit the live website](https://abyxo.xyz/)**
+- [The Lore](https://abyxo.xyz/lore.html) — the creature, its world, and the story of the abyss.
+- [The Signal](https://abyxo.xyz/signal.html) — transmissions and project updates.
+- [Tokenomics](https://abyxo.xyz/tokenomics.html) — project token information and disclosures.
+- [Roadmap](https://abyxo.xyz/roadmap.html) — planned project direction.
+- [Community](https://abyxo.xyz/community.html) — meet the Abyxonauts.
+- [Top Clankers](https://abyxo.xyz/clanker-top.html) — Clanker ecosystem discovery page.
+- [Terminal](https://abyxo.xyz/terminal.html) — interactive ABYXO experience.
 
 ## Website features
 
@@ -58,7 +58,7 @@ Feature availability may depend on the current deployment and external service c
 | Website | HTML5 |
 | Styling | CSS3 |
 | Interactions and game | Vanilla JavaScript |
-| Hosting and deployment | GitHub Pages |
+| Hosting and deployment | Vercel |
 | Authentication and leaderboard backend | Supabase (optional configuration) |
 | Ecosystem theme | Base |
 
@@ -69,7 +69,7 @@ The website is built as a static site. No frontend framework or build step is re
 ```text
 Abyxo/
 ├── .github/
-│   └── workflows/          # GitHub Pages deployment workflow
+│   └── workflows/          # Legacy GitHub Pages workflow (not production)
 ├── assets/
 │   ├── branding/           # Brand artwork and social banner
 │   ├── logo/               # Primary logo assets
@@ -126,11 +126,11 @@ You can also open `website/index.html` directly, although a local HTTP server is
 
 ## Deployment
 
-The live website is published through **GitHub Pages** from this repository.
+The production website is hosted on **Vercel**, connected to this GitHub repository. The Vercel project uses `website/` as its Root Directory and deploys automatically when changes are pushed to the connected production branch.
 
-The deployment workflow is located at `.github/workflows/deploy-pages.yml`. Changes merged or pushed to the configured deployment branch are published by the workflow.
+The GitHub Pages workflow in `.github/workflows/deploy-pages.yml` is separate legacy automation and is not the production host.
 
-Live URL: **https://musclank.github.io/Abyxo/**
+Live URL: **https://abyxo.xyz/**
 
 ## Global leaderboard configuration
 
@@ -139,7 +139,7 @@ The leaderboard interface uses Supabase for authentication and shared score stor
 1. Create a Supabase project.
 2. Run the SQL in `website/supabase/leaderboard.sql`.
 3. Configure the project URL and publishable/anon key in `website/supabase-config.js`.
-4. Add the GitHub Pages URL to the Supabase authentication URL settings.
+4. Add `https://abyxo.xyz` (and any required callback paths) to the Supabase authentication URL settings.
 5. Follow the complete [Supabase setup guide](website/SUPABASE_SETUP.md).
 
 **Security:** Never put a Supabase `service_role` key, database password, private key, or other server secret in browser-accessible files or commit them to Git.
@@ -193,6 +193,6 @@ Follow only links published through verified official ABYXO channels. Be cautiou
 
   Made for the depths. Powered by community.
 
-  [Website](https://musclank.github.io/Abyxo/) · [GitHub Repository](https://github.com/musclank/Abyxo)
+  [Website](https://abyxo.xyz/) · [GitHub Repository](https://github.com/musclank/Abyxo)
 
 </div>
