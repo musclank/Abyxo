@@ -11,7 +11,7 @@ This creates player profiles, the public read-only top-100 leaderboard, and a re
 
 ## 2. Configure Supabase Auth
 1. In **Authentication → URL Configuration**, add this Site URL:
-   `https://musclank.github.io/Abyxo/`
+   `https://abyxo.xyz/`
 2. Add the same URL to the Redirect URLs allow-list.
 3. Keep email confirmation enabled for production. Players will need to confirm their email before signing in if confirmation is required.
 
@@ -21,7 +21,7 @@ This creates player profiles, the public read-only top-100 leaderboard, and a re
 3. Paste the values into `url` and `anonKey`.
 4. Commit the file to the `main` branch.
 
-Only the publishable/anon key belongs in the browser. **Never use the service_role key** in GitHub Pages or any client-side file.
+Only the publishable/anon key belongs in the browser. **Never use the service_role key** in Vercel or any client-side file.
 
 ## 4. How it works
 - Players register with email, password, and a public username (3–18 letters, numbers, or underscores).
