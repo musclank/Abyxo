@@ -6,62 +6,62 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/arcade</loc>
+    <loc>https://abyxo.xyz/arcade.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/clanker-top</loc>
+    <loc>https://abyxo.xyz/clanker-top.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/community</loc>
+    <loc>https://abyxo.xyz/community.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/disclaimer</loc>
+    <loc>https://abyxo.xyz/disclaimer.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/lore</loc>
+    <loc>https://abyxo.xyz/lore.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/privacy</loc>
+    <loc>https://abyxo.xyz/privacy.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/risk-disclosure</loc>
+    <loc>https://abyxo.xyz/risk-disclosure.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/roadmap</loc>
+    <loc>https://abyxo.xyz/roadmap.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/signal</loc>
+    <loc>https://abyxo.xyz/signal.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/terminal</loc>
+    <loc>https://abyxo.xyz/terminal.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/terms</loc>
+    <loc>https://abyxo.xyz/terms.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://abyxo.xyz/tokenomics</loc>
+    <loc>https://abyxo.xyz/tokenomics.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
