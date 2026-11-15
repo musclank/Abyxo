@@ -1093,3 +1093,7 @@ html {
 :root[data-theme="light"] .token-live-chart>div:first-child strong{color:#426276}
 @media(max-width:760px){.token-live-panel{margin-top:52px;padding:20px 16px}.token-live-heading{display:block}.token-live-badge{margin-top:18px}.token-live-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.token-live-grid article{min-height:108px;padding:15px}.token-live-grid article strong{font-size:22px}.token-live-status{align-items:flex-start;padding:15px}.token-live-chart>div:first-child strong{font-size:10px}}
 @media(max-width:360px){.token-live-grid{gap:7px}.token-live-grid article{padding:12px}.token-live-grid article>span{font-size:8px}}
+
+.token-live-chart-empty{min-height:62px;display:grid;place-content:center;gap:6px;margin-top:14px;border:1px dashed #16d9f544;border-radius:7px;color:#a6f7ff;text-align:center;font-size:12px}
+.token-live-chart-empty span{color:#7892a9;font:8px "DM Mono",monospace;letter-spacing:.1em}
+:root[data-theme="light"] .token-live-chart-empty{color:#075d78;border-color:#087f9b66}
