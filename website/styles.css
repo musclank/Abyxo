@@ -1113,3 +1113,43 @@ html {
 .home-explore .explore-bubble b,
 .home-explore .explore-bubble .explore-arrow,
 .home-explore .explore-bubble .arrow{display:none!important;content:none!important}
+
+
+/* DESKTOP HEADER WIDTH FIX — wrap navigation instead of widening the page */
+@media (min-width:761px) {
+  .site-header {
+    height:auto;
+    min-height:100px;
+    flex-wrap:wrap;
+    align-items:center;
+    row-gap:10px;
+    padding-block:12px;
+  }
+  .site-header .brand {
+    flex:0 0 auto;
+  }
+  .site-header .nav {
+    flex:1 1 760px;
+    min-width:0;
+    max-width:100%;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    align-content:center;
+    column-gap:clamp(4px,.8vw,10px);
+    row-gap:5px;
+  }
+  .site-header .nav .nav-item {
+    flex:0 1 auto;
+    min-width:50px;
+  }
+  .site-header .nav-audio-controls {
+    min-width:0;
+    max-width:100%;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+  .site-header .nav-audio-controls .abyxo-music-control,
+  .site-header .nav-audio-controls .site-sound-toggle {
+    max-width:100%;
+  }
+}
