@@ -59,6 +59,17 @@
     .terminal-frame[data-terminal-theme] .terminal-line.system{color:color-mix(in srgb,var(--term-text) 72%,#8295a8)}
     .terminal-frame[data-terminal-theme] .terminal-line.success{color:var(--term-accent)}
     .terminal-frame[data-terminal-theme] .terminal-line.command{color:#fff}
+    .terminal-frame[data-terminal-bg="trench"] .terminal-screen{background:radial-gradient(ellipse at 50% 110%,#07516b88 0,transparent 58%),linear-gradient(180deg,#061a2d 0%,#020811 100%);background-attachment:local}
+    .terminal-frame[data-terminal-bg="biolume"] .terminal-screen{background:radial-gradient(circle at 15% 25%,#39e89b30 0 2px,transparent 3px),radial-gradient(circle at 78% 62%,#39e89b25 0 3px,transparent 4px),radial-gradient(ellipse at 80% 0%,#0a694b66,transparent 55%),linear-gradient(145deg,#03170f,#061d20 70%,#020b12);background-size:54px 58px,83px 77px,auto,auto}
+    .terminal-frame[data-terminal-bg="sonar"] .terminal-screen{background:repeating-radial-gradient(circle at 50% 50%,transparent 0 38px,#22d3ee20 39px 40px,transparent 41px 78px),linear-gradient(135deg,#041426,#061e32 55%,#020a14)}
+    .terminal-frame[data-terminal-bg="relic"] .terminal-screen{background:radial-gradient(ellipse at 18% 15%,#f4c76a30,transparent 35%),radial-gradient(circle at 85% 80%,#b8792b22 0 2px,transparent 3px),linear-gradient(145deg,#211707,#100d08 58%,#090b10);background-size:auto,42px 46px,auto}
+    .terminal-frame[data-terminal-bg="volcanic"] .terminal-screen{background:radial-gradient(ellipse at 50% 100%,#b51f3b55,transparent 52%),radial-gradient(circle at 20% 20%,#ff617522 0 2px,transparent 3px),linear-gradient(160deg,#230b18,#100711 65%,#08060c);background-size:auto,57px 63px,auto}
+    .terminal-frame[data-terminal-theme] .terminal-screen{background-color:transparent}
+    .terminal-background-switcher{max-width:900px;margin:14px auto 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+    .terminal-background-label{width:100%;color:#718ba5;font:10px "DM Mono",monospace;letter-spacing:.12em}
+    .terminal-background-button{border:1px solid #16d9f544;background:#071726;color:#a6f7ff;padding:9px 12px;font:10px "DM Mono",monospace;cursor:pointer}
+    .terminal-background-button:hover,.terminal-background-button:focus-visible{filter:brightness(1.3);outline:2px solid #16d9f5;outline-offset:2px}
+    .terminal-background-button[aria-pressed="true"]{background:#16465a;border-color:#16d9f5;color:#fff}
     .terminal-theme-options{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
     .terminal-theme-option{border:1px solid #16d9f566;background:#0c2038;color:#a6f7ff;padding:8px 12px;font:10px "DM Mono",monospace;cursor:pointer}
     .terminal-theme-option:hover,.terminal-theme-option:focus-visible{border-color:#16d9f5;background:#103b52;outline:2px solid #16d9f544}
@@ -107,6 +118,14 @@
       <button class="terminal-theme-button" type="button" data-terminal-theme-choice="royal" aria-pressed="false">04 · ROYAL</button>
       <button class="terminal-theme-button" type="button" data-terminal-theme-choice="abyssal-red" aria-pressed="false">05 · ABYSSAL RED</button>
     </div>
+    <div class="terminal-background-switcher" id="terminal-background-switcher" aria-label="Terminal background styles">
+      <span class="terminal-background-label">CHOOSE YOUR ABYSS BACKGROUND</span>
+      <button class="terminal-background-button" type="button" data-terminal-bg-choice="trench" aria-pressed="true">01 · DEEP TRENCH</button>
+      <button class="terminal-background-button" type="button" data-terminal-bg-choice="biolume" aria-pressed="false">02 · BIOLUMINESCENT</button>
+      <button class="terminal-background-button" type="button" data-terminal-bg-choice="sonar" aria-pressed="false">03 · SONAR GRID</button>
+      <button class="terminal-background-button" type="button" data-terminal-bg-choice="relic" aria-pressed="false">04 · SUNKEN RELIC</button>
+      <button class="terminal-background-button" type="button" data-terminal-bg-choice="volcanic" aria-pressed="false">05 · VOLCANIC RIFT</button>
+    </div>
     <p class="terminal-hint">TIP: COMMANDS ARE SIMULATED FOR THE ABYXO EXPERIENCE. THIS TERMINAL DOES NOT ACCESS YOUR DEVICE OR ANY EXTERNAL SYSTEM.</p>
     <a class="terminal-back" href="./lore.html">← RETURN TO THE LORE ARCHIVE</a>
   </main>
@@ -123,6 +142,7 @@
       const input = document.getElementById("terminal-input");
       const terminalFrame = document.querySelector(".terminal-frame");
       const terminalThemeButtons = document.querySelectorAll("[data-terminal-theme-choice]");
+      const terminalBackgroundButtons = document.querySelectorAll("[data-terminal-bg-choice]");
       if (!output || !form || !input || !terminalFrame) return;
       function setTerminalTheme(theme) {
         const allowed = ["abyss", "kelp", "sunken-gold", "royal", "abyssal-red"];
@@ -138,6 +158,21 @@
       setTerminalTheme(savedTerminalTheme);
       terminalThemeButtons.forEach((button) => button.addEventListener("click", () => {
         setTerminalTheme(button.dataset.terminalThemeChoice);
+      }));
+      function setTerminalBackground(background) {
+        const allowed = ["trench", "biolume", "sonar", "relic", "volcanic"];
+        const selected = allowed.includes(background) ? background : "trench";
+        terminalFrame.dataset.terminalBg = selected;
+        try { localStorage.setItem("abyxo-terminal-background", selected); } catch (error) {}
+        terminalBackgroundButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.terminalBgChoice === selected));
+        });
+      }
+      let savedTerminalBackground = "trench";
+      try { savedTerminalBackground = localStorage.getItem("abyxo-terminal-background") || "trench"; } catch (error) {}
+      setTerminalBackground(savedTerminalBackground);
+      terminalBackgroundButtons.forEach((button) => button.addEventListener("click", () => {
+        setTerminalBackground(button.dataset.terminalBgChoice);
       }));
       const secret = [
         "ARCHIVE 008-A // CREATURE'S PRIVATE NOTE",
