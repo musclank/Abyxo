@@ -115,6 +115,8 @@
         "  threats     Identify creatures in the trench",
         "  diary       Read ABYXO's private field notes",
         "  mascot      Inspect Entity 008",
+        "  mascot --ascii  Render the ABYXO mascot in terminal art",
+        "  mascot --scan   Run a fictional Entity 008 scan",
         "  base        Check the Base Chain destination",
         "  community   Find the Abyxonaut signal",
         "  signal      Receive a random abyss transmission",
@@ -277,11 +279,37 @@
             line("004 / CURRENT STATUS — The Abyxonauts are gathering.", "success");
             break;
           case "mascot":
-            line("ENTITY 008 // ABYXO", "success");
-            line("SPECIES: ABYSSAL INTERNET OCTOPUS", "system");
-            line("FEATURES: DARK-BLUE BODY / GLOWING CYAN EYES / PERMANENT GOLD CROWN", "system");
-            line("TEMPERAMENT: MISCHIEVOUS / DRAMATIC / SURPRISINGLY CHARMING", "system");
-            line("CONTAINMENT STATUS: NOT A CHANCE.", "warning");
+            if (argument === "--ascii") {
+              line("       .-========-.", "success");
+              line("      /  THE CROWN  \\", "success");
+              line("      '------||-----'", "success");
+              line("             ||", "success");
+              line("        .-""""""""-.", "success");
+              line("       /  (o)  (o)  \\", "success");
+              line("      |      __      |", "success");
+              line("      |   .-____-.   |", "success");
+              line("       \\  \\____/  /", "success");
+              line("        '._      _.'", "success");
+              line("       __/|\\____/|\\__", "success");
+              line("      /___|  ||  |___\\", "success");
+              line("          ABYXO", "success");
+              line("SMALL CREATURE. DEEP CHAOS.", "system");
+            } else if (argument === "--scan") {
+              line("ENTITY 008 // BIOMETRIC SCAN INITIALIZED", "system");
+              line("[OK] OCTOPUS SIGNATURE ........ CONFIRMED", "success");
+              line("[OK] CYAN EYE GLOW ............ ACTIVE", "success");
+              line("[OK] GOLD CROWN ............... PERMANENT", "success");
+              line("[WARN] CHAOS LEVEL ............ UNMEASURABLE", "warning");
+              line("[OK] THREAT ASSESSMENT ........ ADORABLE, BUT DANGEROUS", "success");
+              line("SCAN COMPLETE // ENTITY 008 REMAINS UNCONTAINED.", "warning");
+            } else {
+              line("ENTITY 008 // ABYXO", "success");
+              line("SPECIES: ABYSSAL INTERNET OCTOPUS", "system");
+              line("FEATURES: DARK-BLUE BODY / GLOWING CYAN EYES / PERMANENT GOLD CROWN", "system");
+              line("TEMPERAMENT: MISCHIEVOUS / DRAMATIC / SURPRISINGLY CHARMING", "system");
+              line("TRY: mascot --ascii  |  mascot --scan", "system");
+              line("CONTAINMENT STATUS: NOT A CHANCE.", "warning");
+            }
             break;
           case "base":
             line("DESTINATION NETWORK: BASE", "success");
