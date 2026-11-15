@@ -52,38 +52,130 @@
       <div class="section-kicker">03 / TRANSPARENT BY DESIGN</div>
       <div class="details-heading"><h2>NO MADE-UP<br><span>NUMBERS</span></h2><p>We would rather publish verified facts than fill the deep with guesses. Token parameters are not finalized yet.</p></div>
       <div class="token-grid">
-        <article class="token-card"><span>NETWORK</span><strong>Base</strong><small>Intended ecosystem</small></article>
-        <article class="token-card"><span>TICKER</span><strong>TBD</strong><small>Subject to availability</small></article>
-        <article class="token-card"><span>TOKEN SUPPLY</span><strong>Not set</strong><small>No confirmed figure</small></article>
-        <article class="token-card"><span>CONTRACT</span><strong>Not deployed</strong><small>No verified address published</small></article>
+        <article class="token-card"><span>NETWORK</span><strong>Base</strong><small>Base mainnet</small></article>
+        <article class="token-card"><span>TICKER</span><strong>ABYXO</strong><small>Official token</small></article>
+        <article class="token-card"><span>TOTAL SUPPLY</span><strong id="abyxo-total-supply">Loading…</strong><small>Read directly from contract</small></article>
+        <article class="token-card"><span>CONTRACT</span><strong class="token-contract-value">0x62Bd…3CcC</strong><small><a href="https://basescan.org/token/0x62Bde7b5410BF36a125b4ECA7f5dD478F983cCcC" target="_blank" rel="noopener noreferrer">View verified on BaseScan ↗</a></small></article>
       </div>
       <section class="token-live-panel" id="live-statistics" aria-labelledby="token-live-title">
         <div class="token-live-heading">
           <div>
-            <div class="section-kicker">04 / LIVE TOKEN DATA</div>
+            <div class="section-kicker">04 / LIVE ON-CHAIN + MARKET DATA</div>
             <h2 id="token-live-title">ABYXO <span>MARKET WATCH</span></h2>
-            <p>Live market statistics will appear here once the official ABYXO token launches on Base.</p>
+            <p>Live market information for the official ABYXO contract on Base. Values are fetched from public market-data and Base RPC endpoints.</p>
           </div>
-          <span class="token-live-badge"><i aria-hidden="true"></i> PRE-LAUNCH</span>
+          <span class="token-live-badge token-live-badge--live" id="token-live-badge"><i aria-hidden="true"></i> CONNECTING</span>
         </div>
-        <div class="token-live-status">
+        <div class="token-live-status" id="token-live-status" role="status" aria-live="polite">
           <span class="token-live-orbit" aria-hidden="true">◉</span>
-          <div><strong>THE SIGNAL IS WAITING</strong><small>No token contract has been deployed. Verified market data is not available yet.</small></div>
+          <div><strong id="token-live-status-title">CONNECTING TO THE ABYSS</strong><small id="token-live-status-copy">Requesting current ABYXO market data…</small></div>
         </div>
-        <div class="token-live-grid" aria-label="Token statistics available after launch">
-          <article><span>TOKEN PRICE</span><strong>—</strong><small>Unlocks after launch</small></article>
-          <article><span>MARKET CAP</span><strong>—</strong><small>Unlocks after launch</small></article>
-          <article><span>LIQUIDITY</span><strong>—</strong><small>Unlocks after launch</small></article>
-          <article><span>24H VOLUME</span><strong>—</strong><small>Unlocks after launch</small></article>
-          <article><span>HOLDERS</span><strong>—</strong><small>Unlocks after launch</small></article>
-          <article><span>24H TRANSACTIONS</span><strong>—</strong><small>Unlocks after launch</small></article>
+        <div class="token-live-grid" aria-label="Live ABYXO market statistics">
+          <article><span>TOKEN PRICE</span><strong id="abyxo-price">—</strong><small id="abyxo-price-change">USD</small></article>
+          <article><span>MARKET CAP</span><strong id="abyxo-market-cap">—</strong><small>USD</small></article>
+          <article><span>FULLY DILUTED VALUE</span><strong id="abyxo-fdv">—</strong><small>USD</small></article>
+          <article><span>LIQUIDITY</span><strong id="abyxo-liquidity">—</strong><small>USD</small></article>
+          <article><span>24H VOLUME</span><strong id="abyxo-volume">—</strong><small>USD</small></article>
+          <article><span>24H TRANSACTIONS</span><strong id="abyxo-transactions">—</strong><small id="abyxo-buy-sell">Buys / sells</small></article>
         </div>
-        <div class="token-live-chart" aria-label="Price chart will be available after token launch">
-          <div><span>PRICE HISTORY</span><strong>Chart activates after launch</strong></div>
-          <div class="token-live-chart-empty">Awaiting verified market data<span>PRICE CHART WILL ACTIVATE AFTER LAUNCH</span></div>
+        <div class="token-live-chart" id="abyxo-chart-wrap">
+          <div><span>LIVE PRICE CHART</span><strong id="abyxo-pair-name">Waiting for active Base pair…</strong></div>
+          <div class="token-live-chart-empty" id="abyxo-chart-empty">Searching public market data<span>CHART WILL APPEAR WHEN A TRACKED BASE PAIR IS FOUND</span></div>
+          <iframe id="abyxo-dex-chart" title="ABYXO live price chart on DexScreener" loading="lazy" referrerpolicy="no-referrer" allow="clipboard-write" hidden></iframe>
         </div>
-        <p class="token-live-footnote">Statistics will be connected to verified token data after the contract address is published. No placeholder values or estimated figures are displayed.</p>
+        <div class="token-live-actions">
+          <a class="ca-explorer-link" href="https://www.clanker.world/clanker/0x62Bde7b5410BF36a125b4ECA7f5dD478F983cCcC" target="_blank" rel="noopener noreferrer">VIEW ON CLANKER ↗</a>
+          <a class="ca-explorer-link" href="https://dexscreener.com/base/0x62bde7b5410bf36a125b4eca7f5dd478f983cccc" target="_blank" rel="noopener noreferrer">OPEN DEXSCREENER ↗</a>
+          <button class="ca-copy-button" id="tokenomics-copy-ca" type="button">COPY CONTRACT</button>
+        </div>
+        <p class="token-live-footnote">Market data is supplied by DexScreener and may be delayed or unavailable until a liquidity pool is indexed. Total supply is read from the token contract on Base. A dash means the source has not returned a verified value; it does not mean zero.</p>
       </section>
+      <script>
+      (() => {
+        const ADDRESS = "0x62Bde7b5410BF36a125b4ECA7f5dD478F983cCcC";
+        const API = "https://api.dexscreener.com/latest/dex/tokens/" + ADDRESS;
+        const $ = (id) => document.getElementById(id);
+        const money = (value) => {
+          if (value === null || value === undefined || !Number.isFinite(Number(value))) return "—";
+          const n = Number(value);
+          if (n >= 1) return "$" + n.toLocaleString("en-US", {maximumFractionDigits: n >= 1000 ? 0 : 4});
+          if (n >= 0.0001) return "$" + n.toLocaleString("en-US", {maximumFractionDigits: 8});
+          return "$" + n.toExponential(3);
+        };
+        const compact = (value) => value == null || !Number.isFinite(Number(value)) ? "—" :
+          Number(value).toLocaleString("en-US", {notation:"compact", maximumFractionDigits:2});
+        const setText = (id, value) => { const el = $(id); if (el) el.textContent = value; };
+        const status = (title, copy, live) => {
+          setText("token-live-status-title", title);
+          setText("token-live-status-copy", copy);
+          setText("token-live-badge", live ? "LIVE DATA" : "DATA STATUS");
+          const badge = $("token-live-badge");
+          if (badge) badge.classList.toggle("is-live", !!live);
+        };
+        async function loadSupply() {
+          try {
+            const [supplyRes, decimalsRes] = await Promise.all([
+              fetch("https://mainnet.base.org", {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"eth_call",params:[{to:ADDRESS,data:"0x18160ddd"},"latest"]})}),
+              fetch("https://mainnet.base.org", {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:2,method:"eth_call",params:[{to:ADDRESS,data:"0x313ce567"},"latest"]})})
+            ]);
+            const [supplyJson, decimalsJson] = await Promise.all([supplyRes.json(),decimalsRes.json()]);
+            if (supplyJson.result && decimalsJson.result) {
+              const raw = BigInt(supplyJson.result);
+              const decimals = Number(BigInt(decimalsJson.result));
+              const whole = Number(raw) / Math.pow(10, decimals);
+              setText("abyxo-total-supply", compact(whole));
+            } else setText("abyxo-total-supply", "Unavailable");
+          } catch (_) { setText("abyxo-total-supply", "Unavailable"); }
+        }
+        async function loadMarket() {
+          try {
+            const response = await fetch(API, {headers:{"accept":"application/json"},cache:"no-store"});
+            if (!response.ok) throw new Error("Market API returned " + response.status);
+            const data = await response.json();
+            const pairs = (data.pairs || []).filter(p => p.chainId === "base" && p.baseToken && p.baseToken.address.toLowerCase() === ADDRESS.toLowerCase());
+            pairs.sort((a,b) => Number(b.liquidity?.usd || 0) - Number(a.liquidity?.usd || 0));
+            const pair = pairs[0];
+            if (!pair) {
+              status("NO INDEXED BASE PAIR YET", "Contract lookup succeeded, but DexScreener has not returned an active Base trading pair for this address. Market values will appear once indexed.", false);
+              return;
+            }
+            setText("abyxo-price", money(pair.priceUsd));
+            const change = pair.priceChange?.h24;
+            setText("abyxo-price-change", change == null ? "24H change unavailable" : (Number(change) > 0 ? "+" : "") + Number(change).toFixed(2) + "% / 24H");
+            setText("abyxo-market-cap", money(pair.marketCap ?? pair.fdv));
+            setText("abyxo-fdv", money(pair.fdv));
+            setText("abyxo-liquidity", money(pair.liquidity?.usd));
+            setText("abyxo-volume", money(pair.volume?.h24));
+            const buys = Number(pair.txns?.h24?.buys || 0), sells = Number(pair.txns?.h24?.sells || 0);
+            setText("abyxo-transactions", compact(buys + sells));
+            setText("abyxo-buy-sell", compact(buys) + " buys / " + compact(sells) + " sells · 24H");
+            setText("abyxo-pair-name", (pair.baseToken.symbol || "ABYXO") + " / " + (pair.quoteToken?.symbol || "pair") + " · " + (pair.dexId || "DEX"));
+            const chart = $("abyxo-dex-chart");
+            chart.src = "https://dexscreener.com/base/" + pair.pairAddress + "?embed=1&theme=dark&trades=0&info=0";
+            chart.hidden = false;
+            $("abyxo-chart-empty").hidden = true;
+            status("MARKET FEED CONNECTED", "Showing the most liquid Base pair returned for the official ABYXO contract. Last refreshed " + new Date().toLocaleTimeString() + ".", true);
+          } catch (error) {
+            status("MARKET DATA TEMPORARILY UNAVAILABLE", "Could not retrieve DexScreener data right now. The page will retry automatically.", false);
+          }
+        }
+        const copy = $("tokenomics-copy-ca");
+        if (copy) copy.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(ADDRESS);
+            copy.textContent = "COPIED";
+          } catch (_) {
+            const field = document.createElement("textarea"); field.value = ADDRESS; document.body.appendChild(field); field.select();
+            try { document.execCommand("copy"); copy.textContent = "COPIED"; } catch (_) { copy.textContent = "COPY FAILED"; }
+            field.remove();
+          }
+          setTimeout(() => { copy.textContent = "COPY CONTRACT"; }, 1800);
+        });
+        loadSupply();
+        loadMarket();
+        setInterval(loadMarket, 60000);
+      })();
+      </script>
       <p class="disclaimer">This is a project concept, not an offer to buy or sell an asset. Any future token information must be independently verified.</p>
     </section>
     
