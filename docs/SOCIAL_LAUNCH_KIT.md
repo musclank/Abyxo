@@ -17,7 +17,7 @@ A tiny crowned octopus bringing deep-sea energy to Base.
 Community-led meme coin concept. DYOR.
 
 **Suggested profile website**  
-https://musclank.github.io/Abyxo/
+https://abyxo.xyz/
 
 **Suggested avatar and banner**  
 Use the official ABYXO mascot artwork from `website/mascot.svg` and the social banner from `assets/branding/abyxo-social-banner.svg`.
