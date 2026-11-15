@@ -62,7 +62,15 @@
     </section>
     <section class="ca-strip section-wrap" aria-labelledby="ca-title">
       <div class="ca-strip-label"><span class="pulse-dot"></span><span id="ca-title">CA / CONTRACT ADDRESS</span></div>
-      <div class="ca-strip-value"><span class="ca-status-dot" aria-hidden="true"></span><strong>NOT DEPLOYED</strong><span class="ca-strip-note">No verified contract address published</span></div>
+      <div class="ca-strip-content">
+        <div class="ca-strip-value"><span class="ca-status-dot" aria-hidden="true"></span><strong>ADDRESS PROVIDED</strong><span class="ca-strip-note">Base network · Verify on BaseScan</span></div>
+        <div class="ca-address-row">
+          <code class="ca-address" id="abyxo-contract-address">0x4dBD1F7C1B918a9D22A1d52520b8c0B3C488DCc4</code>
+          <button class="ca-copy-button" id="copy-abyxo-ca" type="button">COPY CA</button>
+          <a class="ca-explorer-link" href="https://basescan.org/address/0x4dBD1F7C1B918a9D22A1d52520b8c0B3C488DCc4" target="_blank" rel="noopener noreferrer">BASESCAN ↗</a>
+        </div>
+        <span class="ca-copy-feedback" id="ca-copy-feedback" role="status" aria-live="polite"></span>
+      </div>
     </section>
     <section class="abyss-transmission section-wrap" aria-labelledby="transmission-title">
       <div class="transmission-orbit transmission-orbit--one"></div><div class="transmission-orbit transmission-orbit--two"></div>
@@ -187,5 +195,29 @@
   <script src="./script.js"></script>
   <script src="./leaderboard.js"></script>
   <script src="./site-sound.js"></script>
+  <script>
+    (() => {
+      const button = document.getElementById("copy-abyxo-ca");
+      const addressEl = document.getElementById("abyxo-contract-address");
+      const feedback = document.getElementById("ca-copy-feedback");
+      if (!button || !addressEl || !feedback) return;
+      button.addEventListener("click", async () => {
+        const address = addressEl.textContent.trim();
+        try {
+          await navigator.clipboard.writeText(address);
+          button.textContent = "COPIED ✓";
+          feedback.textContent = "Contract address copied.";
+        } catch {
+          const range = document.createRange();
+          range.selectNodeContents(addressEl);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          feedback.textContent = "Select and copy the highlighted address.";
+        }
+        window.setTimeout(() => { button.textContent = "COPY CA"; }, 2200);
+      });
+    })();
+  </script>
 </body>
 </html>
