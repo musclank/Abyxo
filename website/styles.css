@@ -518,8 +518,19 @@ body{
 }
 
 
-/* Homepage feature — interactive transmission from the abyss */
-.abyss-transmission{
+  /* Homepage contract address status */
+  .ca-strip{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:26px auto 8px;padding:17px 20px;border:1px solid #16d9f52e;border-radius:12px;background:linear-gradient(100deg,#0b2239,#0a1a2c)}
+  .ca-strip-label,.ca-strip-value{display:flex;align-items:center;gap:10px;font-family:"DM Mono",monospace}
+  .ca-strip-label{color:#91a9bf;font-size:10px;letter-spacing:.12em}
+  .ca-strip-label .pulse-dot{flex:none}
+  .ca-strip-value{flex-wrap:wrap;justify-content:flex-end;font-size:10px;letter-spacing:.08em}
+  .ca-strip-value strong{color:#f8c84e;font-weight:500}
+  .ca-status-dot{width:7px;height:7px;border-radius:50%;background:#f8c84e;box-shadow:0 0 10px #f8c84e88}
+  .ca-strip-note{color:#819ab1;letter-spacing:.02em}
+  @media(max-width:560px){.ca-strip{align-items:flex-start;flex-direction:column;gap:12px;padding:16px}.ca-strip-value{justify-content:flex-start;gap:8px}}
+
+  /* Homepage feature — interactive transmission from the abyss */
+  .abyss-transmission{
   position:relative;isolation:isolate;overflow:hidden;
   display:grid;grid-template-columns:1fr minmax(280px,.78fr);gap:clamp(28px,6vw,84px);
   align-items:center;margin-top:76px;margin-bottom:32px;padding:clamp(28px,5vw,64px);
