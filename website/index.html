@@ -33,6 +33,7 @@
       <a href="./roadmap.html" class="nav-item nav-item--roadmap" data-nav="roadmap"><span class="nav-bubble nav-bubble--roadmap"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Roadmap</span></a>
       <a href="./community.html" class="nav-item nav-item--community" data-nav="community"><span class="nav-bubble nav-bubble--community"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Community</span></a>
       <a href="./clanker-top.html" class="nav-item nav-item--signal"><span class="nav-bubble nav-bubble--signal"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Top Clankers</span></a>
+      <a href="./arcade.html" class="nav-item nav-item--arcade" data-nav="arcade"><span class="nav-bubble nav-bubble--arcade"><img class="nav-bubble-logo" src="./mascot.svg" alt="" aria-hidden="true"></span><span class="nav-label">Abyxo Arcade</span></a>
       <a class="nav-cta" href="./community.html"><span>Enter the abyss</span><b>↗</b></a>
     </nav>
   </header>
@@ -111,68 +112,10 @@
       </div>
     </section>
 
-    <section class="minigame-section section-wrap" aria-labelledby="minigame-title">
-      <div class="minigame-heading">
-        <div><div class="section-kicker">ABYXO ARCADE // GAME 001</div><h2 id="minigame-title">DIVE FOR<br><span>THE TREASURE</span></h2></div>
-        <p>Help ABYXO collect the golden coins drifting through the abyss. Dodge the purple sea mines and see how much treasure you can grab in 30 seconds.</p>
-      </div>
-      <div class="minigame-shell">
-        <div class="game-topbar"><span><i class="game-live-dot"></i> DEEP-SEA TREASURE RUN</span><div class="game-topbar-actions"><span>ROUND 001</span><button class="game-sound" id="game-sound" type="button" aria-label="Turn game sound off" aria-pressed="true">♫ SOUND ON</button><button class="game-fullscreen" id="game-fullscreen" type="button" aria-label="Open minigame fullscreen" aria-pressed="false">⛶ <span>FULLSCREEN</span></button></div></div>
-        <div class="game-stats" aria-live="polite">
-          <div><small>LEVEL</small><b id="game-level">1/100</b></div>
-          <div><small>SCORE</small><b id="game-score">0</b></div>
-          <div><small>TIME</small><b id="game-time">30</b></div>
-          <div><small>BEST</small><b id="game-best">0</b></div>
-          <div class="game-health-stat"><small>HEALTH</small><b id="game-health" aria-label="5 of 5 lives remaining">♥♥♥♥♥</b></div>
-        </div>
-        <div class="game-stage">
-          <canvas id="abyxo-game" width="720" height="420" aria-label="Minigame: move ABYXO to catch gold coins and avoid purple sea mines"></canvas>
-          <div class="game-overlay" id="game-overlay">
-            <span class="game-overlay-icon">🐙</span>
-            <b id="game-overlay-title">READY, ABYXONAUT?</b>
-            <p id="game-overlay-copy">Clear 100 levels. Catch gold, dodge mines, defeat a 50-HP boss every 10 levels, and fire the Tentacle weapon.</p>
-            <button class="game-start" id="game-start" type="button">START DIVE <span>↗</span></button>
-          </div>
-        </div>
-        <div class="game-controls" aria-label="Touch and drag movement instructions">
-          <span class="game-drag-icon" aria-hidden="true">↔</span>
-          <span>TOUCH &amp; DRAG TO MOVE ABYXO · WEAPON AUTO-FIRES</span>
-          <span class="game-weapon-status" aria-live="polite">🐙 TENTACLE AUTO-FIRE</span>
-        </div>
-        <p class="game-help">TOUCH THE GAME AREA, THEN DRAG LEFT OR RIGHT</p>
-      </div>
-    </section>
+    
 
 
-    <section class="global-leaderboard section-wrap" id="global-leaderboard" aria-labelledby="leaderboard-title">
-      <div class="leaderboard-heading">
-        <div><div class="section-kicker">ABYXO ARCADE // WORLDWIDE</div><h2 id="leaderboard-title">GLOBAL<br><span>LEADERBOARD</span></h2></div>
-        <p>Sign in, dive into the abyss, and put your best treasure run on the world map.</p>
-      </div>
-      <div class="leaderboard-layout">
-        <div class="leaderboard-account">
-          <div class="leaderboard-card-kicker">ABYXONAUT IDENTITY</div>
-          <div id="leaderboard-session" class="leaderboard-session" aria-live="polite">Connect to join the global ranking.</div>
-          <form id="leaderboard-auth-form" class="leaderboard-auth-form">
-            <label id="leaderboard-username-wrap">USERNAME<input id="leaderboard-username" type="text" minlength="3" maxlength="18" autocomplete="username" placeholder="DeepDiver" pattern="[A-Za-z0-9_]+" /></label>
-            <label>EMAIL<input id="leaderboard-email" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
-            <label>PASSWORD<input id="leaderboard-password" type="password" minlength="8" autocomplete="current-password" required placeholder="At least 8 characters" /></label>
-            <button class="leaderboard-submit" id="leaderboard-submit" type="submit">CREATE ACCOUNT ↗</button>
-          </form>
-          <div class="leaderboard-auth-actions">
-            <button type="button" id="leaderboard-mode" class="leaderboard-text-button">Already registered? Sign in</button>
-            <button type="button" id="leaderboard-signout" class="leaderboard-text-button" hidden>Sign out</button>
-          </div>
-          <p id="leaderboard-auth-status" class="leaderboard-status" role="status">Create an account or sign in to submit scores.</p>
-          <div id="leaderboard-player-best" class="leaderboard-player-best" hidden></div>
-        </div>
-        <div class="leaderboard-rankings">
-          <div class="leaderboard-table-head"><span>GLOBAL TOP 100</span><button id="leaderboard-refresh" type="button" aria-label="Refresh leaderboard">↻ REFRESH</button></div>
-          <ol id="leaderboard-list" class="leaderboard-list"><li class="leaderboard-empty">Loading the abyss rankings…</li></ol>
-          <p class="leaderboard-footnote">Only signed-in players can submit a run. Your email is never shown publicly.</p>
-        </div>
-      </div>
-    </section>
+    
 
     <section class="home-explore section-wrap"><div class="section-kicker">EXPLORE THE ABYSS</div><h2>ONE CREATURE<br><span>MANY DEPTHS</span></h2><div class="explore-grid"><a class="explore-bubble explore-bubble--lore" href="./lore.html"><img class="explore-mascot explore-mascot--lore" src="./mascot-lore.svg" alt="" aria-hidden="true"><span>The lore</span><b>↗</b></a><a class="explore-bubble explore-bubble--signal" href="./signal.html"><img class="explore-mascot explore-mascot--signal" src="./mascot-signal.svg" alt="" aria-hidden="true"><span>The signal</span><b>↗</b></a><a class="explore-bubble explore-bubble--tokenomics" href="./tokenomics.html"><img class="explore-mascot explore-mascot--tokenomics" src="./mascot-tokenomics.svg" alt="" aria-hidden="true"><span>Tokenomics</span><b>↗</b></a><a class="explore-bubble explore-bubble--roadmap" href="./roadmap.html"><img class="explore-mascot explore-mascot--roadmap" src="./mascot-roadmap.svg" alt="" aria-hidden="true"><span>Roadmap</span><b>↗</b></a><a class="explore-bubble explore-bubble--community" href="./community.html"><img class="explore-mascot explore-mascot--community" src="./mascot-community.svg" alt="" aria-hidden="true"><span>Community</span><b>↗</b></a></div></section>
   </main>
