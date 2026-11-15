@@ -1153,3 +1153,17 @@ html {
     max-width:100%;
   }
 }
+
+
+/* ABYXO tokenomics — live market feed layout */
+.token-live-badge.is-live{border-color:#16d9f566;background:#16d9f510;color:#8dffe8}
+.token-live-badge.is-live i{background:#42f5d7;box-shadow:0 0 10px #42f5d7}
+.token-live-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px}
+.token-live-actions a,.token-live-actions button{font:9px "DM Mono",monospace;text-decoration:none}
+.token-live-chart iframe{display:block;width:100%;height:440px;margin-top:14px;border:0;border-radius:8px;background:#071426}
+.token-live-chart iframe[hidden]{display:none}
+.token-live-chart-empty[hidden]{display:none}
+.token-contract-value{overflow-wrap:anywhere;font-size:clamp(14px,2vw,20px)!important}
+.token-card small a{color:var(--cyan);text-decoration:none}
+.token-card small a:hover{text-decoration:underline}
+@media(max-width:560px){.token-live-actions>*{flex:1 1 calc(50% - 8px)}.token-live-chart iframe{height:360px}}
