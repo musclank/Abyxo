@@ -1097,3 +1097,12 @@ html {
 .token-live-chart-empty{min-height:62px;display:grid;place-content:center;gap:6px;margin-top:14px;border:1px dashed #16d9f544;border-radius:7px;color:#a6f7ff;text-align:center;font-size:12px}
 .token-live-chart-empty span{color:#7892a9;font:8px "DM Mono",monospace;letter-spacing:.1em}
 :root[data-theme="light"] .token-live-chart-empty{color:#075d78;border-color:#087f9b66}
+
+
+/* Official ABYXO X profile links */
+.social-link{display:inline-flex;align-items:center;gap:8px;color:var(--aqua)!important;font-size:11px;font-weight:700;white-space:nowrap}
+.social-link svg,.footer-social-link svg{width:16px;height:16px;fill:currentColor;display:block}
+.social-link:hover,.footer-social-link:hover{color:var(--white)!important}
+.footer-social-link{display:inline-flex;align-items:center;gap:8px;color:var(--aqua);font:10px "DM Mono",monospace;letter-spacing:.04em;white-space:nowrap}
+.community-x-button{margin-top:14px}
+@media(max-width:760px){.social-link{justify-content:center;padding:8px 0}.social-link svg{width:18px;height:18px}}
