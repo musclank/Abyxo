@@ -13,6 +13,7 @@
   [![Live Website](https://img.shields.io/badge/Website-abyxo.xyz-08c7d8?style=for-the-badge)](https://abyxo.xyz/)
   [![Network Direction](https://img.shields.io/badge/Network-Solana%20%7C%20Planned-9945FF?style=for-the-badge)](https://solana.com/)
   [![Hosting](https://img.shields.io/badge/Hosting-Cloudflare%20Pages-F38020?style=for-the-badge&logo=cloudflare)](https://pages.cloudflare.com/)
+  [![Site Quality Check](https://github.com/musclank/Abyxo/actions/workflows/site-check.yml/badge.svg)](https://github.com/musclank/Abyxo/actions/workflows/site-check.yml)
 
 </div>
 
@@ -172,7 +173,7 @@ Always verify project information through the official website and linked ABYXO 
 
 ## Contributing
 
-Suggestions, bug reports, and focused improvements are welcome. Please:
+Suggestions, bug reports, and focused improvements are welcome. Use the [bug report form](https://github.com/musclank/Abyxo/issues/new?template=bug_report.yml) or [feature request form](https://github.com/musclank/Abyxo/issues/new?template=feature_request.yml). For code changes, read [CONTRIBUTING.md](CONTRIBUTING.md) and use the pull request template. Please:
 
 - Preserve existing pages, navigation, and working features unless a change explicitly requires otherwise.
 - Test changes on both mobile and desktop.
