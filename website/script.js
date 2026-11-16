@@ -1110,3 +1110,20 @@ if (personalityArt) {
   syncPowerStatus();
   drawScene();
 })();
+
+
+// ABYXO Solana contract address actions
+document.querySelectorAll("[data-copy-ca]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const address = document.querySelector("#abyxo-contract-address")?.textContent?.trim();
+    if (!address) return;
+    try {
+      await navigator.clipboard.writeText(address);
+      button.textContent = "COPIED";
+      window.setTimeout(() => { button.textContent = "COPY ADDRESS"; }, 1800);
+    } catch (_) {
+      button.textContent = "COPY UNAVAILABLE";
+      window.setTimeout(() => { button.textContent = "COPY ADDRESS"; }, 1800);
+    }
+  });
+});
