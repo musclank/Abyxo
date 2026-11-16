@@ -8,182 +8,182 @@
 
   **Small Creature. Deep Chaos.**
 
-  A community-driven deep-sea universe built around a crowned octopus, internet culture, and the Base ecosystem.
+  A deep-sea meme universe led by a crowned octopus, internet culture, and the Abyxonaut community.
 
-  [![Live Website](https://img.shields.io/badge/Live%20Website-Visit%20ABYXO-08c7d8?style=for-the-badge)](https://abyxo.xyz/)
-  [![Network](https://img.shields.io/badge/Ecosystem-Base-2454ff?style=for-the-badge)](https://www.base.org/)
-  [![Hosting](https://img.shields.io/badge/Hosted%20on-Vercel-181717?style=for-the-badge&logo=github)](https://pages.github.com/)
+  [![Live Website](https://img.shields.io/badge/Website-abyxo.xyz-08c7d8?style=for-the-badge)](https://abyxo.xyz/)
+  [![Network Direction](https://img.shields.io/badge/Network-Solana%20%7C%20Planned-9945FF?style=for-the-badge)](https://solana.com/)
+  [![Hosting](https://img.shields.io/badge/Hosting-Cloudflare%20Pages-F38020?style=for-the-badge&logo=cloudflare)](https://pages.cloudflare.com/)
 
 </div>
 
 ---
 
-## Overview
+## About ABYXO
 
-ABYXO is an independent community-led meme coin concept with a playful deep-ocean identity. At its center is a small but troublemaking abyss-blue octopus: glowing cyan eyes, a mischievous expression, and a permanent golden crown.
+ABYXO is a community-driven meme coin project concept built around a small, mischievous abyss-blue octopus with glowing cyan eyes and a permanent golden crown.
 
-The project combines a distinctive visual identity with an interactive, multi-page website and a browser-based arcade experience. Its community is known as the **Abyxonauts**.
+Its world blends deep-sea fiction, retro-inspired digital visuals, interactive browser experiences, and internet culture. The community is known as the **Abyxonauts**.
 
 > Small Creature. Deep Chaos.
 
-## Explore ABYXO
+## Current project direction
 
-- **[Visit the live website](https://abyxo.xyz/)**
-- [The Lore](https://abyxo.xyz/lore.html) — the creature, its world, and the story of the abyss.
-- [The Signal](https://abyxo.xyz/signal.html) — transmissions and project updates.
-- [Tokenomics](https://abyxo.xyz/tokenomics.html) — project token information and disclosures.
-- [Roadmap](https://abyxo.xyz/roadmap.html) — planned project direction.
-- [Community](https://abyxo.xyz/community.html) — meet the Abyxonauts.
-- [Top Clankers](https://abyxo.xyz/clanker-top.html) — Clanker ecosystem discovery page.
-- [Terminal](https://abyxo.xyz/terminal.html) — interactive ABYXO experience.
+- **Network direction:** Solana is the planned ecosystem for ABYXO.
+- **Token status:** The official Solana contract address, ticker, and launch details have not been announced on the website. Treat unofficial token claims and contract addresses as unverified.
+- **Website experience:** A multi-page static website with a **Retro Deep-Sea Hybrid** visual direction.
+- **Hosting:** Cloudflare Pages.
+- **Source of truth:** This GitHub repository.
+
+Solana is a planned ecosystem direction; this README does not claim that a token or smart contract is already deployed.
+
+## Explore the website
+
+| Section | What you'll find |
+| --- | --- |
+| [Home](https://abyxo.xyz/) | Project introduction, Solana direction, and current launch-status information. |
+| [The Lore](https://abyxo.xyz/lore.html) | ABYXO's origin, world, and deep-sea story. |
+| [The Signal](https://abyxo.xyz/signal.html) | Project transmissions and updates. |
+| [Community](https://abyxo.xyz/community.html) | Abyxonaut principles, community information, and safety guidance. |
+| [ABYXO Arcade](https://abyxo.xyz/arcade.html) | Browser game: collect treasure, avoid hazards, progress through levels, and face bosses. Includes touch controls and a leaderboard interface. |
+| [Deep Terminal](https://abyxo.xyz/terminal.html) | A character-driven local chat simulation and interactive terminal experience. |
+
+Legal and information pages:
+
+- [Disclaimer](https://abyxo.xyz/disclaimer.html)
+- [Privacy](https://abyxo.xyz/privacy.html)
+- [Terms](https://abyxo.xyz/terms.html)
+- [Risk Disclosure](https://abyxo.xyz/risk-disclosure.html)
 
 ## Website features
 
-- **Responsive interface** — layouts designed for desktop and mobile screens.
-- **Distinctive visual identity** — custom logo, mascot illustrations, ocean-inspired styling, and favicon.
-- **Interactive character moods** — explore different sides of the ABYXO mascot.
-- **Abyss transmissions** — discover randomized messages from the creature.
-- **ABYXO Arcade** — a browser mini-game featuring treasure collection, hazards, multiple levels, boss encounters, health, and an automatically firing tentacle weapon.
-- **Global leaderboard integration** — account and score-ranking interface powered by Supabase when configured.
-- **Audio experience** — optional website sound and in-game sound controls.
-- **Page transitions** — smooth navigation effects with reduced-motion consideration.
-- **Project and legal information** — lore, roadmap, tokenomics, privacy, terms, risk disclosure, and disclaimer pages.
-
-Feature availability may depend on the current deployment and external service configuration. The global leaderboard requires a configured Supabase project; see [Leaderboard setup](website/SUPABASE_SETUP.md).
+- Responsive desktop and mobile layouts.
+- Retro Deep-Sea Hybrid styling with dark ocean tones, neon accents, and retro interface details.
+- ABYXO mascot, custom brand artwork, and Solana visual references.
+- Multi-page navigation and project lore.
+- Interactive terminal with selectable themes and backgrounds.
+- **ABYXO Arcade:** a 100-level treasure run with five health points, hazards, boss encounters every ten levels, and an automatically firing tentacle weapon.
+- Touch-and-drag game controls, sound toggle, and fullscreen mode.
+- Optional Supabase-powered account and global leaderboard integration. Shared leaderboard functionality depends on valid Supabase configuration.
+- Website audio controls and motion-conscious interface behavior.
 
 ## Technology
 
-| Area | Implementation |
+| Area | Technology |
 | --- | --- |
-| Website | HTML5 |
+| Markup | HTML5 |
 | Styling | CSS3 |
 | Interactions and game | Vanilla JavaScript |
-| Hosting and deployment | Vercel |
-| Authentication and leaderboard backend | Supabase (optional configuration) |
-| Ecosystem theme | Base |
+| Arcade rendering | HTML Canvas |
+| Optional leaderboard backend | Supabase |
+| Hosting and deployment | Cloudflare Pages |
+| Source control | GitHub |
 
-The website is built as a static site. No frontend framework or build step is required for the current website structure.
+The production website is a static site. The current `website/` structure does not require a frontend framework or build command.
 
-## Repository structure
+## Repository layout
 
 ```text
 Abyxo/
-├── .github/
-│   └── workflows/          # Legacy GitHub Pages workflow (not production)
-├── assets/
-│   ├── branding/           # Brand artwork and social banner
-│   ├── logo/               # Primary logo assets
-│   └── mascot/             # Mascot artwork
-├── community/              # Community principles and information
-├── contracts/              # Contract planning and documentation
-├── docs/                   # Brand, media, roadmap, and project documents
-├── supabase/
-│   └── functions/          # Backend function integrations
 ├── website/
-│   ├── index.html          # Website homepage
-│   ├── lore.html           # The Lore
-│   ├── signal.html         # The Signal
-│   ├── tokenomics.html     # Tokenomics
-│   ├── roadmap.html        # Roadmap
-│   ├── community.html      # Community
-│   ├── clanker-top.html    # Top Clankers
-│   ├── terminal.html       # Interactive terminal
-│   ├── script.js           # Website interactions and arcade game
-│   ├── styles.css          # Main website styles
-│   ├── leaderboard.js      # Leaderboard client integration
-│   ├── site-sound.js       # Website audio controls
-│   └── supabase/           # Website database schema
-├── CONTRIBUTING.md
-├── DISCLAIMER.md
-├── SECURITY.md
+│   ├── index.html
+│   ├── lore.html
+│   ├── signal.html
+│   ├── community.html
+│   ├── arcade.html
+│   ├── terminal.html
+│   ├── disclaimer.html
+│   ├── privacy.html
+│   ├── terms.html
+│   ├── risk-disclosure.html
+│   ├── styles.css
+│   ├── script.js
+│   ├── leaderboard.js
+│   ├── site-sound.js
+│   └── supabase/
+├── assets/
+├── community/
+├── contracts/
+├── docs/
+├── supabase/
 └── README.md
 ```
 
+The `website/` directory contains the live site. Other top-level folders hold supporting project materials and documentation; their contents may evolve as the project develops.
+
 ## Run locally
 
-Because this is a static website, you can run it with any local HTTP server.
+You can preview the static website with Python's built-in HTTP server.
 
-1. Clone the repository:
+```bash
+git clone https://github.com/musclank/Abyxo.git
+cd Abyxo
+python -m http.server 8000
+```
 
-   ```bash
-   git clone https://github.com/musclank/Abyxo.git
-   cd Abyxo
-   ```
+Open:
 
-2. Start a local server from the repository root:
+```text
+http://localhost:8000/website/
+```
 
-   ```bash
-   python -m http.server 8000
-   ```
-
-3. Open the website directory in your browser:
-
-   ```text
-   http://localhost:8000/website/
-   ```
-
-You can also open `website/index.html` directly, although a local HTTP server is recommended for testing browser features.
+Using a local HTTP server is recommended for testing browser features, navigation, audio, and game behavior.
 
 ## Deployment
 
-The production website is hosted on **Vercel**, connected to this GitHub repository. The Vercel project uses `website/` as its Root Directory and deploys automatically when changes are pushed to the connected production branch.
+The production site is deployed with **Cloudflare Pages**, using this GitHub repository as its source.
 
-The GitHub Pages workflow in `.github/workflows/deploy-pages.yml` is separate legacy automation and is not the production host.
+Expected Pages configuration:
 
-Live URL: **https://abyxo.xyz/**
+| Setting | Value |
+| --- | --- |
+| Production branch | The repository's connected production branch |
+| Root directory | `website` |
+| Build command | None |
+| Build output directory | `.` |
 
-## Global leaderboard configuration
+Push website changes to the connected branch to trigger a Cloudflare Pages deployment. Check the Cloudflare Pages deployment history to confirm that the latest deployment completed successfully.
 
-The leaderboard interface uses Supabase for authentication and shared score storage. To configure it:
+- Live website: [https://abyxo.xyz](https://abyxo.xyz)
+- Repository: [https://github.com/musclank/Abyxo](https://github.com/musclank/Abyxo)
+
+## Optional leaderboard setup
+
+The Arcade includes a Supabase integration for player accounts and shared score rankings. Leaderboard availability depends on the project being configured correctly.
+
+Before enabling it:
 
 1. Create a Supabase project.
-2. Run the SQL in `website/supabase/leaderboard.sql`.
-3. Configure the project URL and publishable/anon key in `website/supabase-config.js`.
-4. Add `https://abyxo.xyz` (and any required callback paths) to the Supabase authentication URL settings.
-5. Follow the complete [Supabase setup guide](website/SUPABASE_SETUP.md).
+2. Review the SQL schema and setup instructions in the `website/` directory.
+3. Configure the website's Supabase project URL and public client key.
+4. Configure the allowed authentication URLs in Supabase.
+5. Test account creation, sign-in, score submission, and sign-out before announcing the leaderboard as operational.
 
-**Security:** Never put a Supabase `service_role` key, database password, private key, or other server secret in browser-accessible files or commit them to Git.
+Never put a Supabase `service_role` key, database password, private key, or other server secret in browser-accessible code or commit it to Git.
 
-## Project documentation
+## Transparency and safety
 
-| Document | Description |
-| --- | --- |
-| [Brand Guide](docs/BRAND_GUIDE.md) | Visual identity and brand direction |
-| [Media Kit](docs/MEDIA_KIT.md) | Official project media assets |
-| [Social Launch Kit](docs/SOCIAL_LAUNCH_KIT.md) | Community and social communication materials |
-| [Roadmap](docs/ROADMAP.md) | Project roadmap draft |
-| [Tokenomics](docs/TOKENOMICS.md) | Tokenomics draft and project notes |
-| [Community Principles](community/README.md) | Community standards |
-| [Contract Documentation](contracts/README.md) | Contract-related notes |
-| [Website Guide](website/README.md) | Website-specific information |
-| [Leaderboard Setup](website/SUPABASE_SETUP.md) | Supabase configuration |
-| [Disclaimer](DISCLAIMER.md) | Project disclaimer |
-| [Security Policy](SECURITY.md) | Responsible security reporting |
-| [Contribution Guide](CONTRIBUTING.md) | How to contribute |
+- ABYXO's website currently describes a project concept and community experience.
+- Solana is the planned ecosystem; do not treat this as confirmation of a live token or deployed contract.
+- No official contract address, ticker, launch date, audit, or market data should be assumed unless announced through verified ABYXO channels.
+- Beware of impersonators, unofficial tokens, fake support accounts, and unsolicited direct messages.
+- Nothing on the website or in this repository is financial or investment advice. Meme coins and digital assets can be highly volatile.
 
-## Project status and transparency
-
-ABYXO is presented as a community-driven meme coin **concept**. Project materials, tokenomics, roadmap items, and contract-related documentation may include drafts or plans that are not yet finalized.
-
-- No token ticker, contract address, launch, audit, or deployment should be considered confirmed unless published through an official, verifiable project channel.
-- A website page or draft document is not proof of a live token or deployed smart contract.
-- The project does not promise financial returns or token performance.
-
-Please review the [project disclaimer](DISCLAIMER.md) and the website's [risk disclosure](website/risk-disclosure.html) before relying on project information.
+Always verify project information through the official website and linked ABYXO channels. Read the [Disclaimer](https://abyxo.xyz/disclaimer.html) and [Risk Disclosure](https://abyxo.xyz/risk-disclosure.html) before interacting with any related digital asset.
 
 ## Contributing
 
-Contributions, feedback, and improvements are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes. Keep changes focused, test the website on mobile and desktop, and never commit credentials or private information.
+Suggestions, bug reports, and focused improvements are welcome. Please:
 
-## Security
-
-If you discover a security issue, please follow the instructions in [SECURITY.md](SECURITY.md). Do not publish secrets, exploit details, or private user information in a public issue.
+- Preserve existing pages, navigation, and working features unless a change explicitly requires otherwise.
+- Test changes on both mobile and desktop.
+- Avoid introducing unnecessary build tooling or backend dependencies to the static website.
+- Never commit credentials, private keys, or personal information.
 
 ## Community
 
 The ABYXO community is known as the **Abyxonauts**.
 
-Follow only links published through verified official ABYXO channels. Be cautious of impersonators, unofficial token contracts, and unsolicited messages.
+Follow the official project account on [X](https://x.com/itsabyxo) and use links published on [abyxo.xyz](https://abyxo.xyz/) to avoid impersonators.
 
 ---
 
@@ -193,6 +193,6 @@ Follow only links published through verified official ABYXO channels. Be cautiou
 
   Made for the depths. Powered by community.
 
-  [Website](https://abyxo.xyz/) · [GitHub Repository](https://github.com/musclank/Abyxo)
+  [Website](https://abyxo.xyz/) · [GitHub](https://github.com/musclank/Abyxo) · [X](https://x.com/itsabyxo)
 
 </div>
