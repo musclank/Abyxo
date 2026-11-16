@@ -257,6 +257,22 @@ if (personalityArt) {
   const keys = { left: false, right: false };
   let player, drops, particles, score, level, health, timeLeft, running, lastFrame, spawnClock, animationId, elapsed = 0, levelClock = 0;
   let boss = null, bossShots = [], tentacleShots = [], shootClock = 0, bossClock = 0;
+  let gameMode = "classic";
+  const activeEffects = { shield: 0, turbo: 0, magnet: 0 };
+  const powerUpNames = { shield: "BUBBLE SHIELD", turbo: "TURBO INK", magnet: "TREASURE MAGNET" };
+  const modeButton = document.querySelector("#game-mode");
+  const powerStatus = document.querySelector("#game-power-status");
+  function currentLevelText() { return gameMode === "abyss" ? "LV " + level + " · ∞" : level + "/100"; }
+  function syncModeButton() {
+    if (!modeButton) return;
+    modeButton.textContent = gameMode === "abyss" ? "MODE: ABYSS" : "MODE: CLASSIC";
+    modeButton.setAttribute("aria-pressed", String(gameMode === "abyss"));
+  }
+  function syncPowerStatus() {
+    if (!powerStatus) return;
+    const active = Object.entries(activeEffects).filter(([,seconds]) => seconds > 0);
+    powerStatus.textContent = active.length ? active.map(([name,seconds]) => powerUpNames[name] + " " + Math.ceil(seconds) + "s").join("  //  ") : "POWER SYSTEM // READY";
+  }
   let canvasScale = 1;
   let best = 0;
   try { best = Number(localStorage.getItem("abyxoArcadeBest") || 0) || 0; } catch (_) {}
@@ -285,6 +301,8 @@ if (personalityArt) {
     player = { x: W / 2, y: H - 54, width: 58, speed: 390, hit: 0 };
     drops = [];
     particles = [];
+    activeEffects.shield = activeEffects.turbo = activeEffects.magnet = 0;
+    syncPowerStatus();
     elapsed = 0;
     levelClock = 0;
     score = 0;
@@ -298,7 +316,7 @@ if (personalityArt) {
     health = 5;
     updateHealth();
     timeLeft = 30;
-    levelLabel.textContent = "1/100";
+    levelLabel.textContent = currentLevelText();
     spawnClock = 0;
     lastFrame = 0;
     scoreLabel.textContent = "0";
@@ -310,9 +328,13 @@ if (personalityArt) {
     const roll = Math.random();
     const biomeIndex = Math.floor((level - 1) / 10) % 10;
     const specialChance = level > 10 ? .13 : 0;
-    const type = roll < specialChance ? "special"
-      : roll < specialChance + mineChance ? "mine"
-      : roll < specialChance + mineChance + .08 ? "bomb" : "coin";
+    const powerUpChance = .055;
+    const type = roll < powerUpChance ? "powerup"
+      : roll < powerUpChance + specialChance ? "special"
+      : roll < powerUpChance + specialChance + mineChance ? "mine"
+      : roll < powerUpChance + specialChance + mineChance + .08 ? "bomb" : "coin";
+    const powerRoll = Math.random();
+    const power = powerRoll < .34 ? "shield" : powerRoll < .67 ? "turbo" : "magnet";
     const specialNames = ["jellyfish", "thorn-coral", "lava-rock", "ice-shard", "ghost-orb", "crystal-spike", "storm-orb", "void-eye", "ancient-relic"];
     const specialKind = specialNames[(biomeIndex - 1 + specialNames.length) % specialNames.length];
     const coinRoll = Math.random();
@@ -321,7 +343,7 @@ if (personalityArt) {
       : coinRoll < .82
         ? { radius: 15, points: 2 }
         : { radius: 21, points: 3 };
-    const radius = type === "mine" ? 17 : type === "bomb" ? 19 : type === "special" ? 20 : coinTier.radius;
+    const radius = type === "mine" ? 17 : type === "bomb" ? 19 : type === "special" ? 20 : type === "powerup" ? 15 : coinTier.radius;
     drops.push({
       x: 28 + Math.random() * (W - 56),
       baseX: 28 + Math.random() * (W - 56),
@@ -330,6 +352,7 @@ if (personalityArt) {
       points: type === "coin" ? coinTier.points : 0,
       speed: ((type === "bomb" ? 185 : type === "mine" ? 165 : type === "special" ? 150 : 125) + Math.min(125, (level - 1) * 1.25) + Math.random() * 85 + (30 - timeLeft) * 1.5),
       type,
+      power: type === "powerup" ? power : null,
       specialKind: type === "special" ? specialKind : null,
       drift: Math.random() * Math.PI * 2,
       spin: Math.random() * Math.PI * 2
@@ -463,6 +486,18 @@ if (personalityArt) {
       ctx.strokeStyle = "rgba(232,211,255,.8)"; ctx.lineWidth = 1.5; ctx.stroke();
       ctx.fillStyle = "#25134b"; ctx.beginPath(); ctx.arc(0, 0, r * .48, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = "#fff"; ctx.font = "bold 14px Arial"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText("×", 0, 0);
+    } else if (drop.type === "powerup") {
+      const colors = { shield: "#8deaff", turbo: "#ffd95f", magnet: "#d7a2ff" };
+      const symbols = { shield: "S", turbo: "T", magnet: "M" };
+      const color = colors[drop.power] || "#a6f7ff";
+      ctx.shadowColor = color; ctx.shadowBlur = 24; ctx.fillStyle = color; ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const a = Math.PI / 3 * i - Math.PI / 6, x = Math.cos(a) * drop.radius, y = Math.sin(a) * drop.radius;
+        if (!i) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      }
+      ctx.closePath(); ctx.fill(); ctx.shadowBlur = 0; ctx.fillStyle = "#071426";
+      ctx.font = "bold 13px 'DM Mono', monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(symbols[drop.power] || "+", 0, 1);
     } else if (drop.type === "special") {
       const r = drop.radius;
       const kind = drop.specialKind;
@@ -516,6 +551,10 @@ if (personalityArt) {
     if (player.hit > 0 && Math.floor(player.hit * 14) % 2 === 0) ctx.globalAlpha = .38;
     const bob = Math.sin(elapsed * 5) * 3;
     ctx.translate(player.x, player.y + bob);
+    if (activeEffects.shield > 0) {
+      ctx.save(); ctx.strokeStyle = "#8deaff"; ctx.lineWidth = 4; ctx.shadowColor = "#8deaff"; ctx.shadowBlur = 22;
+      ctx.beginPath(); ctx.arc(0, 0, 54 + Math.sin(elapsed * 8) * 3, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+    }
     ctx.shadowColor = "#16d9f5"; ctx.shadowBlur = 25;
     if (mascotSprite.complete && mascotSprite.naturalWidth) {
       ctx.drawImage(mascotSprite, -43, -48, 86, 86);
@@ -596,10 +635,10 @@ if (personalityArt) {
     ctx.restore();
     const barW=250,barX=(W-barW)/2,barY=18;
     ctx.fillStyle="rgba(0,0,0,.55)";ctx.fillRect(barX,barY,barW,13);
-    ctx.fillStyle=color;ctx.fillRect(barX,barY,barW*Math.max(0,boss.hp/50),13);
+    ctx.fillStyle=color;ctx.fillRect(barX,barY,barW*Math.max(0,boss.hp/boss.maxHp),13);
     ctx.strokeStyle="#d8f5ff";ctx.lineWidth=1;ctx.strokeRect(barX,barY,barW,13);
     ctx.fillStyle="#fff";ctx.font="bold 10px 'DM Mono', monospace";ctx.textAlign="center";
-    ctx.fillText("BOSS HP "+boss.hp+" / 50",W/2,48);
+    ctx.fillText("BOSS HP "+boss.hp+" / "+boss.maxHp+(boss.phase===2?" · PHASE 2":""),W/2,48);
   }
 
   function drawBossShot(shot) {
@@ -622,7 +661,8 @@ if (personalityArt) {
   }
 
   function startBossFight() {
-    boss = { x: W / 2, y: 105, hp: 50, direction: 1, fireClock: 0 };
+    const bossMaxHp = gameMode === "abyss" ? 60 + Math.floor(level / 10) * 8 : 50;
+    boss = { x: W / 2, y: 105, hp: bossMaxHp, maxHp: bossMaxHp, phase: 1, direction: 1, fireClock: 0 };
     if (shootButton) shootButton.hidden = false;
     bossShots = [];
     tentacleShots = [];
@@ -632,7 +672,7 @@ if (personalityArt) {
     particles.length = 0;
     timeLeft = 0;
     timeLabel.textContent = "BOSS";
-    levelLabel.textContent = level + "/100 · BOSS";
+    levelLabel.textContent = currentLevelText() + " · BOSS";
     playSound("level");
     burst(W / 2, 110, "#bd8cff", 34);
   }
@@ -659,7 +699,7 @@ if (personalityArt) {
     boss = null;
     bossShots = [];
     tentacleShots = [];
-    levelLabel.textContent = level + "/100";
+    levelLabel.textContent = currentLevelText();
     timeLabel.textContent = "30";
     playSound("level");
     overlay.hidden = true;
@@ -669,7 +709,7 @@ if (personalityArt) {
   }
 
   function saveCheckpoint() {
-    const checkpoint = { level: level + 1, score, health, best, savedAt: Date.now() };
+    const checkpoint = { level: level + 1, score, health, best, mode: gameMode, savedAt: Date.now() };
     try {
       localStorage.setItem(checkpointKey, JSON.stringify(checkpoint));
       savedCheckpoint = checkpoint;
@@ -686,7 +726,7 @@ if (personalityArt) {
     dragPointerId = null;
     overlayMode = "checkpoint";
     overlayTitle.textContent = "BOSS DEFEATED!";
-    overlayCopy.textContent = "Level " + level + " cleared. Save your dive progress before continuing to level " + (level + 1) + "?";
+    overlayCopy.textContent = "Level " + level + " cleared. Save your dive progress before continuing to level " + (level + 1) + (gameMode === "abyss" ? " in endless Abyss Mode?" : "?");
     startButton.innerHTML = "SAVE & CONTINUE <span>✓</span>";
     if (!checkpointButton) {
       checkpointButton = document.createElement("button");
@@ -716,7 +756,7 @@ if (personalityArt) {
     bossShots = [];
     tentacleShots = [];
     playSound("win");
-    if (level >= 100) {
+    if (gameMode === "classic" && level >= 100) {
       finishGame();
       return;
     }
@@ -808,17 +848,27 @@ if (personalityArt) {
   function update(dt) {
     elapsed += dt;
     shootClock = Math.max(0, shootClock - dt);
+    Object.keys(activeEffects).forEach((key) => { activeEffects[key] = Math.max(0, activeEffects[key] - dt); });
+    syncPowerStatus();
     if (boss) {
       bossClock += dt;
-      boss.x += boss.direction * (105 + Math.sin(bossClock * 2) * 25) * dt;
+      if (boss.phase === 1 && boss.hp <= boss.maxHp * .5) {
+        boss.phase = 2; boss.fireClock = 0; burst(boss.x, boss.y, "#ff6b9b", 28); playSound("level");
+      }
+      boss.x += boss.direction * ((boss.phase === 2 ? 155 : 105) + Math.sin(bossClock * 2) * 25) * dt;
       if (boss.x > W - 100) boss.direction = -1;
       if (boss.x < 100) boss.direction = 1;
       boss.fireClock += dt;
-      if (boss.fireClock >= 1.05) {
+      const fireInterval = boss.phase === 2 ? .68 : 1.05;
+      if (boss.fireClock >= fireInterval) {
         boss.fireClock = 0;
         const dx = player.x - boss.x, dy = player.y - boss.y;
-        const length = Math.hypot(dx, dy) || 1;
-        bossShots.push({ x: boss.x, y: boss.y + 45, vx: dx / length * 185, vy: dy / length * 185 });
+        const baseAngle = Math.atan2(dy, dx), speed = boss.phase === 2 ? 225 : 185;
+        const spread = boss.phase === 2 ? [-.22, 0, .22] : [0];
+        spread.forEach((offset) => {
+          const angle = baseAngle + offset;
+          bossShots.push({ x: boss.x, y: boss.y + 45, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed });
+        });
       }
       if (keys.left) player.x -= player.speed * dt;
       if (keys.right) player.x += player.speed * dt;
@@ -829,7 +879,7 @@ if (personalityArt) {
         const shot = tentacleShots[i];
         shot.y -= shot.speed * dt;
         if (Math.abs(shot.x - boss.x) < 68 && Math.abs(shot.y - boss.y) < 58) {
-          boss.hp = Math.max(0, boss.hp - 1);
+          boss.hp = Math.max(0, boss.hp - (activeEffects.turbo > 0 ? 2 : 1));
           burst(shot.x, shot.y, "#16d9f5", 4);
           tentacleShots.splice(i, 1);
           if (boss.hp <= 0) { defeatBoss(); return; }
@@ -868,6 +918,10 @@ if (personalityArt) {
       const drop = drops[i];
       drop.y += drop.speed * dt;
       drop.spin += dt * (drop.type === "coin" ? 1.6 : -1.8);
+      if (drop.type === "coin" && activeEffects.magnet > 0) {
+        const pullX = player.x - drop.x, pullY = player.y - drop.y, pullLength = Math.hypot(pullX, pullY) || 1;
+        drop.x += pullX / pullLength * 210 * dt; drop.y += pullY / pullLength * 210 * dt;
+      }
       if (drop.type === "special") {
         drop.drift += dt * 2.2;
         const sway = drop.specialKind === "jellyfish" || drop.specialKind === "ghost-orb" || drop.specialKind === "storm-orb" ? 42 : 16;
@@ -879,24 +933,22 @@ if (personalityArt) {
       const hitY = Math.abs(dy) < drop.radius + 38;
       if (hitX && hitY) {
         if (drop.type === "coin") {
-          score += drop.points;
-          scoreLabel.textContent = String(score);
-          burst(drop.x, drop.y, "#ffd95f", 10 + drop.points * 4);
-          playSound("coin");
+          score += drop.points; scoreLabel.textContent = String(score);
+          burst(drop.x, drop.y, "#ffd95f", 10 + drop.points * 4); playSound("coin");
+        } else if (drop.type === "powerup") {
+          activeEffects[drop.power] = 8; score += 5; scoreLabel.textContent = String(score);
+          const color = drop.power === "shield" ? "#8deaff" : drop.power === "turbo" ? "#ffd95f" : "#d7a2ff";
+          burst(drop.x, drop.y, color, 24); syncPowerStatus(); playSound("level");
+        } else if (activeEffects.shield > 0) {
+          activeEffects.shield = 0; syncPowerStatus(); player.hit = .35;
+          burst(drop.x, drop.y, "#8deaff", 22); playSound("coin");
         } else {
           const penalty = drop.type === "bomb" ? 5 : drop.type === "special" ? 3 : 2;
-          score = Math.max(0, score - penalty);
-          scoreLabel.textContent = String(score);
-          player.hit = .7;
-          health = Math.max(0, health - 1);
-          updateHealth();
+          score = Math.max(0, score - penalty); scoreLabel.textContent = String(score);
+          player.hit = .7; health = Math.max(0, health - 1); updateHealth();
           burst(drop.x, drop.y, drop.type === "bomb" ? "#ff525c" : "#b58aff", drop.type === "bomb" ? 26 : 18);
           playSound(drop.type === "bomb" ? "bomb" : "mine");
-          if (health <= 0) {
-            drops.splice(i, 1);
-            gameOver();
-            return;
-          }
+          if (health <= 0) { drops.splice(i, 1); gameOver(); return; }
         }
         drops.splice(i, 1);
       } else if (drop.y > H + 30) {
@@ -904,9 +956,9 @@ if (personalityArt) {
       }
     }
     if (levelClock >= 30) {
-      if (level % 10 === 0) {
+      if (level % (gameMode === "abyss" ? 5 : 10) === 0) {
         startBossFight();
-      } else if (level >= 100) {
+      } else if (gameMode === "classic" && level >= 100) {
         finishGame();
       } else {
         level += 1;
@@ -916,7 +968,7 @@ if (personalityArt) {
         spawnClock = 0;
         drops.length = 0;
         particles.length = 0;
-        levelLabel.textContent = level + "/100";
+        levelLabel.textContent = currentLevelText();
         timeLabel.textContent = "30";
       }
     }
@@ -944,6 +996,8 @@ if (personalityArt) {
       return;
     }
     if (overlayMode === "saved" && savedCheckpoint) {
+      gameMode = savedCheckpoint.mode === "abyss" ? "abyss" : "classic";
+      syncModeButton();
       resetGame();
       level = savedCheckpoint.level;
       score = savedCheckpoint.score;
@@ -951,7 +1005,7 @@ if (personalityArt) {
       best = Math.max(best, savedCheckpoint.best || 0);
       levelClock = 0;
       timeLeft = 30;
-      levelLabel.textContent = level + "/100";
+      levelLabel.textContent = currentLevelText();
       scoreLabel.textContent = String(score);
       timeLabel.textContent = "30";
       updateHealth();
@@ -1000,6 +1054,18 @@ if (personalityArt) {
   stage.addEventListener("lostpointercapture", endDrag);
   stage.addEventListener("contextmenu", (event) => event.preventDefault());
   window.addEventListener("blur", () => { dragPointerId = null; });
+  if (modeButton) {
+    syncModeButton();
+    modeButton.addEventListener("click", () => {
+      if (running) return;
+      gameMode = gameMode === "classic" ? "abyss" : "classic";
+      overlayTitle.textContent = gameMode === "abyss" ? "ENTER ABYSS MODE" : "READY, ABYXONAUT?";
+      overlayCopy.textContent = gameMode === "abyss"
+        ? "Endless survival. Bosses every 5 levels, stronger enemies, and no final depth. How long can you last?"
+        : "Clear 100 levels. Catch gold, dodge mines, defeat a 50-HP boss every 10 levels, and collect power-ups to survive.";
+      syncModeButton(); drawScene();
+    });
+  }
   startButton.addEventListener("click", startGame);
   try {
     const rawCheckpoint = localStorage.getItem(checkpointKey);
@@ -1039,5 +1105,7 @@ if (personalityArt) {
   window.addEventListener("resize", resizeCanvas);
   if ("ResizeObserver" in window) new ResizeObserver(resizeCanvas).observe(stage);
   resetGame();
+  syncModeButton();
+  syncPowerStatus();
   drawScene();
 })();
