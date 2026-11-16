@@ -1433,3 +1433,21 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 .game-mode:hover{border-color:#c4a8ff;background:#35205f}
 .game-upgrade-status{margin:10px 0 0;text-align:center;color:#8deaff;font:10px "DM Mono",monospace;letter-spacing:.1em;min-height:16px}
 @media(max-width:600px){.game-topbar-actions{flex-wrap:wrap;justify-content:flex-end}.game-mode{padding:7px 8px;font-size:9px}}
+
+
+/* ABYXO x pump.fun — planned launch platform, separate from Solana network status */
+.pumpfun-integration{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.82fr);gap:28px;align-items:center;margin-top:26px;margin-bottom:clamp(58px,8vw,88px);padding:clamp(22px,4vw,38px);border:1px solid rgba(153,107,255,.48);background:linear-gradient(125deg,rgba(19,18,49,.96),rgba(7,20,39,.96) 60%,rgba(20,241,149,.045));box-shadow:var(--retro-shadow),6px 6px 0 rgba(0,0,0,.2)}
+.pumpfun-heading h2{font-size:clamp(27px,3.8vw,44px);line-height:1.04;margin:12px 0}
+.pumpfun-heading h2 span{color:#b99aff}
+.pumpfun-heading p{max-width:580px;color:#aebfd0;font-size:12px;line-height:1.8}
+.pumpfun-status-panel{min-width:0;padding:22px;border:1px solid rgba(153,107,255,.42);background:rgba(4,10,25,.72)}
+.pumpfun-wordmark{font:700 clamp(30px,4vw,42px) "DM Mono",monospace;letter-spacing:-.09em;color:#f4f0ff}
+.pumpfun-wordmark span{color:#b99aff}
+.pumpfun-status{display:inline-flex;margin-top:12px;padding:7px 9px;border:1px solid rgba(185,154,255,.55);color:#cbb7ff;background:rgba(153,107,255,.09);font:8px "DM Mono",monospace;letter-spacing:.1em}
+.pumpfun-status-line{display:flex;flex-direction:column;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid #ffffff20}
+.pumpfun-status-line strong{color:#ffd66b;font:11px "DM Mono",monospace;letter-spacing:.1em}
+.pumpfun-status-line small{color:#91a9c4;font:9px/1.7 "DM Mono",monospace}
+.pumpfun-link{display:inline-flex;align-items:center;gap:14px;margin-top:18px;padding:11px 14px;border:1px solid rgba(185,154,255,.65);color:#d9caff;background:rgba(153,107,255,.12);font:9px "DM Mono",monospace;letter-spacing:.1em}
+.pumpfun-link:hover{border-color:#14f195;color:#14f195;background:rgba(20,241,149,.07)}
+.pumpfun-footnote{grid-column:1/-1;margin:0;color:#718ba5;font:8px/1.7 "DM Mono",monospace;letter-spacing:.04em}
+@media(max-width:760px){.pumpfun-integration{grid-template-columns:1fr;gap:18px;margin-top:18px;padding:22px 18px}.pumpfun-status-panel{padding:18px}.pumpfun-footnote{grid-column:auto}}
