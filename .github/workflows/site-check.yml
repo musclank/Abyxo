@@ -37,3 +37,9 @@ jobs:
 
       - name: Check local website links and assets
         run: python scripts/check_site.py
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check website/script.js
+          node --check website/leaderboard.js
+          node --check website/site-sound.js
