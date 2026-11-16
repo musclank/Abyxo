@@ -1407,3 +1407,23 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
     padding: 4px;
   }
 }
+
+/* Compact arcade HUD for narrow phones */
+@media (max-width: 420px) {
+  .game-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .game-stats > div {
+    min-width: 0;
+    flex-direction: column;
+    gap: 4px;
+    padding: 7px 4px;
+  }
+  .game-stats b {
+    font-size: 16px;
+  }
+  .game-stats > .game-health-stat b {
+    font-size: 13px;
+  }
+}
