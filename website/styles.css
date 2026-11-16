@@ -1427,3 +1427,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
     font-size: 13px;
   }
 }
+
+/* ABYXO Arcade gameplay upgrade */
+.game-mode{border:1px solid #8b5cf6;color:#e3d5ff;background:#251a45;padding:8px 10px;font:10px "DM Mono",monospace;letter-spacing:.06em;cursor:pointer}
+.game-mode:hover{border-color:#c4a8ff;background:#35205f}
+.game-upgrade-status{margin:10px 0 0;text-align:center;color:#8deaff;font:10px "DM Mono",monospace;letter-spacing:.1em;min-height:16px}
+@media(max-width:600px){.game-topbar-actions{flex-wrap:wrap;justify-content:flex-end}.game-mode{padding:7px 8px;font-size:9px}}
