@@ -32,3 +32,14 @@ Contract contributions require particular care. Include tests and clear document
 ## Community conduct
 
 Be respectful. Harassment, spam, impersonation, deceptive promotion, and guaranteed-return claims are not welcome.
+
+
+## Local website validation
+
+Before opening a pull request, run the static-site link checker from the repository root:
+
+```bash
+python scripts/check_site.py
+```
+
+The same check runs automatically for relevant pushes and pull requests through GitHub Actions. It checks local HTML links and referenced assets; it does not replace browser testing on mobile and desktop.
