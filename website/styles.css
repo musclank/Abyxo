@@ -1361,3 +1361,49 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
  .solana-ecosystem-meta strong{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.solana-mark-link,.solana-ecosystem-link{transition:none}}
+
+/* MOBILE AUDIT — prevent cramped game controls and improve tap targets */
+@media (max-width: 760px) {
+  .game-topbar {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    row-gap: 10px;
+  }
+  .game-topbar-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  .game-sound,
+  .game-fullscreen,
+  .game-start,
+  .chat-suggestion,
+  .terminal-theme-button,
+  .terminal-background-button,
+  .lore-index a {
+    min-height: 44px;
+  }
+  .lore-index a {
+    display: inline-flex;
+    align-items: center;
+  }
+  .solana-mark-link {
+    width: 44px;
+    height: 44px;
+    margin-right: 8px;
+  }
+  .nav-audio-controls .site-sound-toggle,
+  .nav-audio-controls .abyxo-music-control,
+  .nav-audio-controls .abyxo-music-toggle {
+    min-height: 44px;
+  }
+  .nav-audio-controls .abyxo-music-volume {
+    height: 44px;
+  }
+  .legal-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 4px;
+  }
+}
