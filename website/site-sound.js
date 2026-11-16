@@ -17,7 +17,8 @@
   navControls.className = "nav-audio-controls";
   navControls.appendChild(control);
   const siteNav = document.querySelector(".site-header .nav");
-  (siteNav || document.body).appendChild(navControls);
+  const controlHost = siteNav || document.querySelector(".site-footer") || document.body;
+  controlHost.appendChild(navControls);
   function getAudio() {
     if (!enabled) return null;
     const AudioClass = window.AudioContext || window.webkitAudioContext;
