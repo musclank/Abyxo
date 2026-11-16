@@ -1,0 +1,44 @@
+name: Feature request
+description: Suggest a feature, Arcade mode, community idea, or website improvement.
+title: "[Idea]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share an idea that could make the ABYXO universe more useful, fun, or welcoming.
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Website experience
+        - ABYXO Arcade
+        - Deep Terminal
+        - Mascot and artwork
+        - Community
+        - Documentation
+        - Accessibility
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would this improve?
+      description: Describe the problem, opportunity, or experience you have in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Your idea
+      description: Explain how the feature could work.
+    validations:
+      required: true
+  - type: textarea
+    id: extras
+    attributes:
+      label: References or extra context
+      description: Links, sketches, examples, or related ideas.
+    validations:
+      required: false
