@@ -579,7 +579,8 @@ if (personalityArt) {
       ["STORM EEL", "#4b9cf2", "#153b68", "eel"],
       ["VOID SEA SERPENT", "#8e70d6", "#211744", "serpent"]
     ];
-    const monster = monsters[Math.floor((level - 1) / 10) % monsters.length];
+    const bossInterval = gameMode === "abyss" ? 5 : 10;
+    const monster = monsters[Math.floor((level - 1) / bossInterval) % monsters.length];
     const [name, color, dark, shape] = monster;
     ctx.save();
     ctx.translate(boss.x, boss.y);
