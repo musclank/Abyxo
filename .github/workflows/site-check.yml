@@ -1,0 +1,39 @@
+name: ABYXO Site Quality Check
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "website/**"
+      - "scripts/check_site.py"
+      - ".github/workflows/site-check.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "website/**"
+      - "scripts/check_site.py"
+      - ".github/workflows/site-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-static-site:
+    name: Validate website files and local links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Check local website links and assets
+        run: python scripts/check_site.py
