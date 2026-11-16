@@ -1355,3 +1355,31 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* SOLANA ECOSYSTEM IDENTITY — official mark remains unmodified */
+.solana-mark-link{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:34px;height:34px;margin-left:18px;padding:5px;border:1px solid rgba(153,69,255,.38);background:rgba(153,69,255,.07);border-radius:3px}
+.solana-mark-link img{display:block;width:100%;height:100%;object-fit:contain}
+.solana-mark-link:hover{border-color:#14f195;background:rgba(20,241,149,.08)}
+.solana-ecosystem{position:relative;display:grid;grid-template-columns:88px minmax(0,1fr) 150px;align-items:center;gap:28px;margin-top:42px;margin-bottom:48px;padding:34px 38px;border:1px solid rgba(153,69,255,.42);background:linear-gradient(112deg,rgba(153,69,255,.12),rgba(7,20,38,.96) 48%,rgba(20,241,149,.07));overflow:hidden}
+.solana-ecosystem:before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(180deg,#9945ff,#14f195)}
+.solana-ecosystem-mark{width:74px;height:74px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.13);background:#050b15;padding:17px}
+.solana-ecosystem-mark img{display:block;width:100%;height:100%;object-fit:contain}
+.solana-ecosystem-copy .section-kicker{color:#14f195}
+.solana-ecosystem-copy h2{font-size:clamp(27px,3.5vw,43px);margin:12px 0;line-height:1.02}
+.solana-ecosystem-copy h2 span{background:linear-gradient(90deg,#9945ff,#14f195);-webkit-background-clip:text;background-clip:text;color:transparent}
+.solana-ecosystem-copy p{max-width:690px;margin:0;color:#aebfd0;font-size:13px;line-height:1.75}
+.solana-ecosystem-link{display:inline-flex;gap:14px;align-items:center;margin-top:17px;color:#14f195;font:500 10px "DM Mono",monospace;letter-spacing:.12em}
+.solana-ecosystem-link:hover{color:#fff}
+.solana-ecosystem-meta{display:flex;flex-direction:column;gap:8px;padding-left:20px;border-left:1px solid #ffffff20;font-family:"DM Mono",monospace}
+.solana-ecosystem-meta span,.solana-ecosystem-meta small{font-size:8px;letter-spacing:.12em;color:#8ca3b9}
+.solana-ecosystem-meta strong{font-size:19px;letter-spacing:.05em;background:linear-gradient(90deg,#9945ff,#14f195);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:760px){
+ .solana-mark-link{width:30px;height:30px;margin-left:auto;margin-right:14px}
+ .site-header{gap:0}
+ .solana-ecosystem{grid-template-columns:58px minmax(0,1fr);gap:16px;margin-top:28px;margin-bottom:34px;padding:24px 18px}
+ .solana-ecosystem-mark{width:54px;height:54px;padding:12px}
+ .solana-ecosystem-meta{grid-column:2;border-left:0;border-top:1px solid #ffffff20;padding:13px 0 0;flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap}
+ .solana-ecosystem-meta strong{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.solana-mark-link,.solana-ecosystem-link{transition:none}}
