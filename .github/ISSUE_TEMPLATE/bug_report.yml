@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a broken page, interaction, visual issue, or Arcade bug.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve ABYXO. Please do not include passwords, API keys, private keys, or personal data.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Homepage
+        - The Lore
+        - The Signal
+        - Community
+        - ABYXO Arcade
+        - Deep Terminal
+        - Mobile layout
+        - Desktop layout
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the issue and what you expected to happen.
+      placeholder: I expected...
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+      placeholder: https://abyxo.xyz/arcade.html
+    validations:
+      required: false
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - Android
+        - iPhone / iPad
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: false
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: List the steps that make the issue appear.
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or additional context
+      description: Add screenshots where useful. Remove private information first.
+    validations:
+      required: false
