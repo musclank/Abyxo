@@ -1498,3 +1498,11 @@ button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,
     margin-inline: calc(50% - 50vw) !important;
   }
 }
+
+/* Contract address actions */
+.ca-address-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ca-copy-button,.ca-view-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:38px;padding:10px 14px;border:1px solid #16d9f5;color:#a6f7ff;background:#16d9f510;border-radius:5px;font:10px "DM Mono",monospace;letter-spacing:.08em;cursor:pointer}
+.ca-view-button{background:#16d9f5;color:#071426;font-weight:700}
+.ca-copy-button:hover{background:#16d9f5;color:#071426}
+.ca-view-button:hover{background:#a6f7ff;border-color:#a6f7ff}
+@media(max-width:560px){.ca-address-actions{width:100%}.ca-copy-button,.ca-view-button{flex:1}.ca-address{overflow-wrap:anywhere}}
